@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo Layout - Predajto.ai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css?v=61" />
+  <link rel="stylesheet" href="./modern-layout.css?v=1" />
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: linear-gradient(135deg, 
+        rgba(255, 248, 235, 1) 0%, 
+        rgba(255, 243, 224, 0.95) 50%, 
+        rgba(255, 253, 250, 1) 100%);
+      min-height: 100vh;
+    }
+    
+    .demo-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <h1 style="text-align: center; margin-bottom: 30px; color: rgba(52,43,35,.9);">
+      📐 3-stĺpcový Modal Dashboard - Demo
+    </h1>
+    
+    <!-- Modal (zobrazený) -->
+    <div class="reviewModal" style="position: static; background: none;">
+      <div class="reviewModal__card" role="dialog" style="position: static; transform: none;">
+        <div class="reviewModal__header">
+          <h3 class="reviewModal__title">✅ Súhlasia tieto inzeráty?</h3>
+          <button class="reviewModal__closeBtn" type="button">×</button>
+        </div>
+        
+        <!-- 🆕 3-COLUMN DASHBOARD -->
+        <div class="reviewModal__dashboard">
+          
+          <!-- LEFT COLUMN - Filters -->
+          <div class="reviewModal__filtersColumn">
+            <div class="reviewModal__filters" style="padding: 0;">
+              <!-- Advanced Filters -->
+              <div class="reviewModal__advancedFilters">
+                <div style="font-size: 12px; color: rgba(52,43,35,.7); margin-bottom: 12px; font-weight: 700;">Pokročilé filtre:</div>
+                <div style="display: flex; flex-direction: column; gap: 14px;">
+                  
+                  <!-- RAM filters -->
+                  <div class="filterGroup" style="display: flex; flex-direction: column; gap: 8px;">
+                    <span style="font-size: 11px; color: rgba(52,43,35,.6); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">RAM:</span>
+                    <div class="filterBtnGroup" style="display: flex; flex-direction: column; gap: 6px;">
+                      <button class="advFilterBtn" style="padding: 8px 12px; border: 1.5px solid rgba(52,43,35,.2); border-radius: 8px; background: white; cursor: pointer; font-size: 13px; text-align: left;">
+                        <span>4GB</span>
+                        <span style="float: right; color: rgba(52,43,35,.5); font-weight: 600;">(12)</span>
+                      </button>
+                      <button class="advFilterBtn" style="padding: 8px 12px; border: 2px solid rgba(182,139,83,.6); border-radius: 8px; background: rgba(255,243,224,.7); cursor: pointer; font-size: 13px; font-weight: 600; text-align: left;">
+                        <span>8GB</span>
+                        <span style="float: right; color: rgba(52,43,35,.5); font-weight: 600;">(28)</span>
+                      </button>
+                      <button class="advFilterBtn" style="padding: 8px 12px; border: 1.5px solid rgba(52,43,35,.2); border-radius: 8px; background: white; cursor: pointer; font-size: 13px; text-align: left;">
+                        <span>16GB</span>
+                        <span style="float: right; color: rgba(52,43,35,.5); font-weight: 600;">(44)</span>
+                      </button>
+                      <button class="advFilterBtn" style="padding: 8px 12px; border: 1.5px solid rgba(52,43,35,.2); border-radius: 8px; background: white; cursor: pointer; font-size: 13px; text-align: left;">
+                        <span>32GB</span>
+                        <span style="float: right; color: rgba(52,43,35,.5); font-weight: 600;">(18)</span>
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <!-- SSD filters -->
+                  <div class="filterGroup" style="display: flex; flex-direction: column; gap: 8px;">
+                    <span style="font-size: 11px; color: rgba(52,43,35,.6); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">SSD:</span>
+                    <div class="filterBtnGroup" style="display: flex; flex-direction: column; gap: 6px;">
+                      <button class="advFilterBtn" style="padding: 8px 12px; border: 1.5px solid rgba(52,43,35,.2); border-radius: 8px; background: white; cursor: pointer; font-size: 13px; text-align: left;">
+                        <span>128GB</span>
+                        <span style="float: right; color: rgba(52,43,35,.5); font-weight: 600;">(15)</span>
+                      </button>
+                      <button class="advFilterBtn" style="padding: 8px 12px; border: 1.5px solid rgba(52,43,35,.2); border-radius: 8px; background: white; cursor: pointer; font-size: 13px; text-align: left;">
+                        <span>256GB</span>
+                        <span style="float: right; color: rgba(52,43,35,.5); font-weight: 600;">(42)</span>
+                      </button>
+                      <button class="advFilterBtn" style="padding: 8px 12px; border: 1.5px solid rgba(52,43,35,.2); border-radius: 8px; background: white; cursor: pointer; font-size: 13px; text-align: left;">
+                        <span>512GB</span>
+                        <span style="float: right; color: rgba(52,43,35,.5); font-weight: 600;">(38)</span>
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <!-- Year filters -->
+                  <div class="filterGroup" style="display: flex; flex-direction: column; gap: 8px;">
+                    <span style="font-size: 11px; color: rgba(52,43,35,.6); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Rok:</span>
+                    <div class="filterBtnGroup" style="display: flex; flex-direction: column; gap: 6px;">
+                      <button class="advFilterBtn" style="padding: 8px 12px; border: 1.5px solid rgba(52,43,35,.2); border-radius: 8px; background: white; cursor: pointer; font-size: 13px; text-align: left;">
+                        <span>2020</span>
+                        <span style="float: right; color: rgba(52,43,35,.5); font-weight: 600;">(22)</span>
+                      </button>
+                      <button class="advFilterBtn" style="padding: 8px 12px; border: 1.5px solid rgba(52,43,35,.2); border-radius: 8px; background: white; cursor: pointer; font-size: 13px; text-align: left;">
+                        <span>2021</span>
+                        <span style="float: right; color: rgba(52,43,35,.5); font-weight: 600;">(35)</span>
+                      </button>
+                      <button class="advFilterBtn" style="padding: 8px 12px; border: 1.5px solid rgba(52,43,35,.2); border-radius: 8px; background: white; cursor: pointer; font-size: 13px; text-align: left;">
+                        <span>2022</span>
+                        <span style="float: right; color: rgba(52,43,35,.5); font-weight: 600;">(48)</span>
+                      </button>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            
+            <!-- Condition Filter -->
+            <div class="reviewModal__conditionFilter" style="padding: 0; background: transparent; border: none; margin-top: 16px;">
+              <div style="margin-bottom: 10px;">
+                <strong style="font-size: 12px; color: rgba(52,43,35,.7); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">🔧 Stav zariadenia</strong>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <button class="conditionBtn" style="padding: 10px 12px; border: 2px solid rgba(52,43,35,.15); border-radius: 10px; background: white; cursor: pointer; text-align: left; transition: all 0.2s;">
+                  <div style="font-weight: 600; font-size: 13px; color: rgba(52,43,35,.88); margin-bottom: 2px;">
+                    ✨ Ako nový (A+)
+                  </div>
+                  <div style="font-size: 11px; color: rgba(52,43,35,.6);">
+                    Vyššia cena
+                  </div>
+                </button>
+                
+                <button class="conditionBtn is-active" style="padding: 10px 12px; border: 2px solid rgba(182,139,83,.6); border-radius: 10px; background: rgba(255,243,224,.8); cursor: pointer; text-align: left; transition: all 0.2s;">
+                  <div style="font-weight: 600; font-size: 13px; color: rgba(52,43,35,.88); margin-bottom: 2px;">
+                    ✓ Používaný (B)
+                  </div>
+                  <div style="font-size: 11px; color: rgba(52,43,35,.6);">
+                    Trhová cena
+                  </div>
+                </button>
+                
+                <button class="conditionBtn" style="padding: 10px 12px; border: 2px solid rgba(52,43,35,.15); border-radius: 10px; background: white; cursor: pointer; text-align: left; transition: all 0.2s;">
+                  <div style="font-weight: 600; font-size: 13px; color: rgba(52,43,35,.88); margin-bottom: 2px;">
+                    ⚠️ Poškodený (C)
+                  </div>
+                  <div style="font-size: 11px; color: rgba(52,43,35,.6);">
+                    Nižšia cena
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- MIDDLE COLUMN - Price Info -->
+          <div class="reviewModal__priceColumn">
+            <div class="reviewModal__pricePreview">
+              <div class="reviewModal__priceLabel">Aktuálny odhad ceny:</div>
+              <div class="reviewModal__priceValue">615 €</div>
+              <div class="reviewModal__priceCount">Na základe 124 inzerátov (✓ Používaný, trimmed mean 30%)</div>
+            </div>
+            
+            <div class="reviewModal__warning" style="display: block;">
+              ⚠️ Cena vypočítaná pomocou 30% trimmed mean metódy (odstránených 37 najnižších a 37 najvyšších cien)
+            </div>
+            
+            <!-- Stats -->
+            <div style="padding: 16px; background: rgba(255,255,255,.7); border-radius: 14px; border: 1.5px solid rgba(255,255,255,.6);">
+              <div style="font-size: 12px; font-weight: 700; color: rgba(52,43,35,.7); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Štatistiky trhu:</div>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div style="display: flex; justify-content: space-between; padding: 8px 10px; background: rgba(255,255,255,.5); border-radius: 8px;">
+                  <span style="font-size: 13px; color: rgba(52,43,35,.7);">Najnižšia cena</span>
+                  <span style="font-size: 13px; font-weight: 700; color: rgba(52,43,35,.9);">455 €</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 8px 10px; background: rgba(255,255,255,.5); border-radius: 8px;">
+                  <span style="font-size: 13px; color: rgba(52,43,35,.7);">Najvyššia cena</span>
+                  <span style="font-size: 13px; font-weight: 700; color: rgba(52,43,35,.9);">849 €</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 8px 10px; background: rgba(255,255,255,.5); border-radius: 8px;">
+                  <span style="font-size: 13px; color: rgba(52,43,35,.7);">Aktívnych inzerátov</span>
+                  <span style="font-size: 13px; font-weight: 700; color: rgba(52,43,35,.9);">124</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Google Shopping link -->
+            <div style="margin-top: 12px;">
+              <a href="#" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; background: rgba(66, 133, 244, 0.12); color: rgba(66, 133, 244, 1); text-decoration: none; border-radius: 10px; font-size: 13px; font-weight: 600; border: 1.5px solid rgba(66, 133, 244, 0.3);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.5 2C6.7 2 2 6.7 2 12.5S6.7 23 12.5 23 23 18.3 23 12.5 18.3 2 12.5 2zm0 19c-4.7 0-8.5-3.8-8.5-8.5S7.8 4 12.5 4s8.5 3.8 8.5 8.5-3.8 8.5-8.5 8.5z"/></svg>
+                Overiť cenu na Google Shopping
+              </a>
+            </div>
+          </div>
+          
+          <!-- RIGHT COLUMN - Ads List -->
+          <div class="reviewModal__adsColumn">
+            <div class="reviewModal__list" style="max-height: 500px; overflow-y: auto; padding: 0; display: flex; flex-direction: column; gap: 10px;">
+              
+              <!-- Ad Item 1 -->
+              <div class="reviewAdItem" style="display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,.75); border: 1.5px solid rgba(255,255,255,.6); border-radius: 12px; padding: 12px; cursor: pointer;">
+                <img src="https://via.placeholder.com/60x60/e8d5c4/b68b53?text=📱" style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover; background: rgba(245,245,245,.5);" />
+                <div style="flex: 1; min-width: 0;">
+                  <div style="font-size: 13px; font-weight: 600; color: rgba(27,27,27,.9); margin-bottom: 4px;">iPhone 12, 64GB, čierny</div>
+                  <div style="font-size: 12px; color: rgba(52,43,35,.65); margin-bottom: 4px;">📍 Bratislava • 2 dni</div>
+                  <div style="font-size: 15px; font-weight: 700; color: #b68b53; font-family: 'Fraunces', serif;">610 €</div>
+                </div>
+              </div>
+              
+              <!-- Ad Item 2 -->
+              <div class="reviewAdItem" style="display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,.75); border: 1.5px solid rgba(255,255,255,.6); border-radius: 12px; padding: 12px; cursor: pointer;">
+                <img src="https://via.placeholder.com/60x60/e8d5c4/b68b53?text=📱" style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover; background: rgba(245,245,245,.5);" />
+                <div style="flex: 1; min-width: 0;">
+                  <div style="font-size: 13px; font-weight: 600; color: rgba(27,27,27,.9); margin-bottom: 4px;">iPhone 12, 64GB, batéria 85%</div>
+                  <div style="font-size: 12px; color: rgba(52,43,35,.65); margin-bottom: 4px;">📍 Košice • 5 dní</div>
+                  <div style="font-size: 15px; font-weight: 700; color: #b68b53; font-family: 'Fraunces', serif;">635 €</div>
+                </div>
+              </div>
+              
+              <!-- Ad Item 3 -->
+              <div class="reviewAdItem" style="display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,.75); border: 1.5px solid rgba(255,255,255,.6); border-radius: 12px; padding: 12px; cursor: pointer;">
+                <img src="https://via.placeholder.com/60x60/e8d5c4/b68b53?text=📱" style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover; background: rgba(245,245,245,.5);" />
+                <div style="flex: 1; min-width: 0;">
+                  <div style="font-size: 13px; font-weight: 600; color: rgba(27,27,27,.9); margin-bottom: 4px;">Apple iPhone 12, 128GB, záruka</div>
+                  <div style="font-size: 12px; color: rgba(52,43,35,.65); margin-bottom: 4px;">📍 Žilina • 1 deň</div>
+                  <div style="font-size: 15px; font-weight: 700; color: #b68b53; font-family: 'Fraunces', serif;">663 €</div>
+                </div>
+              </div>
+              
+              <!-- Ad Item 4 -->
+              <div class="reviewAdItem" style="display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,.75); border: 1.5px solid rgba(255,255,255,.6); border-radius: 12px; padding: 12px; cursor: pointer;">
+                <img src="https://via.placeholder.com/60x60/e8d5c4/b68b53?text=📱" style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover; background: rgba(245,245,245,.5);" />
+                <div style="flex: 1; min-width: 0;">
+                  <div style="font-size: 13px; font-weight: 600; color: rgba(27,27,27,.9); margin-bottom: 4px;">iPhone 12, 64GB, komplet</div>
+                  <div style="font-size: 12px; color: rgba(52,43,35,.65); margin-bottom: 4px;">📍 Nitra • 3 dni</div>
+                  <div style="font-size: 15px; font-weight: 700; color: #b68b53; font-family: 'Fraunces', serif;">666 €</div>
+                </div>
+              </div>
+              
+              <!-- Ad Item 5 -->
+              <div class="reviewAdItem" style="display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,.75); border: 1.5px solid rgba(255,255,255,.6); border-radius: 12px; padding: 12px; cursor: pointer;">
+                <img src="https://via.placeholder.com/60x60/e8d5c4/b68b53?text=📱" style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover; background: rgba(245,245,245,.5);" />
+                <div style="flex: 1; min-width: 0;">
+                  <div style="font-size: 13px; font-weight: 600; color: rgba(27,27,27,.9); margin-bottom: 4px;">Apple iPhone 12, ako nový</div>
+                  <div style="font-size: 12px; color: rgba(52,43,35,.65); margin-bottom: 4px;">📍 Trnava • 1 deň</div>
+                  <div style="font-size: 15px; font-weight: 700; color: #b68b53; font-family: 'Fraunces', serif;">633 €</div>
+                </div>
+              </div>
+              
+              <!-- Ad Item 6 -->
+              <div class="reviewAdItem" style="display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,.75); border: 1.5px solid rgba(255,255,255,.6); border-radius: 12px; padding: 12px; cursor: pointer;">
+                <img src="https://via.placeholder.com/60x60/e8d5c4/b68b53?text=📱" style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover; background: rgba(245,245,245,.5);" />
+                <div style="flex: 1; min-width: 0;">
+                  <div style="font-size: 13px; font-weight: 600; color: rgba(27,27,27,.9); margin-bottom: 4px;">iPhone 12, servisovaný</div>
+                  <div style="font-size: 12px; color: rgba(52,43,35,.65); margin-bottom: 4px;">📍 Prešov • 4 dni</div>
+                  <div style="font-size: 15px; font-weight: 700; color: #b68b53; font-family: 'Fraunces', serif;">663 €</div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+        <div class="reviewModal__actions" style="padding: 0 24px 24px 24px;">
+          <button class="btn btn--ghost" type="button">Zrušiť</button>
+          <button class="btn btn--primary" type="button">
+            <span>Potvrdiť a vypočítať cenu</span>
+            <span class="btn__badge">124 inzerátov</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+

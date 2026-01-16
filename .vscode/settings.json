@@ -1,0 +1,9 @@
+{
+  "liveServer.settings.ignoreFiles": [
+    "**/*.js",
+    "**/*.mjs",
+    "**/*.json"
+  ],
+  "liveServer.settings.wait": 10000
+}
+

@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="sk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    <title>Auditly.io – Expertný audit bazárovej techniky</title>
+    <meta
+      name="description"
+      content="Expertný auditný systém pre bazárovú elektroniku. Nekupuj mačku vo vreci – over si inzerát skôr, než zaplatíš."
+    />
+    <!-- Favicon Placeholder -->
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=136" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="aurora-container" aria-hidden="true">
+      <div class="aurora-blob aurora-blob--1"></div>
+      <div class="aurora-blob aurora-blob--2"></div>
+      <div class="aurora-blob aurora-blob--3"></div>
+      <div class="aurora-blob aurora-blob--4"></div>
+    </div>
+    <div class="ambient" aria-hidden="true"></div>
+
+    <div class="page">
+      <header class="mainHeader">
+        <div class="headerContainer">
+          <div class="headerLeft">
+            <div class="headerLogo">
+              <span class="logoText">Auditly.io</span>
+              <span class="logoTagline">Váš expertný poradca</span>
+            </div>
+          </div>
+          
+          <nav class="headerCenter">
+            <ul class="navLinks">
+              <li><a href="#how-it-works">Ako to funguje</a></li>
+              <li><a href="#pricing">Cenník</a></li>
+              <li><a href="#contact">Kontakt</a></li>
+            </ul>
+          </nav>
+
+          <div class="headerRight">
+            <button class="btnSettings" title="Nastavenia">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </button>
+            <button class="btnLogin">Prihlásiť sa</button>
+            <button class="mobileMenuToggle" data-hamburger>
+              <span></span><span></span><span></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div class="mobileNav" hidden data-mobile-menu>
+          <ul class="mobileNavLinks">
+            <li><a href="#how-it-works">Ako to funguje</a></li>
+            <li><a href="#pricing">Cenník</a></li>
+            <li><a href="#contact">Kontakt</a></li>
+            <li><hr></li>
+            <li><button class="btnLogin mobile">Prihlásiť sa</button></li>
+          </ul>
+        </div>
+      </header>
+
+      <!-- Existing Hero / Protection Badge Section -->
+      <section class="heroSection">
+        <div class="luxuryBadge">
+          <div class="luxuryBadge__glow"></div>
+          <div class="luxuryBadge__icon">
+            <svg width="50" height="56" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+                  <stop offset="50%" style="stop-color:#f59e0b;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+                </linearGradient>
+                <filter id="luxuryGlow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="2" result="blur" />
+                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+              </defs>
+              <path d="M12 0L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 0Z" fill="url(#shieldGrad)" filter="url(#luxuryGlow)"/>
+              <path d="M12 2L5 6V11C5 15.5 8.1 19.7 12 20.9V2Z" fill="white" fill-opacity="0.3"/>
+              <!-- Crown symbol inside shield -->
+              <path d="M12 7L14 10H10L12 7Z" fill="white" fill-opacity="0.8"/>
+            </svg>
+          </div>
+          <div class="luxuryBadge__content">
+            <h1 class="luxuryBadge__title">
+              <span class="gold-text">AUDITLY.IO</span>
+              <span class="white-text">VÁŠ EXPERT</span>
+            </h1>
+            <div class="luxuryBadge__footer">
+              <span class="diamond-icon">💎</span>
+              <span class="subtitle">PREMIUM OCHRANA VAŠICH NÁKUPOV</span>
+              <span class="diamond-icon">💎</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <main class="mainContent">
+        <div class="unifiedCard">
+          <div class="mainLayout">
+            
+            <!-- LEFT COLUMN: Input Card -->
+            <div class="layoutCol leftCol">
+              <section class="categoryGrid" data-category-selector>
+                <button type="button" class="catItem is-active" data-cat-id="14" data-cat-type="mobile" title="Mobil">
+                  <span class="icon">📱</span>
+                </button>
+                <button type="button" class="catItem" data-cat-id="16" data-cat-type="console" title="Konzola">
+                  <span class="icon">🎮</span>
+                </button>
+                <button type="button" class="catItem" data-cat-id="13" data-cat-type="laptop" title="Notebook">
+                  <span class="icon">💻</span>
+                </button>
+                <button type="button" class="catItem" data-cat-id="16" data-cat-type="other" title="Iné">
+                  <span class="icon">📦</span>
+                </button>
+              </section>
+
+              <div class="modeToggle">
+                <div class="modeToggle__container">
+                  <input type="radio" name="auditMode" id="modeBuy" value="buy" checked hidden>
+                  <input type="radio" name="auditMode" id="modeSell" value="sell" hidden>
+                  <label for="modeBuy" class="modeToggle__item">Kupujem</label>
+                  <label for="modeSell" class="modeToggle__item">Predávam</label>
+                  <div class="modeToggle__slider"></div>
+                </div>
+              </div>
+
+              <div class="auditForm">
+                <div class="photoAction">
+                  <label class="btnPhoto" for="photo-upload">
+                    <span class="btnPhoto__icon">📸</span>
+                    <span class="btnPhoto__text">Sfotografovať & Analyzovať</span>
+                    <input type="file" id="photo-upload" accept="image/*" capture="environment" hidden data-photo-input>
+                  </label>
+                </div>
+
+                <div class="formDivider">
+                  <span>ALEBO RUČNE</span>
+                </div>
+
+                <input class="auditInput" type="text" placeholder="Model (napr. iPhone 15 Pro)" data-product-name />
+                
+                <div class="input-row-spec">
+                  <select class="auditInput select-spec" data-storage-select>
+                    <option value="" disabled selected>Kapacita (GB)</option>
+                    <option value="64GB">64 GB</option>
+                    <option value="128GB">128 GB</option>
+                    <option value="256GB">256 GB</option>
+                    <option value="512GB">512 GB</option>
+                    <option value="1TB">1 TB</option>
+                  </select>
+                  <select class="auditInput select-spec" data-ram-select>
+                    <option value="" disabled selected>RAM (Voliteľné)</option>
+                    <option value="4GB">4 GB</option>
+                    <option value="6GB">6 GB</option>
+                    <option value="8GB">8 GB</option>
+                    <option value="12GB">12 GB</option>
+                    <option value="16GB">16 GB</option>
+                    <option value="32GB">32 GB</option>
+                  </select>
+                  <select class="auditInput select-spec" data-color-select>
+                    <option value="" disabled selected>Farba</option>
+                    <option value="Čierna">Čierna</option>
+                    <option value="Biela">Biela</option>
+                    <option value="Strieborná">Strieborná</option>
+                    <option value="Zlatá">Zlatá</option>
+                    <option value="Modrá">Modrá</option>
+                    <option value="Zelená">Zelená</option>
+                    <option value="Ružová">Ružová</option>
+                    <option value="Titan">Titan</option>
+                  </select>
+                </div>
+                <p style="font-size: 11px; opacity: 0.6; margin: -8px 0 12px 2px;">
+                  💡 Výber farby a kapacity môže ovplyvniť trhovú cenu o desiatky eur.
+                </p>
+                
+                <!-- BUY MODE FIELDS -->
+                <div class="mode-fields" data-mode-buy-fields>
+                  <div data-battery-field>
+                    <input class="auditInput" type="number" placeholder="Batéria (%)" min="0" max="100" data-battery-health />
+                  </div>
+                  <input class="auditInput" type="number" placeholder="Cena v inzeráte (€)" min="0" data-seller-price />
+                  <div class="input-row-toggle">
+                    <span class="toggle-label">Záruka v cene?</span>
+                    <label class="switch">
+                      <input type="checkbox" data-has-warranty>
+                      <span class="slider-round"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- SELL MODE FIELDS -->
+                <div class="mode-fields" data-mode-sell-fields hidden>
+                  <input class="auditInput" type="number" placeholder="Koľko by ste chceli dostať? (€)" min="0" data-expected-price />
+                  
+                  <div data-battery-field-sell>
+                    <input class="auditInput" type="number" placeholder="Zdravie batérie (%)" min="0" max="100" data-battery-health-sell />
+                  </div>
+                  
+                  <div class="input-group">
+                    <div class="input-with-info">
+                      <input class="auditInput" type="number" placeholder="Celkový stav zariadenia (%)" min="0" max="100" data-device-condition />
+                      <div class="info-tooltip">
+                        <span class="info-icon">i</span>
+                        <div class="tooltip-content">Zadajte vizuálny stav od 0 do 100%. Ovplyvňuje odporúčanú cenu.</div>
+                      </div>
+                    </div>
+                    <p class="input-helper-text">100% = ako nový, 80% = jemné škrabance, &lt;70% = poškodenia</p>
+                  </div>
+
+                  <div class="input-row-toggle">
+                    <span class="toggle-label">Zariadenie je v záruke?</span>
+                    <label class="switch">
+                      <input type="checkbox" data-has-warranty-sell>
+                      <span class="slider-round"></span>
+                    </label>
+                  </div>
+                  
+                  <div class="accessory-section">
+                    <span class="accessory-label">Príslušenstvo:</span>
+                    
+                    <!-- CONSOLE ONLY: Controller Selector (Moved here) -->
+                    <div class="controller-selector" data-controller-cycle data-console-only hidden>
+                      <div class="controller-selector__content">
+                        <span class="controller-selector__icon">🎮</span>
+                        <div class="controller-selector__info">
+                          <span class="controller-selector__label">Počet ovládačov</span>
+                          <span class="controller-selector__value" data-controller-value>Bez ovládača</span>
+                        </div>
+                      </div>
+                      <div class="controller-selector__visual" data-controller-visual>
+                        <!-- Icons will be added here via JS -->
+                      </div>
+                    </div>
+
+                    <div class="accessory-grid">
+                      <label class="acc-item" title="Originálna krabica">
+                        <input type="checkbox" hidden data-acc="box">
+                        <span class="acc-icon">📦</span>
+                        <span class="acc-text">Krabica</span>
+                      </label>
+                      <label class="acc-item" title="Nabíjačka / Kábel">
+                        <input type="checkbox" hidden data-acc="charger">
+                        <span class="acc-icon">🔌</span>
+                        <span class="acc-text">Nabíjačka</span>
+                      </label>
+                      <label class="acc-item" title="Doklad o kúpe / Faktúra">
+                        <input type="checkbox" hidden data-acc="receipt">
+                        <span class="acc-icon">📄</span>
+                        <span class="acc-text">Doklad</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <button class="btnAnalyze" type="button" data-generate>
+                  SPUSTIŤ ANALÝZU RIZÍK
+                </button>
+                <div class="socialProof">
+                  <span class="live-dot"></span>
+                  Dnes už auditovaných 42 zariadení.
+                </div>
+              </div>
+            </div>
+
+            <div class="verticalDivider"></div>
+
+            <!-- RIGHT COLUMN: Results & Meter -->
+            <div class="layoutCol rightCol" data-results-column>
+              <div class="reportOverlay" data-report-overlay>
+                <div class="reportOverlay__content">
+                  <div class="reportOverlay__icon">⏳</div>
+                  <h3 class="reportOverlay__text">Čakám na zadanie údajov...</h3>
+                  <div class="reportOverlay__loader" hidden>
+                    <div class="spinner"></div>
+                    <p>Analyzujem dáta...</p>
+                  </div>
+                </div>
+              </div>
+              <div class="dealArea">
+                <!-- Semafor výhodnosti kúpy -->
+                <section class="dealMeter" data-deal-meter>
+                  <div class="dealMeter__header">
+                    <span class="dealMeter__label">Výhodnosť Kúpy</span>
+                    <span class="dealMeter__status" data-deal-status>Zadajte údaje...</span>
+                  </div>
+                  <div class="dealMeter__bar">
+                    <div class="dealMeter__gradient"></div>
+                    <div class="dealMeter__active" data-meter-fill style="left: 0%;">
+                      <div class="dealMeter__handle"></div>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- Priestor pre Expertný report -->
+                <div id="output" class="reportArea">
+                  <div class="reportGrid">
+                    <!-- CARD 1: Specs -->
+                    <div class="resultCard">
+                      <h4 class="resultCard__title"><span>📋</span> Špecifikácia modelu</h4>
+                      <div class="specList">
+                        <div class="specItem"><span>Model</span> <strong>iPhone 15 Pro</strong></div>
+                        <div class="specItem"><span>Kapacita</span> <strong>128 GB</strong></div>
+                        <div class="specItem"><span>Batéria</span> <strong>98%</strong></div>
+                        <div class="specItem"><span>Záruka</span> <strong>Áno (12 mes.)</strong></div>
+                      </div>
+                    </div>
+
+                    <!-- CARD 2: Risks -->
+                    <div class="resultCard">
+                      <h4 class="resultCard__title"><span>🛡️</span> Riziká a kontrola</h4>
+                      <div class="checkList">
+                        <div class="checkItem is-good"><span>✔️</span> Pôvodný displej</div>
+                        <div class="checkItem is-good"><span>✔️</span> FaceID funkčné</div>
+                        <div class="checkItem is-bad"><span>❌</span> Kozmetické vady</div>
+                        <div class="checkItem is-good"><span>✔️</span> Bez blokovania</div>
+                      </div>
+                    </div>
+
+                    <!-- CARD 3: Market -->
+                    <div class="resultCard is-interactive" data-open-trend>
+                      <h4 class="resultCard__title"><span>📊</span> Trhové porovnanie</h4>
+                      <div class="priceChart">
+                        <div class="priceChart__bar" style="height: 40%;"><span>650€</span></div>
+                        <div class="priceChart__bar is-active" style="height: 70%;"><span>850€</span></div>
+                        <div class="priceChart__bar" style="height: 90%;"><span>980€</span></div>
+                      </div>
+                      <p class="priceChart__label">Vaša cena vs. priemer trhu</p>
+                      
+                      <!-- Legal Disclaimer -->
+                      <p class="market-disclaimer">
+                        Auditly.io využíva verejne dostupné dáta. Informácie sú informatívne a nenahrádzajú oficiálne ponuky.
+                      </p>
+
+                      <div class="cardActionHint">
+                        <span>📈</span> <span data-market-freshness>Kliknite pre detailný vývoj ceny</span>
+                      </div>
+                    </div>
+
+                    <!-- CARD 4: Verdict -->
+                    <div class="resultCard is-verdict">
+                      <h4 class="resultCard__title">Verdikt</h4>
+                      <div class="verdictBox">
+                        <span class="verdictBox__badge">TOP PONUKA</span>
+                        <p class="verdictBox__text">Toto zariadenie odporúčame kúpiť. Cena je pod trhovým priemerom.</p>
+                      </div>
+                      
+                      <div class="verdictActions">
+                        <button class="btnAction" data-download-pdf title="Stiahnuť PDF audit">
+                          <span>📥</span> PDF
+                        </button>
+                        <button class="btnAction" data-share-result title="Zdieľať výsledok">
+                          <span>🔗</span> Zdieľať
+                        </button>
+                      </div>
+                      
+                      <!-- SELL MODE ONLY: Generate Ad Text -->
+                      <button class="btnGenerateAd" data-generate-ad hidden>
+                        <span>✍️</span> Vygenerovať text inzerátu
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Podobné ponuky na trhu -->
+                <section class="similarSection" data-similar-section hidden>
+                  <h3 class="similarTitle">Podobné ponuky na trhu</h3>
+                  <div class="similarGrid" data-similar-list></div>
+                </section>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </main>
+
+      <footer class="mainFooter">
+        <div class="footerContainer">
+          <div class="footerCol">
+            <h5 class="footerTitle">Kontakt</h5>
+            <ul class="footerLinks">
+              <li><a href="mailto:support@auditly.io">support@auditly.io</a></li>
+              <li class="footerSocials">
+                <!-- Social icons can go here -->
+              </li>
+            </ul>
+          </div>
+          <div class="footerCol">
+            <h5 class="footerTitle">O nás</h5>
+            <ul class="footerLinks">
+              <li><a href="#about">Príbeh Auditly</a></li>
+              <li><a href="#team">Náš tím</a></li>
+              <li><a href="#blog">Blog</a></li>
+            </ul>
+          </div>
+          <div class="footerCol">
+            <h5 class="footerTitle">Právne informácie</h5>
+            <ul class="footerLinks">
+              <li><a href="/privacy">Ochrana osobných údajov</a></li>
+              <li><a href="/terms">Obchodné podmienky</a></li>
+              <li><a href="/cookies">Cookies</a></li>
+            </ul>
+          </div>
+        </div>
+      <div class="footerBottom">
+        <p>&copy; 2026 Auditly.io. Všetky práva vyhradené. Aplikácia Auditly.io využíva na analýzu trhu verejne dostupné dáta z vyhľadávacích sietí. Poskytnuté informácie majú informatívny charakter a nenahrádzajú oficiálne ponuky predajcov.</p>
+      </div>
+      </footer>
+    </div>
+
+    <!-- Hidden Logic Compatibility -->
+    <div hidden>
+      <textarea data-product-notes>Auditlyio automated technical audit request</textarea>
+      <input type="checkbox" data-gdpr-checkbox checked>
+      <input type="email" data-beta-email value="audit@auditly.io">
+      <button data-image-clear></button>
+      <div data-result></div>
+      <div data-price></div>
+      <div data-deal-status-old></div>
+      <div data-segments></div>
+    </div>
+
+    <div class="toast" role="status" aria-live="polite" aria-atomic="true" hidden data-toast>
+      <span class="toast__icon" aria-hidden="true" data-toast-icon></span>
+      <span class="toast__text" data-toast-text>Generujem…</span>
+    </div>
+
+    <!-- Modals hidden -->
+    <div class="modal" hidden data-modal></div>
+    <div class="reviewModal" hidden data-review-modal></div>
+
+    <!-- Trend Chart Modal -->
+    <div class="trendModal" hidden data-trend-modal>
+      <div class="trendModal__overlay" data-close-trend></div>
+      <div class="trendModal__content">
+        <button class="trendModal__close" data-close-trend>&times;</button>
+        <div class="trendModal__header">
+          <h3 class="trendModal__title">Historický vývoj ceny</h3>
+          <p class="trendModal__subtitle">iPhone 15 Pro (128GB) • Trend za posledný rok</p>
+        </div>
+        <div class="trendModal__chart">
+          <canvas id="priceTrendChart"></canvas>
+        </div>
+        <div class="trendModal__footer">
+          <div class="trendStats">
+            <div class="trendInfo">
+              <span class="trendInfo__label">Aktuálna priemerná cena:</span>
+              <span class="trendInfo__value">950 €</span>
+            </div>
+            <div class="trendInfo">
+              <span class="trendInfo__label">Pokles za 6 mesiacov:</span>
+              <span class="trendInfo__value is-drop">− 12%</span>
+            </div>
+          </div>
+          <p class="trendModal__tip">💡 Cena tohto modelu klesla za posledných 6 mesiacov o 12%. Ideálny čas na nákup pred príchodom novej generácie.</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="./main.js?v=166"></script>
+  </body>
+</html>

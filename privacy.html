@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ochrana osobných údajov | Predajto.ai</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .privacy-container {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 40px 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    }
+    .privacy-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid rgba(182, 139, 83, 0.3);
+    }
+    .privacy-header h1 {
+      font-size: 32px;
+      color: rgba(26, 22, 18, 0.9);
+      margin: 0 0 10px;
+    }
+    .privacy-header p {
+      font-size: 14px;
+      color: rgba(52, 43, 35, 0.65);
+      margin: 0;
+    }
+    .privacy-section {
+      margin-bottom: 30px;
+    }
+    .privacy-section h2 {
+      font-size: 22px;
+      color: rgba(26, 22, 18, 0.88);
+      margin: 0 0 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(182, 139, 83, 0.2);
+    }
+    .privacy-section p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(52, 43, 35, 0.78);
+      margin: 0 0 15px;
+    }
+    .privacy-section ul {
+      margin: 10px 0;
+      padding-left: 25px;
+    }
+    .privacy-section li {
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(52, 43, 35, 0.78);
+      margin-bottom: 8px;
+    }
+    .privacy-highlight {
+      background: rgba(255, 248, 240, 0.8);
+      padding: 15px;
+      border-radius: 10px;
+      border-left: 4px solid rgba(182, 139, 83, 0.6);
+      margin: 15px 0;
+    }
+    .privacy-highlight strong {
+      color: rgba(182, 139, 83, 0.95);
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 24px;
+      background: rgba(182, 139, 83, 0.12);
+      border: 1px solid rgba(182, 139, 83, 0.3);
+      border-radius: 10px;
+      color: rgba(182, 139, 83, 0.9);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .back-link:hover {
+      background: rgba(182, 139, 83, 0.2);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="privacy-container">
+    <div class="privacy-header">
+      <h1>📄 Ochrana osobných údajov</h1>
+      <p>Informácie o spracovaní osobných údajov | Predajto.ai</p>
+      <p style="font-size: 12px; margin-top: 10px;">Platné od: 6. januára 2025</p>
+    </div>
+
+    <div class="privacy-section">
+      <h2>1. Prevádzkovateľ údajov</h2>
+      <p><strong>Kto zbiera vaše údaje?</strong></p>
+      <div class="privacy-highlight">
+        <p><strong>Meno:</strong> Predajto.ai</p>
+        <p><strong>Email:</strong> <a href="mailto:predajto.ai@gmail.com">predajto.ai@gmail.com</a></p>
+        <p><strong>Typ služby:</strong> Online AI asistent pre tvorbu bazárových inzerátov</p>
+      </div>
+      <p>
+        Predajto.ai je nezávislý nástroj pre generovanie inzerátov pomocou umelej inteligencie. 
+        Nie sme spojení, sponzorovaní ani schválení spoločnosťou Bazoš.sk, Heureka.sk ani žiadnou inou platformou.
+      </p>
+    </div>
+
+    <div class="privacy-section">
+      <h2>2. Aké údaje zbierame?</h2>
+      <p>Na poskytnutie služby zbierame nasledujúce osobné údaje:</p>
+      <ul>
+        <li><strong>Emailová adresa:</strong> Používame na zaslanie vygenerovaného inzerátu a spätnú väzbu.</li>
+        <li><strong>Nahraté fotografie produktov:</strong> Spracovávame ich cez AI (OpenAI Vision API) na identifikáciu produktu a generovanie popisu.</li>
+        <li><strong>Textové vstupy:</strong> Názov produktu, popis/poznámky – slúžia na vytvorenie inzerátu.</li>
+        <li><strong>IP adresa:</strong> Zbierame na účely rate limitingu (max. 5 inzerátov za hodinu) a bezpečnosti.</li>
+        <li><strong>Technické údaje:</strong> Typ prehliadača, operačný systém – na optimalizáciu služby.</li>
+      </ul>
+      <div class="privacy-highlight">
+        <p><strong>⚠️ Nezbierame:</strong> Heslá, platobné údaje, citlivé osobné údaje (zdravotný stav, politické názory, atď.)</p>
+      </div>
+    </div>
+
+    <div class="privacy-section">
+      <h2>3. Prečo spracovávame vaše údaje?</h2>
+      <p>Vaše údaje spracovávame na základe vášho <strong>súhlasu</strong> (GDPR čl. 6 ods. 1 písm. a) na tieto účely:</p>
+      <ul>
+        <li>✅ <strong>Generovanie inzerátov:</strong> Analýza fotiek a tvorba textov pomocou AI</li>
+        <li>✅ <strong>Zaslanie výsledkov:</strong> Email s vygenerovaným inzerátom (beta verzia)</li>
+        <li>✅ <strong>Spätná väzba:</strong> Zbieranie pozitívnych/negatívnych hodnotení na vylepšenie AI</li>
+        <li>✅ <strong>Technická podpora:</strong> Riešenie problémov a odpovedanie na otázky</li>
+        <li>✅ <strong>Bezpečnosť:</strong> Ochrana proti zneužitiu služby (rate limiting)</li>
+      </ul>
+    </div>
+
+    <div class="privacy-section">
+      <h2>4. Tretie strany a ich role</h2>
+      <p>Na poskytnutie služby spolupracujeme s týmito tretími stranami:</p>
+      
+      <h3 style="font-size: 18px; margin-top: 20px; color: rgba(26, 22, 18, 0.85);">🤖 OpenAI (USA)</h3>
+      <ul>
+        <li><strong>Účel:</strong> AI analýza fotografií (GPT-4o Vision) a generovanie textov inzerátov (GPT-4o-mini)</li>
+        <li><strong>Spracovávané údaje:</strong> Fotografie produktov, názov, popis, technické parametre</li>
+        <li><strong>Právny základ:</strong> Zmluvný vzťah s OpenAI, Privacy Policy: <a href="https://openai.com/privacy" target="_blank">openai.com/privacy</a></li>
+        <li><strong>⚠️ Upozornenie:</strong> Údaje sa spracovávajú v USA (tretiach krajinách mimo EÚ). OpenAI je certifikovaný podľa EU-US Data Privacy Framework.</li>
+      </ul>
+
+      <h3 style="font-size: 18px; margin-top: 20px; color: rgba(26, 22, 18, 0.85);">☁️ Vercel (USA)</h3>
+      <ul>
+        <li><strong>Účel:</strong> Hosting webovej aplikácie a serverových funkcií</li>
+        <li><strong>Spracovávané údaje:</strong> IP adresa, technické logy, cache dát</li>
+        <li><strong>Právny základ:</strong> Legitímny záujem (technický chod služby), Privacy Policy: <a href="https://vercel.com/legal/privacy-policy" target="_blank">vercel.com/legal/privacy-policy</a></li>
+      </ul>
+
+      <h3 style="font-size: 18px; margin-top: 20px; color: rgba(26, 22, 18, 0.85);">📧 Gmail (Google)</h3>
+      <ul>
+        <li><strong>Účel:</strong> Zaslanie email notifikácií (spätná väzba, beta signup)</li>
+        <li><strong>Spracovávané údaje:</strong> Vaša emailová adresa, obsah správy</li>
+        <li><strong>Email používaný:</strong> predajto.ai@gmail.com</li>
+        <li><strong>Právny základ:</strong> Súhlas, Privacy Policy: <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a></li>
+      </ul>
+
+      <div class="privacy-highlight">
+        <p><strong>🛡️ Ochrana údajov:</strong> Všetky tretie strany sú zmluvne zaviazané chrániť vaše údaje podľa GDPR. Údaje sa prenášajú šifrovaným spojením (HTTPS/TLS).</p>
+      </div>
+    </div>
+
+    <div class="privacy-section">
+      <h2>5. Ako dlho uchovávame údaje?</h2>
+      <ul>
+        <li><strong>Fotografie produktov:</strong> Spracované okamžite cez OpenAI, <strong>neukladáme trvalo</strong> na naše servery</li>
+        <li><strong>Emailová adresa:</strong> Uchovávame v localStorage (prehliadač) a v beta signup záznamoch – <strong>neobmedzene</strong> (kým službu neodstránite alebo nevymažete cookies)</li>
+        <li><strong>Vygenerované inzeráty:</strong> <strong>Neukladáme</strong> – zostávajú len vo vašom prehliadači (sessionStorage)</li>
+        <li><strong>Spätná väzba:</strong> Uchovávame emailové záznamy feedback notifikácií – <strong>12 mesiacov</strong></li>
+        <li><strong>IP adresy (rate limiting):</strong> <strong>1 hodina</strong> (potom sa automaticky vymažú z pamäte servera)</li>
+      </ul>
+      <div class="privacy-highlight">
+        <p><strong>💡 Poznámka:</strong> Keďže nepoužívame databázu, väčšina údajov sa spracováva v reálnom čase a nevytvára trvalé záznamy.</p>
+      </div>
+    </div>
+
+    <div class="privacy-section">
+      <h2>6. Vaše práva podľa GDPR</h2>
+      <p>Máte právo:</p>
+      <ul>
+        <li>📄 <strong>Právo na prístup:</strong> Vyžiadať si kópiu svojich osobných údajov</li>
+        <li>✏️ <strong>Právo na opravu:</strong> Opraviť nesprávne údaje</li>
+        <li>🗑️ <strong>Právo na vymazanie ("právo byť zabudnutý"):</strong> Požiadať o vymazanie vašich údajov</li>
+        <li>⛔ <strong>Právo na obmedzenie spracovnia:</strong> Obmedziť spracovanie vašich údajov</li>
+        <li>📦 <strong>Právo na prenosnosť:</strong> Získať údaje v strojovo čitateľnom formáte</li>
+        <li>🚫 <strong>Právo namietať:</strong> Namietať proti spracovaniu údajov</li>
+        <li>❌ <strong>Právo odvolať súhlas:</strong> Odvolať súhlas so spracovaním kedykoľvek</li>
+      </ul>
+      <div class="privacy-highlight">
+        <p><strong>Ako uplatniť svoje práva?</strong></p>
+        <p>Kontaktujte nás na email: <a href="mailto:predajto.ai@gmail.com">predajto.ai@gmail.com</a></p>
+        <p>Odpovieme do <strong>30 dní</strong> od prijatia žiadosti.</p>
+      </div>
+      <p style="margin-top: 15px;">
+        <strong>Podanie sťažnosti:</strong> Ak si myslíte, že spracúvame vaše údaje v rozpore so zákonom, 
+        máte právo podať sťažnosť na Úrad na ochranu osobných údajov SR: 
+        <a href="https://www.uoou.gov.sk" target="_blank">www.uoou.gov.sk</a>
+      </p>
+    </div>
+
+    <div class="privacy-section">
+      <h2>7. Cookies a lokálne úložisko</h2>
+      <p>Používame nasledujúce technológie:</p>
+      <ul>
+        <li><strong>LocalStorage:</strong> Ukladáme vašu emailovú adresu na automatické vyplnenie formulára, cache Bazoš výsledkov (12 hodín)</li>
+        <li><strong>SessionStorage:</strong> Počítadlo free úprav inzerátov (3x zadarmo) – vynuluje sa po zavretí prehliadača</li>
+        <li><strong>Cookies:</strong> <strong>Nepoužívame</strong> žiadne cookies tretích strán (Google Analytics, Facebook Pixel, atď.)</li>
+      </ul>
+      <p><strong>Ako vymazať údaje z prehliadača?</strong></p>
+      <ol>
+        <li>Otvorte Vývojárske nástroje (F12)</li>
+        <li>Prejdite na záložku "Application" → "Local Storage" / "Session Storage"</li>
+        <li>Vymažte položky začínajúce na <code>predajto_</code></li>
+      </ol>
+    </div>
+
+    <div class="privacy-section">
+      <h2>8. Zabezpečenie údajov</h2>
+      <p>Ochrana vašich údajov je našou prioritou. Používame:</p>
+      <ul>
+        <li>🔒 <strong>HTTPS šifrovanie:</strong> Všetka komunikácia je šifrovaná TLS/SSL certifikátom</li>
+        <li>🔑 <strong>API kľúče:</strong> Uložené ako environment variables (nie v kóde)</li>
+        <li>🚫 <strong>Žiadna databáza:</strong> Neukladáme vaše údaje trvalo – minimalizácia rizika úniku dát</li>
+        <li>⏱️ <strong>Rate limiting:</strong> Max. 5 generovaní za hodinu na IP adresu (ochrana proti botom)</li>
+        <li>🛡️ <strong>Vercel Security:</strong> Hosting na bezpečnej infraštruktúre s DDoS ochranou</li>
+      </ul>
+    </div>
+
+    <div class="privacy-section">
+      <h2>9. Zmeny v Privacy Policy</h2>
+      <p>
+        Vyhradzujeme si právo aktualizovať túto politiku ochrany osobných údajov. 
+        O zásadných zmenách vás budeme informovať emailom alebo upozornením na webe.
+      </p>
+      <p><strong>Posledná aktualizácia:</strong> 6. január 2025</p>
+    </div>
+
+    <div class="privacy-section">
+      <h2>10. Kontakt</h2>
+      <div class="privacy-highlight">
+        <p><strong>Máte otázky o ochrane vašich údajov?</strong></p>
+        <p>📧 Email: <a href="mailto:predajto.ai@gmail.com">predajto.ai@gmail.com</a></p>
+        <p>🌐 Web: <a href="https://predajto-ai.vercel.app">predajto-ai.vercel.app</a></p>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px;">
+      <a href="index.html" class="back-link">← Späť na hlavnú stránku</a>
+    </div>
+  </div>
+</body>
+</html>
+
+

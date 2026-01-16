@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modern Glass Layout - Predajto.ai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./modern-layout.css?v=2" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, 
+        rgba(255, 248, 235, 1) 0%, 
+        rgba(255, 243, 224, 0.9) 50%, 
+        rgba(255, 253, 250, 1) 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(216, 176, 116, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(182, 139, 83, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(255, 243, 224, 0.2) 0%, transparent 50%);
+      animation: moveBackground 20s ease-in-out infinite;
+      z-index: 0;
+    }
+    
+    @keyframes moveBackground {
+      0%, 100% {
+        transform: translate(0, 0);
+      }
+      50% {
+        transform: translate(-5%, -5%);
+      }
+    }
+    
+    .modernLayout {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <!-- MODERN 3-COLUMN GLASS LAYOUT -->
+  <div class="modernLayout">
+    <!-- LEFT COLUMN -->
+    <div class="modernLayout__left">
+      <div class="productInfoCard">
+        <h3 class="productInfoCard__title">
+          <span>📦</span>
+          <span>Apple iPhone 12, 64GB</span>
+        </h3>
+        <div class="productInfoCard__content">
+          Čierny, zakúpený v Orange, batéria 90%, kompletný balenie s krabicou a príslušenstvom. Drobné škrabance na zadnej strane.
+        </div>
+      </div>
+
+      <!-- CONDITION FILTER -->
+      <div class="filterCard">
+        <h4 class="filterCard__title">Stav zariadenia</h4>
+        <div class="filterCard__options">
+          <button type="button" class="filterOption">
+            <span class="filterOption__label">
+              <span>✨</span>
+              <span>Ako nový (A+)</span>
+            </span>
+          </button>
+          <button type="button" class="filterOption is-active">
+            <span class="filterOption__label">
+              <span>✓</span>
+              <span>Používaný (B)</span>
+            </span>
+          </button>
+          <button type="button" class="filterOption">
+            <span class="filterOption__label">
+              <span>⚠️</span>
+              <span>Poškodený (C)</span>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- PRICE RANGE FILTER -->
+      <div class="filterCard">
+        <h4 class="filterCard__title">Cenový rozsah</h4>
+        <div class="filterCard__options">
+          <button type="button" class="filterOption">
+            <span class="filterOption__label">
+              <span>💰</span>
+              <span>Nižšia cena</span>
+            </span>
+            <span class="filterOption__count">28</span>
+          </button>
+          <button type="button" class="filterOption is-active">
+            <span class="filterOption__label">
+              <span>🎯</span>
+              <span>Stredná cena</span>
+            </span>
+            <span class="filterOption__count">56</span>
+          </button>
+          <button type="button" class="filterOption">
+            <span class="filterOption__label">
+              <span>💎</span>
+              <span>Vyššia cena</span>
+            </span>
+            <span class="filterOption__count">40</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MIDDLE COLUMN - Ads List -->
+    <div class="modernLayout__middle">
+      <div class="adsListHeader">
+        <h3 class="adsListHeader__title">Analýza ponúk na Bazoši</h3>
+        <span class="adsListHeader__count">124 inzerátov</span>
+      </div>
+      <div class="adsList">
+        <!-- Ad Card 1 -->
+        <a href="#" class="adCard">
+          <img src="https://via.placeholder.com/90x90/e8d5c4/b68b53?text=iPhone" alt="iPhone" class="adCard__image" />
+          <div class="adCard__content">
+            <h4 class="adCard__title">Apple iPhone 12, 64GB, čierny - TOP stav</h4>
+            <div class="adCard__meta">
+              <span>📍 Bratislava</span>
+              <span>⏱️ 2 dni</span>
+            </div>
+            <div class="adCard__price">610 €</div>
+            <span class="adCard__badge">✓ Presná zhoda</span>
+          </div>
+        </a>
+
+        <!-- Ad Card 2 -->
+        <a href="#" class="adCard">
+          <img src="https://via.placeholder.com/90x90/e8d5c4/b68b53?text=iPhone" alt="iPhone" class="adCard__image" />
+          <div class="adCard__content">
+            <h4 class="adCard__title">iPhone 12, 64GB, čierny, batéria 85%</h4>
+            <div class="adCard__meta">
+              <span>📍 Košice</span>
+              <span>⏱️ 5 dní</span>
+            </div>
+            <div class="adCard__price">635 €</div>
+            <span class="adCard__badge">✓ Presná zhoda</span>
+          </div>
+        </a>
+
+        <!-- Ad Card 3 -->
+        <a href="#" class="adCard">
+          <img src="https://via.placeholder.com/90x90/e8d5c4/b68b53?text=iPhone" alt="iPhone" class="adCard__image" />
+          <div class="adCard__content">
+            <h4 class="adCard__title">Apple iPhone 12, 128GB, čierny, záruka 6 mesiacov</h4>
+            <div class="adCard__meta">
+              <span>📍 Žilina</span>
+              <span>⏱️ 1 deň</span>
+            </div>
+            <div class="adCard__price">663 €</div>
+            <span class="adCard__badge adCard__badge--similar">⚡ Podobné</span>
+          </div>
+        </a>
+
+        <!-- Ad Card 4 -->
+        <a href="#" class="adCard">
+          <img src="https://via.placeholder.com/90x90/e8d5c4/b68b53?text=iPhone" alt="iPhone" class="adCard__image" />
+          <div class="adCard__content">
+            <h4 class="adCard__title">iPhone 12, 64GB, čierny, komplet balenie</h4>
+            <div class="adCard__meta">
+              <span>📍 Nitra</span>
+              <span>⏱️ 3 dni</span>
+            </div>
+            <div class="adCard__price">666 €</div>
+            <span class="adCard__badge">✓ Presná zhoda</span>
+          </div>
+        </a>
+
+        <!-- Ad Card 5 -->
+        <a href="#" class="adCard">
+          <img src="https://via.placeholder.com/90x90/e8d5c4/b68b53?text=iPhone" alt="iPhone" class="adCard__image" />
+          <div class="adCard__content">
+            <h4 class="adCard__title">Apple iPhone 12, 64GB, čierny, ako nový</h4>
+            <div class="adCard__meta">
+              <span>📍 Trnava</span>
+              <span>⏱️ 1 deň</span>
+            </div>
+            <div class="adCard__price">633 €</div>
+            <span class="adCard__badge">✓ Presná zhoda</span>
+          </div>
+        </a>
+
+        <!-- Ad Card 6 -->
+        <a href="#" class="adCard">
+          <img src="https://via.placeholder.com/90x90/e8d5c4/b68b53?text=iPhone" alt="iPhone" class="adCard__image" />
+          <div class="adCard__content">
+            <h4 class="adCard__title">iPhone 12, 64GB, čierny, servisovaný</h4>
+            <div class="adCard__meta">
+              <span>📍 Prešov</span>
+              <span>⏱️ 4 dni</span>
+            </div>
+            <div class="adCard__price">663 €</div>
+            <span class="adCard__badge adCard__badge--similar">⚡ Podobné</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN - Price Analysis -->
+    <div class="modernLayout__right">
+      <div class="priceCard">
+        <h4 class="priceCard__title">Výsledná odhadovaná cena</h4>
+        <div class="priceCard__value">615 €</div>
+        <div class="priceCard__range">
+          Rozsah: <strong>579 € - 649 €</strong>
+        </div>
+        <button type="button" class="priceCard__cta">
+          Zobraziť ponuky
+        </button>
+        <p class="priceCard__note">
+          Cena vypočítaná z 124 podobných inzerátov na Bazári. Trimmed mean 30%.
+        </p>
+      </div>
+
+      <div class="statsCard">
+        <h4 class="statsCard__title">Štatistiky trhu</h4>
+        <div class="statsList">
+          <div class="statItem">
+            <span class="statItem__label">Priemerná cena</span>
+            <span class="statItem__value">615 €</span>
+          </div>
+          <div class="statItem">
+            <span class="statItem__label">Najnižšia cena</span>
+            <span class="statItem__value">455 €</span>
+          </div>
+          <div class="statItem">
+            <span class="statItem__label">Najvyššia cena</span>
+            <span class="statItem__value">849 €</span>
+          </div>
+          <div class="statItem">
+            <span class="statItem__label">Aktívnych inzerátov</span>
+            <span class="statItem__value">124</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+

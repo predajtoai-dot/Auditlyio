@@ -1,0 +1,28 @@
+/* Pricing transparency info */
+.result__pricingInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.result__pricingInfo[hidden] {
+  display: none;
+}
+
+.result__pricingSource,
+.result__pricingAds {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.4;
+}
+
+.result__pricingSource strong,
+.result__pricingAds strong {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+}
+
+

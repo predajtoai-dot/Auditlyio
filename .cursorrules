@@ -1,0 +1,18 @@
+Pracujeme na projekte Auditlyio, čo je expertný auditný systém pre bazárovú elektroniku. Systém musí na základe vybraného modelu (iPhone, PS5, MacBook) vygenerovať hĺbkový technický report, checklist rizík a cenové odporúčanie. Štýl musí byť čistý, moderný (ako Apple/Stripe) a responzívny.
+
+### Kontext:
+- **Auditlyio**: Expertný auditný systém pre bazárovú elektroniku.
+- **Databáza modelov**: Bude doplnená neskôr (zatiaľ používame mock dáta alebo `schema.sql`).
+
+### Kľúčové pravidlá:
+1. **Design System**: Vždy používaj čistý, minimalistický dizajn inšpirovaný Apple a Stripe (veľa bieleho priestoru, kvalitná typografia, jemné tiene, zaoblené rohy - `border-radius: 12px` a viac).
+2. **Technológie**: 
+   - **Frontend**: React (Tailwind CSS) pre nové moduly (`AuditlyLanding.jsx`).
+   - **Legacy/Core**: Vanilla JavaScript (`main.js`) a CSS (`styles.css`).
+   - **Database**: PostgreSQL (`schema.sql`).
+3. **Funkcionalita**:
+   - Generovanie hĺbkového technického reportu.
+   - Checklist rizík špecifický pre vybrané zariadenie.
+   - Dynamické cenové odporúčanie.
+4. **Responzivita**: Všetky zmeny musia byť plne responzívne a optimalizované pre mobilné zariadenia.
+5. **Jazyk**: Komunikácia a používateľské rozhranie sú v slovenčine.

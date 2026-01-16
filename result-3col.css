@@ -1,0 +1,379 @@
+/* ===============================================
+   🆕 3-COLUMN RESULT LAYOUT (generovaný inzerát)
+   =============================================== */
+
+/* When result is shown, completely reorganize layout */
+.hero.hero--result-visible {
+  display: flex !important;
+  flex-direction: column !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  gap: 0 !important;
+}
+
+.hero.hero--result-visible .hero__left {
+  max-width: 100% !important;
+  padding: 0 !important;
+  width: 100% !important;
+  order: 0;
+}
+
+/* Move similarCard to right when result is shown */
+.hero.hero--result-visible .hero__right {
+  order: 1;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+}
+
+.result {
+  display: grid !important;
+  grid-template-columns: 400px 1fr 420px !important;
+  gap: 24px !important;
+  padding: 24px 32px !important;
+  align-items: start !important;
+  overflow: visible !important;
+  max-width: 1600px !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  min-height: 60vh !important;
+}
+
+/* All direct children of .result */
+.result > * {
+  min-width: 0;
+}
+
+/* LEFT COLUMN - Generated Ad Text */
+.result__top,
+.result__instruction,
+.result__title,
+.result__desc,
+.techLine,
+.result__sectionTitle,
+.benefitsText,
+.result__whyBuySection,
+.funnyPriceNote,
+.editAdSection {
+  grid-column: 1 !important;
+}
+
+/* MIDDLE COLUMN - Analysis & Legal Info */
+.aiWarning,
+.legalDisclaimer,
+.confirmBox,
+.miniBadges {
+  grid-column: 2 !important;
+}
+
+/* Add price analysis info to middle */
+.result__searchInfo,
+.result__pricingInfo {
+  grid-column: 2 !important;
+}
+
+/* RIGHT COLUMN - Price Card + Similar Ads */
+.result__bottom {
+  grid-column: 3 !important;
+  grid-row: 1 / span 2 !important;
+  position: sticky;
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Move price card styling */
+.result__price {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.95), 
+    rgba(255, 253, 250, 0.9));
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  padding: 24px !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 
+    0 8px 32px rgba(182, 139, 83, 0.15),
+    0 2px 8px rgba(255, 255, 255, 0.5) inset;
+  margin-bottom: 0 !important;
+}
+
+.result__priceValue {
+  font-size: 44px !important;
+  font-weight: 800 !important;
+  color: #b68b53 !important;
+  font-family: 'Fraunces', serif !important;
+  line-height: 1 !important;
+  display: block !important;
+  margin: 12px 0 !important;
+}
+
+.result__priceLabel {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: rgba(52, 43, 35, 0.65) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1.2px !important;
+}
+
+/* MIDDLE COLUMN - Similar Ads (will be moved via JS) */
+.hero.hero--result-visible .similarCard {
+  grid-column: 3 !important;
+  grid-row: 3 / span 30 !important;
+  max-height: 600px;
+  overflow-y: auto;
+  margin-top: 0 !important;
+}
+
+.similarCard {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: 16px;
+  padding: 18px !important;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* Left column cards */
+.result__top,
+.result__instruction {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: 14px;
+  padding: 16px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.result__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(27, 27, 27, 0.95);
+  line-height: 1.4;
+  margin: 16px 0;
+}
+
+.result__desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(52, 43, 35, 0.85);
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Middle column styling */
+.aiWarning,
+.legalDisclaimer {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: 14px;
+  padding: 16px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(52, 43, 35, 0.8);
+}
+
+.aiWarning {
+  background: linear-gradient(135deg, 
+    rgba(255, 200, 0, 0.08), 
+    rgba(255, 180, 0, 0.05));
+  border-color: rgba(255, 180, 0, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+  .result {
+    grid-template-columns: 360px 1fr 380px !important;
+    gap: 20px !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .result {
+    grid-template-columns: 320px 1fr 340px !important;
+    gap: 18px !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .result {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+  
+  .result > * {
+    grid-column: 1 !important;
+  }
+  
+  .result__bottom {
+    position: static;
+  }
+  
+  .similarCard {
+    max-height: 400px;
+  }
+}
+
+/* LEFT COLUMN - Ad Text */
+.result__leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+/* MIDDLE COLUMN - Similar Ads */
+.result__middleColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+/* RIGHT COLUMN - Price Card */
+.result__rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: sticky;
+  top: 20px;
+}
+
+/* Product Info Card (žltý box) */
+.result__productCard {
+  background: linear-gradient(135deg, 
+    rgba(255, 243, 224, 0.95), 
+    rgba(255, 238, 210, 0.9));
+  border: 1.5px solid rgba(216, 176, 116, 0.4);
+  border-radius: 16px;
+  padding: 18px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 
+    0 4px 16px rgba(182, 139, 83, 0.12),
+    0 1px 4px rgba(255, 255, 255, 0.6) inset;
+}
+
+.result__productCard h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(52, 43, 35, 0.85);
+  margin: 0 0 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Price Card (pravý stĺpec) */
+.result__priceCard {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.95), 
+    rgba(255, 253, 250, 0.9));
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  padding: 24px;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 
+    0 8px 32px rgba(182, 139, 83, 0.15),
+    0 2px 8px rgba(255, 255, 255, 0.5) inset;
+  position: relative;
+  overflow: hidden;
+}
+
+.result__priceCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 1), 
+    transparent);
+}
+
+.result__priceCard h4 {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(52, 43, 35, 0.65);
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+.result__priceCard__value {
+  font-size: 44px;
+  font-weight: 800;
+  color: #b68b53;
+  font-family: 'Fraunces', serif;
+  margin: 0 0 8px 0;
+  line-height: 1;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.result__priceCard__range {
+  font-size: 13px;
+  color: rgba(52, 43, 35, 0.7);
+  margin: 0 0 18px 0;
+}
+
+.result__priceCard__cta {
+  width: 100%;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, 
+    rgba(216, 176, 116, 0.95), 
+    rgba(182, 139, 83, 0.9));
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 6px 20px rgba(182, 139, 83, 0.3),
+    0 2px 6px rgba(255, 255, 255, 0.4) inset;
+}
+
+.result__priceCard__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 28px rgba(182, 139, 83, 0.4),
+    0 2px 8px rgba(255, 255, 255, 0.5) inset;
+}
+
+.result__priceCard__note {
+  font-size: 11.5px;
+  color: rgba(52, 43, 35, 0.6);
+  margin: 12px 0 0 0;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .result {
+    grid-template-columns: 250px 1fr 300px !important;
+    gap: 16px !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .result {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+  
+  .result__rightColumn {
+    position: static;
+  }
+}
+

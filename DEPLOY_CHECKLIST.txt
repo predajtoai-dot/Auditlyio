@@ -1,0 +1,56 @@
+===============================================
+ 🚀 VERCEL DEPLOYMENT CHECKLIST
+===============================================
+
+☐ KROK 1: Vytvor ZIP
+   → Klikni 2x na: create-vercel-zip.bat
+   → Počkaj kým sa vytvorí predajto-vercel.zip
+
+☐ KROK 2: Otvor Vercel
+   → https://vercel.com/new
+   → Prihlás sa (GitHub/Email)
+
+☐ KROK 3: Upload ZIP
+   → Add New → Project
+   → Browse → Vyber predajto-vercel.zip
+
+☐ KROK 4: Configure
+   Project Name: predajto-ai
+   Framework: Other
+   Build: (empty)
+   Install: npm install
+
+☐ KROK 5: Environment Variables (KRITICKÉ!)
+   ✅ OPENAI_API_KEY = sk-proj-xxxxx...
+   ✅ OPENAI_MODEL = gpt-4o-mini
+
+☐ KROK 6: Deploy
+   → Klikni "Deploy"
+   → Čakaj 2-3 min
+   → Done! 🎉
+
+☐ KROK 7: Test
+   → Otvor: https://TVOJA-DOMENA.vercel.app
+   → Upload fotku
+   → Zadaj: "MacBook 8GB 256GB"
+   → Vyskúšaj!
+
+===============================================
+ ⏱️ CELKOVÝ ČAS: 10 MINÚT
+ 💰 CENA: ZDARMA
+===============================================
+
+DÔLEŽITÉ:
+⚠️ BEZ OPENAI_API_KEY NEFUNGUJE!
+⚠️ API key začína na "sk-proj-" alebo "sk-"
+⚠️ Necommituj .env.local do gitu!
+
+HOTOVO? ✅
+Máš live aplikáciu na: https://predajto-ai-xxxxx.vercel.app
+
+Ďalšie kroky:
+→ Custom doména (voliteľné)
+→ Analytics (sleduj traffic)
+→ Share link s používateľmi!
+
+===============================================

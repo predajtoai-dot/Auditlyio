@@ -1,0 +1,14 @@
+node_modules
+.env.local
+*.log
+.DS_Store
+Thumbs.db
+.vercel
+terminals
+.cursor
+package-lock.json
+tests
+*.md
+predajto-vercel.zip
+create-vercel-zip.bat
+test-vercel.bat

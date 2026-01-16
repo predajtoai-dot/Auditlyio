@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Layout Demo - Predajto.ai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: linear-gradient(135deg, 
+        rgba(255, 248, 235, 1) 0%, 
+        rgba(255, 243, 224, 0.95) 50%, 
+        rgba(255, 253, 250, 1) 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 320px 1fr 380px;
+      gap: 24px;
+      align-items: start;
+    }
+    
+    /* LEFT COLUMN */
+    .left-column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .product-card {
+      background: linear-gradient(135deg, 
+        rgba(255, 243, 224, 0.95), 
+        rgba(255, 238, 210, 0.9));
+      border: 1.5px solid rgba(216, 176, 116, 0.4);
+      border-radius: 16px;
+      padding: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 16px rgba(182, 139, 83, 0.12);
+    }
+    
+    .product-card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(52, 43, 35, 0.88);
+      margin-bottom: 12px;
+    }
+    
+    .product-card p {
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(52, 43, 35, 0.75);
+    }
+    
+    .filter-card {
+      background: rgba(255, 255, 255, 0.8);
+      border: 1.5px solid rgba(255, 255, 255, 0.6);
+      border-radius: 16px;
+      padding: 18px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    
+    .filter-card h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(52, 43, 35, 0.7);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    
+    .filter-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .filter-option {
+      padding: 10px 14px;
+      border: 1.5px solid rgba(52, 43, 35, 0.15);
+      border-radius: 10px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .filter-option:hover {
+      border-color: rgba(182, 139, 83, 0.4);
+      background: rgba(255, 248, 235, 0.6);
+      transform: translateX(2px);
+    }
+    
+    /* MIDDLE COLUMN */
+    .middle-column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .ads-header {
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 14px;
+      padding: 16px 20px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .ads-header h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: rgba(27, 27, 27, 0.95);
+      margin: 0;
+    }
+    
+    .ads-header p {
+      font-size: 12px;
+      color: rgba(52, 43, 35, 0.65);
+      margin-top: 4px;
+    }
+    
+    .ads-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 700px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+    
+    .ads-list::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .ads-list::-webkit-scrollbar-thumb {
+      background: rgba(182, 139, 83, 0.3);
+      border-radius: 10px;
+    }
+    
+    .ad-card {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.5px solid rgba(255, 255, 255, 0.6);
+      border-radius: 12px;
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      gap: 12px;
+    }
+    
+    .ad-card:hover {
+      border-color: rgba(182, 139, 83, 0.4);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      transform: translateY(-1px);
+    }
+    
+    .ad-card .title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: rgba(27, 27, 27, 0.9);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    
+    .ad-card .meta {
+      font-size: 11px;
+      color: rgba(52, 43, 35, 0.6);
+      margin-bottom: 8px;
+    }
+    
+    .ad-card .price {
+      font-size: 16px;
+      font-weight: 700;
+      color: #b68b53;
+      font-family: 'Fraunces', serif;
+    }
+    
+    /* RIGHT COLUMN */
+    .right-column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: sticky;
+      top: 20px;
+    }
+    
+    .price-card {
+      background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.95), 
+        rgba(255, 253, 250, 0.9));
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(20px);
+      box-shadow: 
+        0 8px 32px rgba(182, 139, 83, 0.15),
+        0 2px 8px rgba(255, 255, 255, 0.5) inset;
+    }
+    
+    .price-card h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(52, 43, 35, 0.65);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+    
+    .price-card .value {
+      font-size: 48px;
+      font-weight: 800;
+      color: #b68b53;
+      font-family: 'Fraunces', serif;
+      margin-bottom: 8px;
+      line-height: 1;
+    }
+    
+    .price-card .range {
+      font-size: 13px;
+      color: rgba(52, 43, 35, 0.7);
+      margin-bottom: 20px;
+    }
+    
+    .price-card .range strong {
+      font-weight: 700;
+      color: rgba(52, 43, 35, 0.85);
+    }
+    
+    .cta-button {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, 
+        rgba(216, 176, 116, 0.95), 
+        rgba(182, 139, 83, 0.9));
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 6px 20px rgba(182, 139, 83, 0.3);
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(182, 139, 83, 0.4);
+    }
+    
+    .price-note {
+      font-size: 11.5px;
+      color: rgba(52, 43, 35, 0.6);
+      margin-top: 14px;
+      line-height: 1.5;
+    }
+    
+    .stats-card {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.5px solid rgba(255, 255, 255, 0.6);
+      border-radius: 16px;
+      padding: 20px;
+      backdrop-filter: blur(12px);
+    }
+    
+    .stats-card h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(52, 43, 35, 0.7);
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .faq-item {
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .faq-item:hover {
+      background: rgba(255, 248, 235, 0.7);
+    }
+    
+    .faq-item .question {
+      font-size: 13px;
+      color: rgba(52, 43, 35, 0.85);
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- LEFT COLUMN -->
+    <div class="left-column">
+      <div class="product-card">
+        <h3>📦 Analyzujeme Bazoš za vás</h3>
+        <p>Zadajte produkt (napr. iPhone 12, 64GB, čierny), zvoľte stav a kategóriu. AI vygeneruje text inzerátu, odhad ceny a porovnanie s trhom.</p>
+      </div>
+      
+      <div class="filter-card">
+        <h4>Vyplňte informácie o produkte</h4>
+        <div style="margin-bottom: 12px;">
+          <label style="font-size: 12px; color: rgba(52,43,35,.7); display: block; margin-bottom: 6px;">Názov produktu</label>
+          <input type="text" placeholder="Napr. iPhone 12" style="width: 100%; padding: 10px 12px; border: 1.5px solid rgba(52,43,35,.2); border-radius: 10px; font-size: 13px;">
+        </div>
+        <div style="margin-bottom: 12px;">
+          <label style="font-size: 12px; color: rgba(52,43,35,.7); display: block; margin-bottom: 6px;">Popis / poznámky</label>
+          <textarea placeholder="Batéria 90%, kupované v Orange..." style="width: 100%; padding: 10px 12px; border: 1.5px solid rgba(52,43,35,.2); border-radius: 10px; font-size: 13px; resize: vertical; min-height: 60px;"></textarea>
+        </div>
+      </div>
+      
+      <div class="filter-card">
+        <h4>Stav zariadenia</h4>
+        <div class="filter-options">
+          <div class="filter-option">
+            <span>✨ Ako nový (A+)</span>
+          </div>
+          <div class="filter-option" style="border-color: rgba(182,139,83,.6); background: rgba(255,243,224,.8);">
+            <span>✓ Používaný (B)</span>
+          </div>
+          <div class="filter-option">
+            <span>⚠️ Poškodený (C)</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="filter-card">
+        <h4>Cena</h4>
+        <div style="padding: 12px; background: rgba(255,255,255,.5); border-radius: 10px; margin-bottom: 8px;">
+          <input type="range" min="0" max="1000" value="615" style="width: 100%; accent-color: #b68b53;">
+          <div style="display: flex; justify-content: space-between; margin-top: 6px; font-size: 11px; color: rgba(52,43,35,.6);">
+            <span>0€</span>
+            <span style="font-weight: 700; color: #b68b53;">615€</span>
+            <span>1000€</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="filter-card">
+        <h4>Výsledná odhadovaná cena</h4>
+        <div style="text-align: center; padding: 16px;">
+          <div style="font-size: 36px; font-weight: 800; color: #b68b53; font-family: 'Fraunces', serif; margin-bottom: 8px;">615 €</div>
+          <div style="font-size: 12px; color: rgba(52,43,35,.7);">Rozsah: <strong>579 € - 649 €</strong></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- MIDDLE COLUMN -->
+    <div class="middle-column">
+      <div class="ads-header">
+        <h2>Analýza ponúk na Bazoši</h2>
+        <p>Našli sme 124 podobných ponúk</p>
+      </div>
+      
+      <div class="ads-list">
+        <div class="ad-card">
+          <div style="flex: 1;">
+            <div class="title">1. Apple iPhone 12, 64GB, čierny - TOP stav</div>
+            <div class="meta">pred 2 dňami • Bratislava</div>
+            <div class="price">610 €</div>
+          </div>
+        </div>
+        
+        <div class="ad-card">
+          <div style="flex: 1;">
+            <div class="title">2. Apple iPhone 12, 128GB, čierny</div>
+            <div class="meta">pred 1 dňom • Košice</div>
+            <div class="price">635 €</div>
+          </div>
+        </div>
+        
+        <div class="ad-card">
+          <div style="flex: 1;">
+            <div class="title">3. Apple iPhone 12, 64GB, čierny - TOP stav</div>
+            <div class="meta">pred 3 dňami • Žilina</div>
+            <div class="price">633 €</div>
+          </div>
+        </div>
+        
+        <div class="ad-card">
+          <div style="flex: 1;">
+            <div class="title">4. Apple iPhone 12, 128GB, Garny - 5G</div>
+            <div class="meta">pred 2 dňami • Nitra</div>
+            <div class="price">663 €</div>
+          </div>
+        </div>
+        
+        <div class="ad-card">
+          <div style="flex: 1;">
+            <div class="title">5. Apple iPhone 12, 64GB, čierny - 5G</div>
+            <div class="meta">pred 5 dňami • Trnava</div>
+            <div class="price">666 €</div>
+          </div>
+        </div>
+        
+        <div class="ad-card">
+          <div style="flex: 1;">
+            <div class="title">6. Apple iPhone 12, 64GB, čierny - TOP stav</div>
+            <div class="meta">pred 1 dňom • Prešov</div>
+            <div class="price">663 €</div>
+          </div>
+        </div>
+        
+        <div class="ad-card">
+          <div style="flex: 1;">
+            <div class="title">7. Apple iPhone 12, 128GB, čierna záruka</div>
+            <div class="meta">pred 4 dňami • Banská Bystrica</div>
+            <div class="price">663 €</div>
+          </div>
+        </div>
+        
+        <div class="ad-card">
+          <div style="flex: 1;">
+            <div class="title">8. Apple iPhone 12, 64GB, čierny - 5G</div>
+            <div class="meta">pred 2 dňami • Trenčín</div>
+            <div class="price">666 €</div>
+          </div>
+        </div>
+        
+        <button style="width: 100%; padding: 14px; background: linear-gradient(135deg, rgba(216,176,116,.9), rgba(182,139,83,.85)); border: none; border-radius: 12px; color: white; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 8px;">
+          Vyhľadať ponuky
+        </button>
+      </div>
+    </div>
+    
+    <!-- RIGHT COLUMN -->
+    <div class="right-column">
+      <div class="price-card">
+        <h4>Výsledná odhadovaná cena</h4>
+        <div class="value">615 €</div>
+        <div class="range">Rozsah: <strong>579 € - 649 €</strong></div>
+        <button class="cta-button">Zobraziť ponuky</button>
+        <div class="price-note">
+          Jednoduchá cena: 579 € • Rýchly: 615 € • Premium: 649 €<br>
+          Priemerná cena trhu: 615 € (±5%)
+        </div>
+      </div>
+      
+      <div class="stats-card">
+        <h4>Často kladenky</h4>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="question">• Ako funguje odhadovanie ceny?</div>
+          </div>
+          <div class="faq-item">
+            <div class="question">• Ako sa vyhnúť podvodom pri predaji?</div>
+          </div>
+          <div class="faq-item">
+            <div class="question">• Mám sa vyhnúť sezónam pri predaji?</div>
+          </div>
+        </div>
+      </div>
+      
+      <div style="background: rgba(255,255,255,.7); border: 1.5px solid rgba(255,255,255,.6); border-radius: 14px; padding: 16px; font-size: 11px; color: rgba(52,43,35,.6); line-height: 1.5; backdrop-filter: blur(10px);">
+        <strong>Pozor:</strong> Ide o AI odhad. Pred publikovaním overte detaily a cenu.
+      </div>
+    </div>
+    
+  </div>
+</body>
+</html>
+

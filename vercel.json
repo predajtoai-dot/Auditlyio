@@ -1,0 +1,10 @@
+{
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "installCommand": "npm install",
+  "functions": {
+    "api/server.js": {
+      "maxDuration": 30
+    }
+  }
+}
