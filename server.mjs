@@ -9,6 +9,7 @@ import { BAZOS_CATEGORIES, getCategoryFromKeywords } from "./categories.mjs";
 import { calculateProtectedPrice, median as calculateMedian } from "./pricingProtection.mjs";
 import nodemailer from "nodemailer";
 import https from "node:https";
+import crypto from "node:crypto";
 import { ProxyAgent } from "undici";
 import { exec } from "node:child_process";
 import { promisify } from "node:util";
@@ -17,8 +18,8 @@ import { createClient } from "@supabase/supabase-js";
 const execAsync = promisify(exec);
 
 // SUPABASE INITIALIZATION
-const supabaseUrl = process.env.SUPABASE_URL || "https://ovmptxtfytqclpbtvjny.supabase.co";
-const supabaseKey = process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY || "";
+const supabaseUrl = process.env.SUPABASE_URL || "https://dbbhvaokhdrgawohappo.supabase.co";
+const supabaseKey = process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY || "sb_publishable_myBjYbRfS0G9VWj-a5mvaA_kPizADYd";
 let supabase = null;
 
 if (supabaseUrl && supabaseKey) {
@@ -2600,6 +2601,74 @@ function json(res, status, body) {
   res.end(JSON.stringify(body));
 }
 
+// 📧 EMAIL SENDING UTILITY
+async function sendAuditEmail(email, auditId, productName) {
+  // Use environment variables for SMTP config
+  const smtpHost = process.env.SMTP_HOST || "smtp.gmail.com";
+  const smtpPort = parseInt(process.env.SMTP_PORT || "465");
+  const smtpUser = process.env.SMTP_USER;
+  const smtpPass = process.env.SMTP_PASS;
+
+  if (!smtpUser || !smtpPass) {
+    console.warn("⚠️ [Email] SMTP credentials missing. Email not sent.");
+    return;
+  }
+
+  const transporter = nodemailer.createTransport({
+    host: smtpHost,
+    port: smtpPort,
+    secure: smtpPort === 465,
+    auth: {
+      user: smtpUser,
+      pass: smtpPass,
+    },
+  });
+
+  const auditLink = `${process.env.BASE_URL || "https://auditlyio.sk"}/?report=${auditId}`;
+  
+  const mailOptions = {
+    from: `"Auditly.io 🛡️" <${smtpUser}>`,
+    to: email,
+    subject: `Váš technický audit pre ${productName} je pripravený!`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;">
+        <h2 style="color: #1e293b; text-align: center;">🛡️ Auditly.io - Technický Audit</h2>
+        <p style="font-size: 16px; color: #475569;">Dobrý deň,</p>
+        <p style="font-size: 16px; color: #475569;">Váš technický audit pre zariadenie <strong>${productName}</strong> bol úspešne vygenerovaný a uložený.</p>
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="${auditLink}" style="background-color: #8b5cf6; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">Otvoriť kompletný audit</a>
+        </div>
+        <p style="font-size: 14px; color: #94a3b8; text-align: center;">
+          Tento odkaz je platný po dobu 30 dní. Odporúčame si ho uložiť alebo pridať do vášho inzerátu.
+        </p>
+        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 30px 0;">
+        <p style="font-size: 12px; color: #94a3b8; text-align: center;">
+          © 2026 Auditly.io - Váš expertný auditný systém pre bazárovú elektroniku.
+        </p>
+      </div>
+    `,
+  };
+
+  await transporter.sendMail(mailOptions);
+  console.log(`✅ [Email] Audit link sent to ${email}`);
+}
+
+// 🔐 AUTH UTILITIES
+function hashPassword(password) {
+  const salt = crypto.randomBytes(16).toString("hex");
+  const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, "sha512").toString("hex");
+  return `${salt}:${hash}`;
+}
+
+function verifyPassword(password, storedHash) {
+  if (!storedHash) return false;
+  const parts = storedHash.split(":");
+  if (parts.length !== 2) return false;
+  const [salt, hash] = parts;
+  const verifyHash = crypto.pbkdf2Sync(password, salt, 1000, 64, "sha512").toString("hex");
+  return hash === verifyHash;
+}
+
 async function readBody(req) {
   const chunks = [];
   for await (const c of req) chunks.push(c);
@@ -4068,7 +4137,7 @@ Výstup musí byť v slovenčine a vo formáte JSON.
   // 🆕 DETECT GOOGLE SHOPPING FALLBACK
   const usedGoogleFallback = marketAds.length > 0 && marketAds.every(ad => ad?.source === "google_shopping");
   const googleSearchUrl = usedGoogleFallback 
-    ? `https://www.google.com/search?q=${encodeURIComponent(rawQuery + ' kúpiť cena')}&tbm=shop`
+    ? `https://www.google.com/search?q=${encodeURIComponent(rawQuery + ' site:heureka.sk')}&tbm=shop`
     : null;
   
   return {
@@ -4119,30 +4188,131 @@ function contentTypeFor(filePath) {
 
 async function serveStatic(req, res) {
   const url = new URL(req.url, `http://${req.headers.host}`);
-  const rel = url.pathname === "/" ? "/index.html" : url.pathname;
+  let rel = url.pathname === "/" ? "/index.html" : url.pathname;
+  
   // Avoid noisy console errors for missing favicon during dev.
   if (rel === "/favicon.ico") {
     res.writeHead(204, { "cache-control": "no-store", ...corsHeaders() });
     return res.end();
   }
+
   const safeRel = rel.replaceAll("..", "");
-  const filePath = path.join(__dirname, safeRel);
+  let filePath = path.join(__dirname, safeRel);
+
   try {
+    // Check if it's a directory, if so, serve index.html
+    const stats = await fs.stat(filePath);
+    if (stats.isDirectory()) {
+      filePath = path.join(filePath, "index.html");
+    }
+
     const buf = await fs.readFile(filePath);
     res.writeHead(200, {
       "content-type": contentTypeFor(filePath),
       "cache-control": "no-store",
     });
     res.end(buf);
-  } catch {
+  } catch (err) {
+    // Fallback to index.html for SPA-like behavior on unknown routes
+    if (rel !== "/index.html") {
+      try {
+        const indexBuf = await fs.readFile(path.join(__dirname, "index.html"));
+        res.writeHead(200, { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" });
+        return res.end(indexBuf);
+      } catch (indexErr) {
+        // ignore
+      }
+    }
     res.writeHead(404, { "content-type": "text/plain; charset=utf-8" });
     res.end("Not found");
   }
 }
 
+// ⚖️ CENTRAL PRICING ENGINE (Backend version)
+function getFairPriceBasis(modelName, rawPrice) {
+  const nameLower = modelName.toLowerCase();
+  let price = Number(rawPrice || 0);
+
+  // 1. Safety Overrides: Hard caps for common models
+  if (nameLower.includes("iphone 17 pro max")) return Math.min(price, 1150);
+  if (nameLower.includes("iphone 17 pro")) return Math.min(price, 1050);
+  if (nameLower.includes("iphone 17")) return Math.min(price, 920);
+
+  if (nameLower.includes("iphone 16 pro max")) return Math.min(price, 1020);
+  if (nameLower.includes("iphone 16 pro")) return Math.min(price, 890);
+  if (nameLower.includes("iphone 16")) return Math.min(price, 690);
+
+  if (nameLower.includes("iphone 15 pro max")) return Math.min(price, 650);
+  if (nameLower.includes("iphone 15 pro")) return Math.min(price, 580);
+  if (nameLower.includes("iphone 15 plus")) return Math.min(price, 480);
+  if (nameLower.includes("iphone 15")) return Math.min(price, 440);
+
+  if (nameLower.includes("iphone 14 pro max")) return Math.min(price, 480);
+  if (nameLower.includes("iphone 14 pro")) return Math.min(price, 400);
+  if (nameLower.includes("iphone 14 plus")) return Math.min(price, 350);
+  if (nameLower.includes("iphone 14")) return Math.min(price, 320);
+
+  if (nameLower.includes("iphone 13 pro max")) return Math.min(price, 390);
+  if (nameLower.includes("iphone 13 pro")) return Math.min(price, 350);
+  if (nameLower.includes("iphone 13 mini")) return Math.min(price, 240);
+  if (nameLower.includes("iphone 13")) return Math.min(price, 290);
+
+  if (nameLower.includes("iphone 12 pro max")) return Math.min(price, 290);
+  if (nameLower.includes("iphone 12 pro")) return Math.min(price, 260);
+  if (nameLower.includes("iphone 12 mini")) return Math.min(price, 170);
+  if (nameLower.includes("iphone 12")) return Math.min(price, 210);
+
+  if (nameLower.includes("airpods pro 2")) return Math.min(price, 170);
+  if (nameLower.includes("airpods pro")) return Math.min(price, 120);
+  if (nameLower.includes("airpods 3")) return Math.min(price, 90);
+  if (nameLower.includes("airpods 2")) return Math.min(price, 50);
+  if (nameLower.includes("airpods 1")) return Math.min(price, 25);
+
+  // Sanity check for any other used phone/electronic
+  if (price > 1300 && !nameLower.includes("17") && !nameLower.includes("16")) return 800;
+
+  return price;
+}
+
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
   const pathname = url.pathname.replace(/\/+$/, "") || "/";
+
+  // LOG ALL REQUESTS TO DEBUG 404
+  console.log(`[API Request] ${req.method} ${pathname}`);
+
+  if (pathname === "/api/products/list" && req.method === "GET") {
+    try {
+      if (!supabase) return json(res, 500, { ok: false, error: "Database not connected" });
+      const { data, error } = await supabase
+        .from('products')
+        .select('name, brand, model_name, category, negotiation_tips')
+        .order('name', { ascending: true });
+      
+      if (error) throw error;
+      return json(res, 200, { ok: true, products: data });
+    } catch (err) {
+      return json(res, 500, { ok: false, error: err.message });
+    }
+  }
+
+  // 📄 STATIC PAGES REDIRECTS (Clean URLs)
+  if (pathname === "/privacy") {
+    req.url = "/privacy.html";
+    return serveStatic(req, res);
+  }
+  if (pathname === "/about") {
+    req.url = "/about.html";
+    return serveStatic(req, res);
+  }
+  if (pathname === "/terms") {
+    req.url = "/terms.html"; 
+    return serveStatic(req, res);
+  }
+  if (pathname === "/cookies") {
+    req.url = "/cookies.html"; 
+    return serveStatic(req, res);
+  }
 
   if (req.method === "OPTIONS") {
     res.writeHead(204, corsHeaders());
@@ -4200,10 +4370,14 @@ const server = http.createServer(async (req, res) => {
       const match = stdout.match(/DATA_EXIT: priceFrom=([\d.]+) avgPrice=([\d.]+) source=(\w+) date="([^"]+)"/);
       
       if (match) {
-        const priceFrom = parseFloat(match[1]);
-        const priceAvg = parseFloat(match[2]);
+        let priceFrom = parseFloat(match[1]);
+        let priceAvg = parseFloat(match[2]);
         const source = match[3];
         const freshnessDate = match[4];
+
+        // ⚖️ APPLY SAFETY CAPS before saving to DB
+        priceAvg = getFairPriceBasis(model, priceAvg);
+        priceFrom = Math.min(priceFrom, priceAvg * 0.95);
 
         // 🛡️ ANTI-SWAPPIE SHIELD: Kontrola anomálií oproti histórii
         let isAnomaly = false;
@@ -4311,6 +4485,400 @@ const server = http.createServer(async (req, res) => {
     return json(res, 405, { ok: false, error: "Method not allowed", allowed: ["GET"], method: req.method, path: pathname });
   }
 
+  // 💾 AUDITS API (Save & Load)
+  if (pathname.startsWith("/api/audits") || pathname.startsWith("/api/audit/") || pathname.startsWith("/api/auth/")) {
+    if (pathname === "/api/audits" && req.method === "POST") {
+      try {
+        const body = await readBody(req);
+        if (!body) return json(res, 400, { ok: false, error: "Invalid JSON body" });
+        const { report_data, risk_score, final_price_recommendation, product_id, user_email, user_id } = body;
+        if (!supabase) throw new Error("Database not connected");
+
+        const insertData = {
+          product_id,
+          report_data,
+          risk_score: risk_score || 0,
+          final_price_recommendation: final_price_recommendation || 0,
+          status: 'completed'
+        };
+
+        // Only add user_email/user_id if they exist in the body to avoid issues with missing columns
+        if (user_email) insertData.user_email = user_email;
+        if (user_id) insertData.user_id = user_id;
+
+        const { data, error } = await supabase
+          .from('audits')
+          .insert(insertData)
+          .select('id')
+          .single();
+
+        if (error) throw error;
+
+        // If email provided, send the link
+        if (user_email) {
+          try {
+            await sendAuditEmail(user_email, data.id, report_data.productName || "Zariadenie");
+          } catch (mailErr) {
+            console.error("❌ [API Audits] Failed to send email:", mailErr.message);
+            // Don't fail the whole request if email fails
+          }
+        }
+
+        return json(res, 200, { ok: true, id: data.id });
+      } catch (err) {
+        return json(res, 500, { ok: false, error: err.message });
+      }
+    }
+
+    if (pathname.startsWith("/api/audits/") && req.method === "GET") {
+      const id = pathname.split("/").pop();
+      if (!id || id === "audits") return json(res, 400, { ok: false, error: "Missing ID" });
+      
+      try {
+        if (!supabase) throw new Error("Database not connected");
+
+        // 1. Fetch Audit Data first
+        const { data: audit, error: auditErr } = await supabase
+          .from('audits')
+          .select('*')
+          .eq('id', id)
+          .maybeSingle();
+
+        if (auditErr) throw auditErr;
+        if (!audit) return json(res, 404, { ok: false, error: "Audit not found" });
+
+        // 2. Fetch associated Product Data separately to avoid JOIN relationship errors
+        const { data: product, error: prodErr } = await supabase
+          .from('products')
+          .select('*')
+          .eq('id', audit.product_id)
+          .maybeSingle();
+
+        if (prodErr) throw prodErr;
+
+        // 3. Increment View Count
+        try {
+          await supabase
+            .from('audits')
+            .update({ view_count: (audit.view_count || 0) + 1 })
+            .eq('id', id);
+          audit.view_count = (audit.view_count || 0) + 1; // Update local object for response
+        } catch (vErr) {
+          console.warn("⚠️ [API Audits] View count increment failed:", vErr.message);
+        }
+
+        // Merge product into audit object for frontend compatibility
+        audit.products = product;
+
+        const createdAt = new Date(audit.created_at);
+        const now = new Date();
+        const diffDays = Math.abs(now - createdAt) / (1000 * 60 * 60 * 24);
+        
+        if (diffDays > 30) {
+          return json(res, 410, { ok: false, error: "Tento odkaz na audit vypršal (platnosť 30 dní)." });
+        }
+        return json(res, 200, { ok: true, audit });
+      } catch (err) {
+        console.error("❌ [API Audits] Fetch error:", err.message);
+        return json(res, 500, { ok: false, error: err.message });
+      }
+    }
+
+    if (pathname === "/api/audit/report" && req.method === "GET") {
+      const brand = String(url.searchParams.get("brand") || "").trim();
+      const model = String(url.searchParams.get("model") || "").trim();
+      if (!model) return json(res, 400, { ok: false, error: "Missing model" });
+      if (!supabase) return json(res, 500, { ok: false, error: "Database not connected" });
+
+      try {
+        let query = supabase.from('products').select('*');
+        
+        if (brand) {
+          query = query.ilike('brand', brand);
+        }
+        
+        // Skúsime hľadať v model_name alebo v name
+        const { data, error } = await query
+          .or(`model_name.ilike."${model}",name.ilike."${model}"`)
+          .maybeSingle();
+
+        if (error) throw error;
+        if (!data) return json(res, 404, { ok: false, error: "Audit report not found for this model" });
+        return json(res, 200, { ok: true, report: data });
+      } catch (err) {
+        return json(res, 500, { ok: false, error: "Database query failed", details: err.message });
+      }
+    }
+
+    // 🔐 AUTH API (Internal User Management)
+    if (pathname === "/api/auth/register" && req.method === "POST") {
+      try {
+        const body = await readBody(req);
+        if (!body || !body.email || !body.password) {
+          return json(res, 400, { ok: false, error: "Email a heslo sú povinné." });
+        }
+        const { email, password } = body;
+        if (!supabase) throw new Error("Database not connected");
+
+        const hashedPassword = hashPassword(password);
+        const { data, error } = await supabase
+          .from('users')
+          .insert({ email, password_hash: hashedPassword })
+          .select('id, email')
+          .single();
+
+        if (error) {
+          if (error.code === '23505') return json(res, 400, { ok: false, error: "Tento e-mail je už zaregistrovaný." });
+          throw error;
+        }
+
+        return json(res, 200, { ok: true, user: data });
+      } catch (err) {
+        return json(res, 500, { ok: false, error: err.message });
+      }
+    }
+
+    if (pathname === "/api/auth/login" && req.method === "POST") {
+      try {
+        const body = await readBody(req);
+        if (!body || !body.email || !body.password) {
+          return json(res, 400, { ok: false, error: "Email a heslo sú povinné." });
+        }
+        const { email, password } = body;
+        if (!supabase) throw new Error("Database not connected");
+
+        const { data, error } = await supabase
+          .from('users')
+          .select('*')
+          .eq('email', email)
+          .maybeSingle();
+
+        if (error) throw error;
+        if (!data || !verifyPassword(password, data.password_hash)) {
+          return json(res, 401, { ok: false, error: "Nesprávny e-mail alebo heslo." });
+        }
+
+        return json(res, 200, { ok: true, user: { id: data.id, email: data.email } });
+      } catch (err) {
+        return json(res, 500, { ok: false, error: err.message });
+      }
+    }
+
+    // ⚖️ [AI Porovnanie] AI-driven expert comparison
+    if (pathname === "/api/audit/compare" && req.method === "POST") {
+      console.log("⚖️ [AI Porovnanie] Prijatá požiadavka...");
+      const body = await readBody(req);
+      const { modelA, modelB, brandA, brandB } = body;
+
+      if (!modelA || !modelB) {
+        return json(res, 400, { ok: false, error: "Missing models for comparison" });
+      }
+
+      try {
+        if (!supabase) throw new Error("Database not connected");
+
+        // Fetch specs for both from DB if available to ground the AI
+        const { data: specA } = await supabase.from('products').select('*').ilike('model_name', modelA).maybeSingle();
+        const { data: specB } = await supabase.from('products').select('*').ilike('model_name', modelB).maybeSingle();
+
+        const modelToUse = "gpt-4o"; // Force GPT-4o for expert technical analysis
+
+        const comparePrompt = `
+Si hlavný technický auditor bazárovej elektroniky. Vykonaj hĺbkové odborné porovnanie dvoch zariadení.
+Zameraj sa na technické detaily, ktoré bežný používateľ nevidí (RAM typ, čipset, technológia displeja, reálny výkon).
+
+ZARIADENIE A: ${modelA} (Značka: ${brandA || 'Apple'})
+ZARIADENIE B: ${modelB} (Značka: ${brandB || 'Apple'})
+
+DOPLNKOVÉ INFO Z DB (ak existuje):
+A: ${specA ? JSON.stringify({ cpu: specA.display_tech, common_faults: specA.common_faults }) : 'N/A'}
+B: ${specB ? JSON.stringify({ cpu: specB.display_tech, common_faults: specB.common_faults }) : 'N/A'}
+
+PRAVIDLÁ POROVNANIA:
+1. Porovnávaj RAM: Ktorý model má viac? Je tam rozdiel v generácii (napr. LPDDR4x vs LPDDR5)? Prečo je to dôležité?
+2. Porovnávaj VÝKON: Reálny rozdiel v čipsetoch (napr. A14 vs A15). Koľko % výkonu naviac to reálne znamená pre bežného používateľa a pre hráča?
+3. Porovnávaj DISPLEJ: Jas v nitoch (peak brightness), obnovovacia frekvencia (60Hz vs 120Hz), typ panela.
+4. Porovnávaj FOTOAPARÁT: Rozlíšenie, veľkosť senzora, zoom schopnosti (optický vs digitálny).
+5. Porovnávaj NABÍJANIE: Typ portu (USB-C vs Lightning), rýchlosť nabíjania (W), podpora bezdrôtového nabíjania (MagSafe).
+6. Porovnávaj ŽIVOTNOSŤ: Ktorý model bude mať dlhšiu softvérovú podporu?
+
+Vráť JSON v slovenčine:
+{
+  "verdict": "Jasný a stručný verdikt (1-2 vety). Pre koho je ktorý vhodnejší?",
+  "specsA": {
+    "cpu": "Názov čipsetu",
+    "ram": "Veľkosť RAM (napr. 6 GB LPDDR5)",
+    "display": "Typ a jas (napr. OLED, 1200 nitov)",
+    "camera": "Hlavný snímač a zoom (napr. 48MP + 3x optický)",
+    "charging": "Konektor a rýchlosť (napr. USB-C, 27W)",
+    "material": "Materiál tela (napr. Titán, Hliník)"
+  },
+  "specsB": {
+    "cpu": "Názov čipsetu",
+    "ram": "Veľkosť RAM",
+    "display": "Typ a jas",
+    "camera": "Hlavný snímač a zoom",
+    "charging": "Konektor a rýchlosť",
+    "material": "Materiál tela"
+  },
+  "pointsA": ["Odborný bod 1 za model A", "Odborný bod 2 za model A", "Odborný bod 3 za model A"],
+  "negativesA": ["Slabina 1 modelu A", "Slabina 2 modelu A"],
+  "pointsB": ["Odborný bod 1 za model B", "Odborný bod 2 za model B", "Odborný bod 3 za model B"],
+  "negativesB": ["Slabina 1 modelu B", "Slabina 2 modelu B"],
+  "technicalWinner": "Názov modelu, ktorý je technicky vyspelejší",
+  "reasoning": "Stručné odborné zdôvodnenie prečo vyhral víťaz."
+}
+        `.trim();
+
+        const resp = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            authorization: `Bearer ${OPENAI_API_KEY}`,
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            model: modelToUse,
+            messages: [{ role: "user", content: comparePrompt }],
+            response_format: { type: "json_object" },
+            temperature: 0.2,
+          }),
+        });
+
+        if (!resp.ok) {
+          const errText = await resp.text();
+          throw new Error(`OpenAI API failure: ${resp.status} - ${errText}`);
+        }
+        
+        const data = await resp.json();
+        const result = JSON.parse(data.choices[0].message.content);
+
+        console.log(`✅ [AI Porovnanie] Hotovo: ${modelA} vs ${modelB}`);
+        return json(res, 200, { ok: true, result });
+      } catch (err) {
+        console.error("🔥 [AI Porovnanie] Chyba:", err);
+        return json(res, 500, { ok: false, error: err.message });
+      }
+    }
+
+    // 📸 NEW: AI MULTI-PHOTO IDENTIFICATION & CONDITION
+    if (pathname === "/api/audit/identify-multi" && req.method === "POST") {
+      console.log("📸 [AI Skener] Prijatá požiadavka na analýzu...");
+      const body = await readBody(req);
+      if (!body || !Array.isArray(body.images) || body.images.length === 0) {
+        console.error("❌ [AI Skener] Chýbajúce fotky v požiadavke");
+        return json(res, 400, { ok: false, error: "Missing or invalid images array" });
+      }
+
+      const images = body.images.filter(img => typeof img === "string" && img.startsWith("data:image/"));
+      console.log(`📸 [AI Skener] Prijatých ${images.length} platných fotografií`);
+
+      if (images.length === 0) {
+        return json(res, 400, { ok: false, error: "No valid data:image/ URLs found" });
+      }
+
+      try {
+        if (!supabase) throw new Error("Database not connected");
+        
+        // 1. Get list of allowed models from DB to increase accuracy and save money
+        const { data: dbModels } = await supabase
+          .from('products')
+          .select('model_name')
+          .order('model_name', { ascending: true });
+        
+        const allowedModels = [...new Set((dbModels || []).map(m => m.model_name))];
+        const modelsListStr = allowedModels.join(", ");
+
+        const model = "gpt-4o"; // FORCED HIGH-END MODEL FOR TERMINATOR PRECISION
+        console.log(`🤖 [AI Skener] ŠTART ANALÝZY s modelom ${model} (Vysoká presnosť)...`);
+        
+        const idPrompt = `
+SI ABSOLÚTNA ŠPIČKA V IDENTIFIKÁCII APPLE HARDVÉRU. Tvojou úlohou je neomylne rozoznať iPhone 13/14 od iPhone 15/16.
+
+ZAMERAJ SA NA TENTO KRITICKÝ ROZDIEL (Predná strana):
+- iPhone 13/14: MÁ "NOTCH" (čierny výrez, ktorý je FYZICKY SPOJENÝ s horným rámom telefónu).
+- iPhone 15/16: MÁ "DYNAMIC ISLAND" (čierna pilulka, ktorá je SAMOSTATNE v displeji, nad ňou aj pod ňou svietia pixely).
+
+AK VIDÍŠ DISPLEJ OKOLO ČIERNEHO PRVKU HORE, JE TO iPHONE 15 ALEBO 16.
+AK JE ČIERNY PRVOK PRICHYTENÝ K RÁMU, JE TO iPHONE 13 ALEBO 14.
+
+ZAMERAJ SA NA ZADNÚ STRANU:
+- iPhone 15: Matné, saténové sklo, pastelové farby.
+- iPhone 13: Lesklé, zrkadlové sklo, sýte farby.
+
+VISUÁLNE CHYBY & STAV (PRÍSNE PRAVIDLÁ - TERMINATOR MODE):
+- Buď extrémne prísny. Ak vidíš na displeji čo i len malú čiaru, je to PRASKLINA.
+- AK JE PRASKLINA (IMPACT / PAVUČINA), STAV JE MAX 40-50%.
+- 100% = Úplne nové, nerozbalené, vo fóliách. Žiadne stopy používania.
+- 91-99% = TOP STAV. Žiadne viditeľné škrabance.
+- 85-90% = MIKRO-ŠKRABANCE (Bežné známky používania).
+- 70-75% = VLÁSOČNICOVÁ PRASKLINA (Tenká čiara).
+- 40-50% = PRASKLINA / IMPACT (FAILED AUDIT).
+
+DETEKCIA VÁD:
+- Hľadaj škrabance, praskliny, odreniny na ráme alebo šošovkách.
+- Buď konkrétny. Ak si nie si istý, radšej vadu nahlás.
+- Tieto chyby budú zahrnuté do inzerátu, tak píš profesionálne.
+
+ZOZNAM POVOLENÝCH MODELOV:
+${modelsListStr}
+
+Vráť JSON:
+{
+  "model": "PRESNÝ NÁZOV ZO ZOZNAMU",
+  "category": "Mobil",
+  "condition": 95,
+  "defects": ["škrabanec na hornom rohu", "jemne ošúchaný lak pri konektore"],
+  "confidence": 1.0,
+  "evidence": "POVODNÝ DÔKAZ: [Vymenuj čo vidíš na displeji a prečo to nie je iný model. Napr: Vidím Dynamic Island, čiže je to 15, nie 13.]"
+}
+`.trim();
+
+        console.log(`🤖 [AI Skener] Odosielam požiadavku do OpenAI (${model}) s vysokým rozlíšením...`);
+        const messages = [
+          {
+            role: "user",
+            content: [
+              { type: "text", text: idPrompt },
+              ...images.map(url => ({ type: "image_url", image_url: { url, detail: "high" } }))
+            ],
+          },
+        ];
+
+        const resp = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            authorization: `Bearer ${OPENAI_API_KEY}`,
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            model,
+            messages,
+            response_format: { type: "json_object" },
+            temperature: 0.2,
+          }),
+        });
+
+        if (!resp.ok) {
+          const errText = await resp.text();
+          console.error("❌ [AI Skener] OpenAI API zlyhalo:", resp.status, errText);
+          return json(res, 500, { ok: false, error: "OpenAI API error", details: errText });
+        }
+
+      const data = await resp.json();
+      const resultText = data?.choices?.[0]?.message?.content ?? "{}";
+      const result = JSON.parse(resultText);
+
+      console.log("✅ [AI Skener] Analýza dokončená:", result.model, `(${result.condition}%)`);
+      if (result.evidence) console.log("📝 [AI Dôkaz]:", result.evidence);
+      
+      return json(res, 200, { ok: true, result });
+      } catch (err) {
+        console.error("🔥 [AI Skener] Kritická chyba:", err);
+        return json(res, 500, { ok: false, error: err.message });
+      }
+    }
+  }
+
   // Market data endpoints (real, verifiable via URLs)
   if (pathname === "/api/market/sources" && req.method === "GET") {
     const q = String(url.searchParams.get("query") || "").trim();
@@ -4388,7 +4956,7 @@ const server = http.createServer(async (req, res) => {
         })(),
         bazosMin: Math.min(...ads.map(a => a.price || 0).filter(p => p > 0)),
         bazosMax: Math.max(...ads.map(a => a.price || 0)),
-        googleShoppingUrl: `https://www.google.com/search?q=${encodeURIComponent(q + " kúpiť cena")}&tbm=shop`,
+        googleShoppingUrl: `https://www.google.com/search?q=${encodeURIComponent(q + " site:heureka.sk")}&tbm=shop`,
         heurekaUrl: `https://www.heureka.sk/?h[fraze]=${encodeURIComponent(q)}`
       } : null,
       // 🆕 QUALITY STATS
@@ -5312,7 +5880,13 @@ server.listen(PORT, "0.0.0.0", () => {
   // eslint-disable-next-line no-console
   console.log(`predajto.ai dev server running on http://127.0.0.1:${PORT}`);
   // eslint-disable-next-line no-console
-  console.log(`routes: GET /api/health | POST /api/identify | POST /api/evaluate | POST /api/edit-ad | POST /api/beta-signup | POST /api/feedback | POST /api/review-feedback | POST /api/refine-search`);
+  console.log(`🚀 Auditlyio Server Running on port ${PORT}`);
+  console.log(`Routes: 
+    GET  /api/audit/report
+    POST /api/audit/compare (Expert AI)
+    POST /api/audit/identify-multi (AI Scanner)
+    POST /api/audits (Save audit)
+    ... and more`);
 });
 
 // Graceful shutdown for Railway/Vercel/Docker

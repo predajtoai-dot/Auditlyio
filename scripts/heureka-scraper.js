@@ -63,6 +63,8 @@ async function scrapeMarketPrice(productName) {
 
       // Dynamický cenový podlahový limit (Sanity Check)
       let priceFloor = 150; // Absolútne minimum pre akýkoľvek smartfón
+      if (modelPart.includes('iphone 17')) priceFloor = 750;
+      if (modelPart.includes('iphone 16')) priceFloor = 650;
       if (modelPart.includes('iphone 15')) priceFloor = 550;
       if (modelPart.includes('iphone 14')) priceFloor = 450;
       if (modelPart.includes('iphone 13')) priceFloor = 350;
@@ -145,7 +147,13 @@ function useFallback(lowerSearch, date) {
   console.log(`⚠️ POUŽITÝ FALLBACK (Overené dáta)`);
   let baseF = 450;
   
-  if (lowerSearch.includes('15 pro max')) baseF = 950;
+  if (lowerSearch.includes('17 pro max')) baseF = 1150;
+  else if (lowerSearch.includes('17 pro')) baseF = 1050;
+  else if (lowerSearch.includes('17')) baseF = 850;
+  else if (lowerSearch.includes('16 pro max')) baseF = 1050;
+  else if (lowerSearch.includes('16 pro')) baseF = 920;
+  else if (lowerSearch.includes('16')) baseF = 720;
+  else if (lowerSearch.includes('15 pro max')) baseF = 950;
   else if (lowerSearch.includes('15 pro')) baseF = 820;
   else if (lowerSearch.includes('15')) baseF = 620;
   else if (lowerSearch.includes('14 pro max')) baseF = 750;

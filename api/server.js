@@ -7,6 +7,20 @@
 import { MarketStore, buildSearchUrls } from '../marketStore.mjs';
 import { BAZOS_CATEGORIES, getCategoryFromKeywords } from '../categories.mjs';
 import { calculateProtectedPrice, median as calculateMedian } from '../pricingProtection.mjs';
+import { createClient } from '@supabase/supabase-js';
+
+// SUPABASE INITIALIZATION
+const supabaseUrl = process.env.SUPABASE_URL || "https://dbbhvaokhdrgawohappo.supabase.co";
+const supabaseKey = process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY || "sb_publishable_myBjYbRfS0G9VWj-a5mvaA_kPizADYd";
+let supabase = null;
+
+if (supabaseUrl && supabaseKey) {
+  try {
+    supabase = createClient(supabaseUrl, supabaseKey);
+  } catch (err) {
+    console.error("❌ Failed to initialize Supabase:", err.message);
+  }
+}
 
 // Helper to read request body
 async function getBody(req) {
@@ -45,6 +59,87 @@ export default async function handler(req, res) {
   console.log(`[API] ${req.method} ${pathname}`);
 
   try {
+    // Route: /api/audit/report
+    if (pathname === '/api/audit/report' && req.method === 'GET') {
+      const brand = url.searchParams.get('brand') || '';
+      const model = url.searchParams.get('model') || '';
+      
+      if (!model) return res.status(400).json({ ok: false, error: 'Missing model' });
+      if (!supabase) return res.status(500).json({ ok: false, error: 'Database not connected' });
+
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .ilike('model_name', model)
+        .ilike('brand', brand)
+        .maybeSingle();
+
+      if (error) return res.status(500).json({ ok: false, error: error.message });
+      if (!data) return res.status(404).json({ ok: false, error: 'Audit report not found' });
+
+      return res.status(200).json({ ok: true, report: data });
+    }
+
+    // 💾 SAVE AUDIT TO CLOUD (STAY PERSISTENT)
+    if (pathname === "/api/audits" && req.method === "POST") {
+      try {
+        const body = await getBody(req);
+        const { report_data, risk_score, final_price_recommendation, product_id } = body;
+
+        if (!supabase) throw new Error("Database not connected");
+
+        const { data, error } = await supabase
+          .from('audits')
+          .insert({
+            product_id,
+            report_data,
+            risk_score: risk_score || 0,
+            final_price_recommendation: final_price_recommendation || 0,
+            status: 'completed'
+          })
+          .select('id')
+          .single();
+
+        if (error) throw error;
+        return res.status(200).json({ ok: true, id: data.id });
+      } catch (err) {
+        return res.status(500).json({ ok: false, error: err.message });
+      }
+    }
+
+    // 📂 FETCH AUDIT FROM CLOUD (RELOAD BY ID)
+    if (pathname.startsWith("/api/audits/") && req.method === "GET") {
+      const id = pathname.split("/").pop();
+      if (!id || id === "audits") return res.status(400).json({ ok: false, error: "Missing ID" });
+      
+      try {
+        if (!supabase) throw new Error("Database not connected");
+
+        const { data, error } = await supabase
+          .from('audits')
+          .select('*, products(*)')
+          .eq('id', id)
+          .single();
+
+        if (error) throw error;
+        if (!data) return res.status(404).json({ ok: false, error: "Audit not found" });
+
+        // 🕒 CHECK EXPIRATION (3 DAYS LIMIT)
+        const createdAt = new Date(data.created_at);
+        const now = new Date();
+        const diffTime = Math.abs(now - createdAt);
+        const diffDays = diffTime / (1000 * 60 * 60 * 24);
+        
+        if (diffDays > 3) {
+          return res.status(410).json({ ok: false, error: "Tento odkaz na audit vypršal (platnosť 3 dni)." });
+        }
+
+        return res.status(200).json({ ok: true, audit: data });
+      } catch (err) {
+        return res.status(500).json({ ok: false, error: err.message });
+      }
+    }
+
     // Route: /api/market/search
     if (pathname.startsWith('/api/market/search')) {
       const query = url.searchParams.get('query') || '';

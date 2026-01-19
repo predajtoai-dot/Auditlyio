@@ -6,18 +6,19 @@
     <title>Auditly.io – Expertný audit bazárovej techniky</title>
     <meta
       name="description"
-      content="Expertný auditný systém pre bazárovú elektroniku. Nekupuj mačku vo vreci – over si inzerát skôr, než zaplatíš."
+      content="Expertný auditný systém pre bazárové elektroniku. Nekupuj mačku vo vreci – over si inzerát skôr, než zaplatíš."
     />
     <!-- Favicon Placeholder -->
-    <link rel="icon" type="image/png" href="favicon.png" />
+    <!-- <link rel="icon" type="image/png" href="favicon.png" /> -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=136" />
+    <link rel="stylesheet" href="./assets/css/styles.css?v=136" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
   <body>
     <div class="aurora-container" aria-hidden="true">
@@ -41,12 +42,15 @@
           <nav class="headerCenter">
             <ul class="navLinks">
               <li><a href="#how-it-works">Ako to funguje</a></li>
-              <li><a href="#pricing">Cenník</a></li>
+              <li><a href="#" id="openPricingModal">Cenník</a></li>
               <li><a href="#contact">Kontakt</a></li>
             </ul>
           </nav>
 
           <div class="headerRight">
+            <button class="btnSettings" id="startTourBtn" title="Spustiť navigáciu" style="background: rgba(167, 139, 250, 0.1); color: #a78bfa; border: 1px solid rgba(167, 139, 250, 0.2); width: 32px; height: 32px; font-weight: 800; font-size: 16px;">
+              ?
+            </button>
             <button class="btnSettings" title="Nastavenia">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
             </button>
@@ -61,7 +65,7 @@
         <div class="mobileNav" hidden data-mobile-menu>
           <ul class="mobileNavLinks">
             <li><a href="#how-it-works">Ako to funguje</a></li>
-            <li><a href="#pricing">Cenník</a></li>
+            <li><a href="#" id="openPricingModalMobile">Cenník</a></li>
             <li><a href="#contact">Kontakt</a></li>
             <li><hr></li>
             <li><button class="btnLogin mobile">Prihlásiť sa</button></li>
@@ -105,7 +109,134 @@
           </div>
         </div>
       </section>
+      
+      <!-- HOW IT WORKS SECTION (GATE CARDS) -->
+      <section id="how-it-works" class="howSection">
+        <div class="container">
+          <div class="how-header">
+            <h2 class="how-title">Ako to funguje?</h2>
+            <p class="how-subtitle">Vyberte si svoju cestu pre bezpečný a férový obchod.</p>
+          </div>
 
+          <div class="gate-grid">
+            <!-- SELL GATE -->
+            <div class="gate-card seller" onclick="openGuide('seller')">
+              <div class="gate-card__content">
+                <span class="gate-icon">💰</span>
+                <h3>Chcem predať</h3>
+                <p>Získajte certifikát stavu a predajte drahšie.</p>
+                <span class="gate-link">Zobraziť návod ➜</span>
+              </div>
+            </div>
+
+            <!-- BUY GATE -->
+            <div class="gate-card buyer" onclick="openGuide('buyer')">
+              <div class="gate-card__content">
+                <span class="gate-icon">🛡️</span>
+                <h3>Chcem kúpiť</h3>
+                <p>Nekupujte mačku vo vreci. Overte si inzerát.</p>
+                <span class="gate-link">Zobraziť návod ➜</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BAZAAR GUIDE MODAL (DYNAMIC CONTENT) -->
+      <div id="guideOverlay" class="guide-overlay" hidden>
+        <div class="guide-modal-window">
+          <button class="guide-close" onclick="closeGuide()">✕</button>
+          
+          <!-- Seller Content -->
+          <div id="sellerGuideContent" hidden>
+            <div class="guide-modal-header seller">
+              <span class="guide-icon">💰</span>
+              <h2>Predaj ako profík</h2>
+              <p style="color: #94a3b8; font-size: 14px; margin-top: 10px; line-height: 1.5;">Prestaň do inzerátov písať vágne vety ako „dobrý stav, volajte“. S naším auditom získaš certifikát, ktorý tvoj inzerát vystrelí nad ostatné.</p>
+            </div>
+            <div class="guide-modal-body">
+              <div class="how-steps">
+                <div class="how-step">
+                  <div class="how-step-num">1</div>
+                  <div class="how-step-content">
+                    <h5>Sfotografuj & Analyzuj</h5>
+                    <p>Stačí priložiť fotku alebo manuálne vyklikať špecifikácie (model, kapacita, zdravie batérie).</p>
+                  </div>
+                </div>
+                <div class="how-step">
+                  <div class="how-step-num">2</div>
+                  <div class="how-step-content">
+                    <h5>Získaj férovú cenu</h5>
+                    <p>Náš systém okamžite vypočíta strop, za ktorý sa tvoje zariadenie skutočne predá (napr. tvojich férových 160 € za AirPods).</p>
+                  </div>
+                </div>
+                <div class="how-step">
+                  <div class="how-step-num">3</div>
+                  <div class="how-step-content">
+                    <h5>Prilož audit k inzerátu</h5>
+                    <p>Vygenerovaný profesionálny report vlož priamo do fotiek na Bazoši alebo ho pošli záujemcovi do správy.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.1); border-radius: 20px; padding: 20px; margin-top: 20px;">
+                <p style="color: #34d399; font-size: 13px; font-weight: 600; line-height: 1.5; margin: 0;">
+                  ✨ <strong>Výsledok:</strong> Kupujúci vidí, že nič neskrývaš a vie presne, čo kupuje. Tvoj predaj bude rýchlejší a bez zbytočného vyjednávania o cene.
+                </p>
+              </div>
+
+              <div class="guide-modal-footer">
+                <button class="btn-scanner btn-scanner--primary" onclick="closeGuide()">Rozumiem, poďme na to</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Buyer Content -->
+          <div id="buyerGuideContent" hidden>
+            <div class="guide-modal-header buyer">
+              <span class="guide-icon">🛡️</span>
+              <h2>Rozhodni sa za 5 minút</h2>
+              <p style="color: #94a3b8; font-size: 14px; margin-top: 10px; line-height: 1.5;">Už sa ti stalo, že pri hľadaní mobilu stráviš celé dni porovnávaním, kým nie si úplne vyčerpaný? My ti vrátime tvoj čas.</p>
+            </div>
+            <div class="guide-modal-body">
+              <div class="how-steps">
+                <div class="how-step">
+                  <div class="how-step-num">1</div>
+                  <div class="how-step-content">
+                    <h5>Žiadne tápanie</h5>
+                    <p>Namiesto hodín hľadania recenzií a cien ti náš expertný systém za moment ukáže, či je inzerát, ktorý si našiel, výhodný alebo predražený.</p>
+                  </div>
+                </div>
+                <div class="how-step">
+                  <div class="how-step-num">2</div>
+                  <div class="how-step-content">
+                    <h5>Auditly férová cena</h5>
+                    <p>Okamžite uvidíš, či cena napr. 400 € za iPhone 14 Pro zodpovedá jeho technickému stavu a trhovému trendu.</p>
+                  </div>
+                </div>
+                <div class="how-step">
+                  <div class="how-step-num">3</div>
+                  <div class="how-step-content">
+                    <h5>Odborné riziká</h5>
+                    <p>Náš audit ťa upozorní na vady, ktoré predajca možno nespomína – FaceID, pôvod displeja a iné.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div style="background: rgba(167, 139, 250, 0.05); border: 1px solid rgba(167, 139, 250, 0.1); border-radius: 20px; padding: 20px; margin-top: 20px;">
+                <p style="color: #a78bfa; font-size: 13px; font-weight: 600; line-height: 1.5; margin: 0;">
+                  ✨ <strong>Koniec únavy:</strong> Za 5 minút máš v ruke jasné dáta, vďaka ktorým vieš, či máš ísť na stretnutie, alebo hľadať ďalej.
+                </p>
+              </div>
+
+              <div class="guide-modal-footer">
+                <button class="btn-scanner btn-scanner--primary" onclick="closeGuide()">Rozumiem, chcem preveriť inzerát</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <main class="mainContent">
         <div class="unifiedCard">
           <div class="mainLayout">
@@ -113,17 +244,23 @@
             <!-- LEFT COLUMN: Input Card -->
             <div class="layoutCol leftCol">
               <section class="categoryGrid" data-category-selector>
-                <button type="button" class="catItem is-active" data-cat-id="14" data-cat-type="mobile" title="Mobil">
+                <button type="button" class="catItem is-active" data-cat-type="Mobil" title="Mobil">
                   <span class="icon">📱</span>
                 </button>
-                <button type="button" class="catItem" data-cat-id="16" data-cat-type="console" title="Konzola">
+                <button type="button" class="catItem" data-cat-type="Konzola" title="Konzola">
                   <span class="icon">🎮</span>
                 </button>
-                <button type="button" class="catItem" data-cat-id="13" data-cat-type="laptop" title="Notebook">
+                <button type="button" class="catItem" data-cat-type="Notebook" title="Notebook">
                   <span class="icon">💻</span>
                 </button>
-                <button type="button" class="catItem" data-cat-id="16" data-cat-type="other" title="Iné">
-                  <span class="icon">📦</span>
+                <button type="button" class="catItem" data-cat-type="Hodinky" title="Hodinky">
+                  <span class="icon">⌚</span>
+                </button>
+                <button type="button" class="catItem" data-cat-type="Tablet" title="Tablet">
+                  <span class="icon">📖</span>
+                </button>
+                <button type="button" class="catItem" data-cat-type="Slúchadlá" title="Slúchadlá">
+                  <span class="icon">🎧</span>
                 </button>
               </section>
 
@@ -150,16 +287,29 @@
                   <span>ALEBO RUČNE</span>
                 </div>
 
-                <input class="auditInput" type="text" placeholder="Model (napr. iPhone 15 Pro)" data-product-name />
+                <div class="model-selection-wrapper">
+                  <select class="auditInput" data-category-select>
+                    <option value="" disabled selected>Vyberte kategóriu</option>
+                    <option value="Mobil">Mobil</option>
+                    <option value="Hodinky">Hodinky</option>
+                    <option value="Slúchadlá">Slúchadlá</option>
+                    <option value="Notebook">Notebook</option>
+                    <option value="Tablet">Tablet</option>
+                    <option value="Konzola">Konzola</option>
+                    <option value="Iné">Iné</option>
+                  </select>
+
+                  <select class="auditInput" data-model-select disabled>
+                    <option value="" disabled selected>Vyberte model</option>
+                  </select>
+                </div>
+
+                <!-- Hidden but used for logic compatibility -->
+                <input type="hidden" data-product-name />
                 
                 <div class="input-row-spec">
-                  <select class="auditInput select-spec" data-storage-select>
-                    <option value="" disabled selected>Kapacita (GB)</option>
-                    <option value="64GB">64 GB</option>
-                    <option value="128GB">128 GB</option>
-                    <option value="256GB">256 GB</option>
-                    <option value="512GB">512 GB</option>
-                    <option value="1TB">1 TB</option>
+                  <select class="auditInput select-spec" data-storage-select disabled>
+                    <option value="" disabled selected>Kapacita</option>
                   </select>
                   <select class="auditInput select-spec" data-ram-select>
                     <option value="" disabled selected>RAM (Voliteľné)</option>
@@ -189,7 +339,10 @@
                 <!-- BUY MODE FIELDS -->
                 <div class="mode-fields" data-mode-buy-fields>
                   <div data-battery-field>
-                    <input class="auditInput" type="number" placeholder="Batéria (%)" min="0" max="100" data-battery-health />
+                    <input class="auditInput" type="number" placeholder="Batéria (%)" min="40" max="100" data-battery-health />
+                    <p style="font-size: 10px; opacity: 0.6; margin: 4px 0 0 2px;">
+                      Min. 40% (pod 40% ide o zariadenie na diely)
+                    </p>
                   </div>
                   <input class="auditInput" type="number" placeholder="Cena v inzeráte (€)" min="0" data-seller-price />
                   <div class="input-row-toggle">
@@ -205,19 +358,24 @@
                 <div class="mode-fields" data-mode-sell-fields hidden>
                   <input class="auditInput" type="number" placeholder="Koľko by ste chceli dostať? (€)" min="0" data-expected-price />
                   
-                  <div data-battery-field-sell>
-                    <input class="auditInput" type="number" placeholder="Zdravie batérie (%)" min="0" max="100" data-battery-health-sell />
-                  </div>
-                  
                   <div class="input-group">
                     <div class="input-with-info">
-                      <input class="auditInput" type="number" placeholder="Celkový stav zariadenia (%)" min="0" max="100" data-device-condition />
+                      <input class="auditInput" type="number" placeholder="Celkový vizuálny stav (%)" min="40" max="100" data-device-condition />
                       <div class="info-tooltip">
                         <span class="info-icon">i</span>
-                        <div class="tooltip-content">Zadajte vizuálny stav od 0 do 100%. Ovplyvňuje odporúčanú cenu.</div>
+                        <div class="tooltip-content">100% = ako nový, 80% = jemné škrabance, <70% = poškodenia.</div>
                       </div>
                     </div>
-                    <p class="input-helper-text">100% = ako nový, 80% = jemné škrabance, &lt;70% = poškodenia</p>
+                  </div>
+
+                  <div class="input-group" data-battery-field-sell>
+                    <div class="input-with-info">
+                      <input class="auditInput" type="number" placeholder="Zdravie batérie (%)" min="40" max="100" data-battery-health-sell />
+                      <div class="info-tooltip">
+                        <span class="info-icon">i</span>
+                        <div class="tooltip-content">Zadajte zdravie batérie z nastavení (iba pre iPhone/MacBook).</div>
+                      </div>
+                    </div>
                   </div>
 
                   <div class="input-row-toggle">
@@ -308,24 +466,42 @@
                 <div id="output" class="reportArea">
                   <div class="reportGrid">
                     <!-- CARD 1: Specs -->
-                    <div class="resultCard">
+                    <div class="resultCard is-interactive" data-open-master-report>
                       <h4 class="resultCard__title"><span>📋</span> Špecifikácia modelu</h4>
-                      <div class="specList">
-                        <div class="specItem"><span>Model</span> <strong>iPhone 15 Pro</strong></div>
-                        <div class="specItem"><span>Kapacita</span> <strong>128 GB</strong></div>
-                        <div class="specItem"><span>Batéria</span> <strong>98%</strong></div>
-                        <div class="specItem"><span>Záruka</span> <strong>Áno (12 mes.)</strong></div>
+                      <div class="specList" id="miniSpecList">
+                        <div class="specItem"><span>Model</span> <strong>---</strong></div>
+                        <div class="specItem"><span>Kapacita</span> <strong>---</strong></div>
+                        <div class="specItem"><span>Batéria</span> <strong>---</strong></div>
+                        <div class="specItem"><span>Záruka</span> <strong>---</strong></div>
+                      </div>
+                      <div class="cardActionHint">
+                        <span>🔍</span> Kliknite pre kompletný hĺbkový report
                       </div>
                     </div>
 
                     <!-- CARD 2: Risks -->
-                    <div class="resultCard">
-                      <h4 class="resultCard__title"><span>🛡️</span> Riziká a kontrola</h4>
+                    <div class="resultCard is-interactive" data-open-risks-modal>
+                      <h4 class="resultCard__title"><span>🛡️</span> Expertné Riziká a Kontrola</h4>
                       <div class="checkList">
                         <div class="checkItem is-good"><span>✔️</span> Pôvodný displej</div>
                         <div class="checkItem is-good"><span>✔️</span> FaceID funkčné</div>
                         <div class="checkItem is-bad"><span>❌</span> Kozmetické vady</div>
                         <div class="checkItem is-good"><span>✔️</span> Bez blokovania</div>
+                      </div>
+
+                      <!-- 🆕 AUTHENTICITY CHECK (Apple/iUnlocker) -->
+                      <div class="authenticity-box" style="margin-top: 15px; padding: 12px; background: rgba(167, 139, 250, 0.08); border-radius: 10px; border: 1px dashed rgba(167, 139, 250, 0.3);">
+                        <p style="font-size: 11px; color: #ffffff; line-height: 1.4; margin-bottom: 8px;">
+                          🛡️ <strong>Overenie pravosti:</strong> Pred kúpou si overte zariadenie podľa sériového čísla:
+                        </p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                          <a href="https://checkcoverage.apple.com/?cid=gn-ols-checkcoverage-lp-get_help&locale=sk_SK" target="_blank" class="mini-link" style="font-size: 10px; color: #a78bfa; text-decoration: underline; font-weight: 600;">Oficiálna stránka Apple</a>
+                          <a href="https://iunlocker.com/check_imei.php" target="_blank" class="mini-link" style="font-size: 10px; color: #a78bfa; text-decoration: underline; font-weight: 600;">Podrobný IMEI výpis</a>
+                        </div>
+                      </div>
+
+                      <div class="cardActionHint" style="margin-top: 12px;">
+                        <span>🔍</span> Kliknite pre hĺbkový checklist chýb
                       </div>
                     </div>
 
@@ -333,9 +509,9 @@
                     <div class="resultCard is-interactive" data-open-trend>
                       <h4 class="resultCard__title"><span>📊</span> Trhové porovnanie</h4>
                       <div class="priceChart">
-                        <div class="priceChart__bar" style="height: 40%;"><span>650€</span></div>
-                        <div class="priceChart__bar is-active" style="height: 70%;"><span>850€</span></div>
-                        <div class="priceChart__bar" style="height: 90%;"><span>980€</span></div>
+                        <div class="priceChart__bar" style="height: 0%;"><span>---</span></div>
+                        <div class="priceChart__bar is-active" style="height: 0%;"><span>---</span></div>
+                        <div class="priceChart__bar" style="height: 0%;"><span>---</span></div>
                       </div>
                       <p class="priceChart__label">Vaša cena vs. priemer trhu</p>
                       
@@ -353,22 +529,28 @@
                     <div class="resultCard is-verdict">
                       <h4 class="resultCard__title">Verdikt</h4>
                       <div class="verdictBox">
-                        <span class="verdictBox__badge">TOP PONUKA</span>
-                        <p class="verdictBox__text">Toto zariadenie odporúčame kúpiť. Cena je pod trhovým priemerom.</p>
+                        <span class="verdictBox__badge" style="background: var(--muted); opacity: 0.5;">ČAKÁM</span>
+                        <p class="verdictBox__text">Zadajte údaje o zariadení a spustite expertnú kontrolu.</p>
                       </div>
                       
                       <div class="verdictActions">
-                        <button class="btnAction" data-download-pdf title="Stiahnuť PDF audit">
-                          <span>📥</span> PDF
-                        </button>
-                        <button class="btnAction" data-share-result title="Zdieľať výsledok">
-                          <span>🔗</span> Zdieľať
+                        <button class="btnAction" data-share-result title="Uložiť si svoj audit">
+                          <span>💾</span> Uložiť si svoj audit (Platnosť 30 dní)
                         </button>
                       </div>
+
+                      <!-- 🆕 COMPARISON TRIGGER BUTTON (MOVED HERE) -->
+                      <button type="button" class="btnCompareTrigger" data-open-compare-modal style="margin-top: 15px; border-style: solid; background: rgba(167, 139, 250, 0.15);">
+                        <span>🤔</span> Nevieš sa rozhodnúť? Porovnaj si svoje top 2 produkty...
+                      </button>
                       
                       <!-- SELL MODE ONLY: Generate Ad Text -->
                       <button class="btnGenerateAd" data-generate-ad hidden>
                         <span>✍️</span> Vygenerovať text inzerátu
+                      </button>
+
+                      <button class="btn-scanner btn-scanner--secondary" data-preview-public-direct hidden style="margin-top: 10px; width: 100%; height: 50px; border-radius: 12px; font-weight: 700;">
+                        <span>👁️</span> Zobraziť môj verejný audit (30 dní)
                       </button>
                     </div>
                   </div>
@@ -386,12 +568,12 @@
         </div>
       </main>
 
-      <footer class="mainFooter">
+      <footer class="mainFooter" id="contact">
         <div class="footerContainer">
           <div class="footerCol">
             <h5 class="footerTitle">Kontakt</h5>
             <ul class="footerLinks">
-              <li><a href="mailto:support@auditly.io">support@auditly.io</a></li>
+              <li><a href="mailto:auditly.io@gmail.com">auditly.io@gmail.com</a></li>
               <li class="footerSocials">
                 <!-- Social icons can go here -->
               </li>
@@ -400,7 +582,7 @@
           <div class="footerCol">
             <h5 class="footerTitle">O nás</h5>
             <ul class="footerLinks">
-              <li><a href="#about">Príbeh Auditly</a></li>
+              <li><a href="/about">Príbeh Auditly</a></li>
               <li><a href="#team">Náš tím</a></li>
               <li><a href="#blog">Blog</a></li>
             </ul>
@@ -424,7 +606,7 @@
     <div hidden>
       <textarea data-product-notes>Auditlyio automated technical audit request</textarea>
       <input type="checkbox" data-gdpr-checkbox checked>
-      <input type="email" data-beta-email value="audit@auditly.io">
+      <input type="email" data-beta-email value="auditly.io@gmail.com">
       <button data-image-clear></button>
       <div data-result></div>
       <div data-price></div>
@@ -456,7 +638,7 @@
         <div class="trendModal__footer">
           <div class="trendStats">
             <div class="trendInfo">
-              <span class="trendInfo__label">Aktuálna priemerná cena:</span>
+              <span class="trendInfo__label">Auditly férová cena:</span>
               <span class="trendInfo__value">950 €</span>
             </div>
             <div class="trendInfo">
@@ -469,6 +651,638 @@
       </div>
     </div>
 
-    <script src="./main.js?v=166"></script>
+    <!-- EXPERT MASTER REPORT OVERLAY (REDESIGNED TO MATCH SCREENSHOT STYLE) -->
+    <div id="expertReportOverlay" hidden>
+      <div class="expert-report-window">
+        <!-- Header Area -->
+        <div class="expert-header-top">
+          <div class="expert-title-group">
+            <h2 id="expertReportName">Model Zariadenia</h2>
+            <div class="expert-subtitle">Trend za posledný rok • Mobil</div>
+            <div style="display: flex; gap: 15px; align-items: center; margin-top: 10px;">
+              <div id="expertShareLink" style="font-size: 11px; color: #a78bfa; cursor: pointer; display: none;" onclick="copyAuditLink()">
+                🔗 Kopírovať odkaz
+              </div>
+            </div>
+          </div>
+          <button id="closeExpertReport">✕</button>
+        </div>
+
+        <div id="expertReportLoader">
+          <div class="skeleton-expert-layout">
+            <div class="skeleton-header-row">
+              <div class="skeleton skeleton-circle" style="width: 80px; height: 80px;"></div>
+              <div style="flex: 1;">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-text" style="width: 30%;"></div>
+              </div>
+            </div>
+            <div class="skeleton-grid">
+              <div class="skeleton skeleton-card" style="height: 200px;"></div>
+              <div class="skeleton skeleton-card" style="height: 200px;"></div>
+            </div>
+            <div class="skeleton skeleton-card" style="height: 300px;"></div>
+          </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="expert-scroll-area" id="expertReportContent" hidden>
+          
+          <!-- TOP SECTION: Specs & Price -->
+          <div class="expert-visual-area">
+            <div id="expertReportSpecs"></div>
+            <div class="expert-price-tag">
+              <span class="price-label">Auditly férová cena:</span>
+              <span id="expertRecommendedPrice">850 €</span>
+              <div style="font-size: 10px; opacity: 0.6; margin-top: 4px; line-height: 1.2;">
+                *Cena za model v TOP stave. Pri poškodeniach klesá.
+              </div>
+              
+              <!-- 🛡️ Authenticity Verification in Master Report -->
+              <div style="margin-top: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); text-align: left;">
+                <p style="font-size: 10px; color: #ffffff; margin-bottom: 6px;">🛡️ <strong>Overenie pravosti:</strong></p>
+                <p style="font-size: 9px; opacity: 0.8; margin-bottom: 8px; line-height: 1.3;">Pred kúpou si overte pravosť zariadenia pomocou sériového čísla na oficiálnej stránke alebo pre podrobnejší výpis využite druhý link.</p>
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                  <a href="https://checkcoverage.apple.com/?cid=gn-ols-checkcoverage-lp-get_help&locale=sk_SK" target="_blank" style="font-size: 9px; color: #a78bfa; text-decoration: none;">➜ Oficiálna stránka Apple (Záruka)</a>
+                  <a href="https://iunlocker.com/check_imei.php" target="_blank" style="font-size: 9px; color: #a78bfa; text-decoration: none;">➜ Podrobný IMEI výpis (iUnlocker)</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MIDDLE SECTION: Strategic Checklist & Risks -->
+          <div class="expert-info-grid">
+            <div class="info-card">
+              <h4 class="card-label" style="color: #eab308;">💡 Kalkulačka & Stratégia</h4>
+              <div id="expertReportCalculator" class="checks-container"></div>
+            </div>
+            <div class="info-card">
+              <h4 class="card-label">⚠️ Expertné Riziká</h4>
+              <div id="expertReportRisks" class="risks-container"></div>
+            </div>
+          </div>
+
+          <!-- BOTTOM SECTION: Manual Checks & Analysis -->
+          <div class="expert-bottom-grid">
+            <div class="info-card secondary-card">
+              <h4 class="card-label">🛡️ Manuálna Kontrola (interaktívna)</h4>
+              <div id="expertReportManual" class="manual-mini-grid"></div>
+            </div>
+            <div class="analysis-card">
+              <h4 class="card-label">🔍 Ako otestovať toto zariadenie</h4>
+              <div id="expertReportFullText" class="analysis-content"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FOOTER: Branding / Small Note -->
+        <div class="expert-footer-simple">
+          <p>© 2026 Auditlyio Expert System. Dáta overené v reálnom čase.</p>
+          <div style="font-size: 10px; line-height: 1.5; opacity: 0.6; max-width: 800px; margin: 15px auto 0; padding: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+            <strong>PRÁVNE UPOZORNENIE:</strong> Reporty generované systémom Auditly.io majú výhradne informatívny charakter. Prevádzkovateľ nezodpovedá za presnosť dát ani za obchodné rozhodnutia (kúpa/predaj) vykonané na základe týchto informácií. Každé zariadenie si vyžaduje osobnú fyzickú kontrolu odborníkom.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PUBLIC AUDIT LANDING MODAL (THE 30-DAY LINK VIEW) -->
+    <div id="publicAuditOverlay" hidden>
+      <div class="expert-report-window public-audit-window">
+        <div class="expert-header-top">
+          <div class="expert-title-group">
+            <h2 id="publicAuditName">Technický Audit Zariadenia</h2>
+            <div style="display: flex; gap: 15px; align-items: center;">
+              <div class="expert-subtitle" id="publicAuditID">ID Reportu: #AUD-000</div>
+              <div id="publicViewCounter" style="font-size: 12px; color: #10b981; font-weight: 700; background: rgba(16, 185, 129, 0.1); padding: 4px 10px; border-radius: 99px; display: none;">
+                👁️ <span id="viewCountNumber">0</span> ľudí si pozrelo tento audit
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <button id="copyPublicLink" class="btnCopy" style="padding: 10px 20px; border-radius: 12px; background: rgba(167, 139, 250, 0.1); border: 1px solid rgba(167, 139, 250, 0.3); color: #a78bfa; font-size: 13px;">
+              🔗 Kopírovať odkaz
+            </button>
+            <button id="closePublicAudit">✕</button>
+          </div>
+        </div>
+
+        <div class="expert-scroll-area">
+          <!-- 1. HEADER FACT SHEET (No fluff, just facts) -->
+          <div class="fact-sheet-grid" id="publicFactSheet">
+            <!-- Injected via JS -->
+          </div>
+
+          <!-- 2. MAIN AD TEXT / INTRO -->
+          <div class="public-section">
+            <div class="public-card intro-card">
+              <p id="publicIntroText" style="font-size: 15px; line-height: 1.6; color: #ffffff;"></p>
+            </div>
+          </div>
+
+          <!-- 3. WHY THIS MODEL IS BETTER (TECH COMPARISON) -->
+          <div class="public-section">
+            <h4 class="public-section-title">✨ Prečo je tento model lepšia voľba?</h4>
+            <div id="publicComparisonPoints" class="public-grid">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+
+          <!-- 4. VERIFIED TECH PARAMETERS -->
+          <div class="public-section">
+            <h4 class="public-section-title">📊 Overené technické parametre</h4>
+            <div id="publicVerifiedParams" class="public-grid-mini">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+
+          <!-- 4.2 QUICK SALE HIGHLIGHTS (Facts for quick sale) -->
+          <div class="public-section">
+            <h4 class="public-section-title">⚡ Prečo kúpiť práve tento kus?</h4>
+            <div id="publicSaleHighlights" class="public-grid">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+
+          <!-- 4.5 AUDIT RULE -->
+          <div class="public-section" id="publicAuditRuleBox" style="display: none;">
+            <div class="public-card" style="background: rgba(167, 139, 250, 0.1); border-color: rgba(167, 139, 250, 0.3);">
+              <h5 style="color: #a78bfa; margin-bottom: 8px; font-size: 14px;">🔍 Audit pravidlo</h5>
+              <p id="publicAuditRuleText" style="font-size: 13px; color: #f1f5f9; line-height: 1.5;"></p>
+            </div>
+          </div>
+
+          <!-- 5. TERMS & CONDITIONS -->
+          <div class="public-section">
+            <div class="public-card terms-card">
+              <h5 style="color: #a78bfa; margin-bottom: 10px;">🤝 Podmienky predaja</h5>
+              <p style="font-size: 13px; color: #cbd5e1; line-height: 1.5;">
+                Odporúčame profesionálne jednanie a osobný odber, kde si môžete všetky dáta z auditu krížovo overiť priamo v zariadení.
+              </p>
+            </div>
+          </div>
+
+          <!-- 6. LEGAL FOOTER -->
+          <div class="public-footer">
+            <div style="text-align: center; margin-bottom: 25px;">
+              <a href="/" class="btn-scanner btn-scanner--primary" style="display: inline-flex; text-decoration: none; padding: 12px 30px;">
+                🚀 Chcem tiež predať drahšie s Auditly.io
+              </a>
+            </div>
+            <div class="legal-box">
+              <p>🛡️ <strong>Informácia o audite:</strong> Tento report bol vypracovaný technológiou Auditly.io. Nezávislý technický audit slúži výhradne na overenie technických špecifikácií a dát v databázach tretích strán. Platforma Auditly.io nezodpovedá za skutočný fyzický stav zariadenia ani za pravosť súborov nahratých predajcom. Za celkový stav produktu zodpovedá predávajúci.</p>
+              
+              <!-- 🏆 Trust Badges -->
+              <div class="trust-badges">
+                <div style="font-size: 10px; font-weight: 800; color: #94a3b8; display: flex; align-items: center; gap: 8px;">
+                   <span style="font-size: 20px;">🛡️</span> SECURE AUDIT
+                </div>
+                <div style="font-size: 10px; font-weight: 800; color: #94a3b8; display: flex; align-items: center; gap: 8px;">
+                   <span style="font-size: 20px;">⚡</span> AI VERIFIED
+                </div>
+                <div style="font-size: 10px; font-weight: 800; color: #94a3b8; display: flex; align-items: center; gap: 8px;">
+                   <span style="font-size: 20px;">✅</span> BAZOŠ READY
+                </div>
+              </div>
+
+              <p style="margin-top: 30px;">⚖️ <strong>DISKLAIMER:</strong> Verejný prístup k reportu je limitovaný na dobu 30 dní za účelom verifikácie konkrétneho inzerátu. Dizajn a štruktúra reportu podliehajú ochrane duševného vlastníctva Auditly.io.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="risksReportOverlay" hidden>
+      <div class="expert-report-window">
+        <div class="expert-header-top">
+          <div class="expert-title-group">
+            <h2 id="risksReportName">Riziká a Kontrola</h2>
+            <div class="expert-subtitle">Expertný technický checklist</div>
+          </div>
+          <button id="closeRisksReport">✕</button>
+        </div>
+
+        <div id="risksReportLoader">
+          <div style="text-align:center; padding: 60px;">
+            <div class="loader-spinner" style="margin: 0 auto 20px;"></div>
+            <p style="color: rgba(255,255,255,0.5); font-weight: 600;">Sťahujem checklist chýb...</p>
+          </div>
+        </div>
+
+        <div class="expert-scroll-area" id="risksReportContent" hidden>
+          <div class="expert-info-grid">
+            <div class="info-card">
+              <h4 class="card-label" style="color: #eab308 !important; opacity: 1 !important;">💡 Náklady na opravu & Stratégia</h4>
+              <div id="risksReportCalculator" class="checks-container"></div>
+            </div>
+            <div class="info-card">
+              <h4 class="card-label" style="color: #a78bfa !important; opacity: 1 !important;">⚠️ Expertné Riziká</h4>
+              <div id="risksReportRisks" class="risks-container"></div>
+            </div>
+          </div>
+
+          <div class="info-card secondary-card" style="margin-top: 25px;">
+            <h4 class="card-label" style="color: #a78bfa !important; opacity: 1 !important;">🛡️ Manuálna Kontrola (interaktívna)</h4>
+            <div id="risksReportManual" class="manual-mini-grid"></div>
+          </div>
+
+          <div class="analysis-card" style="margin-top: 25px;">
+            <h4 class="card-label" style="color: #a78bfa !important; opacity: 1 !important;">🔍 Ako otestovať toto zariadenie (Analýza)</h4>
+            <div id="risksReportFullText" class="analysis-content"></div>
+          </div>
+        </div>
+
+        <div class="expert-footer-simple">
+          <p>© 2026 Auditlyio Expert System. Checklist je špecifický pre tento model.</p>
+          <div style="font-size: 10px; line-height: 1.5; opacity: 0.6; max-width: 800px; margin: 15px auto 0; padding: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+            <strong>PRÁVNE UPOZORNENIE:</strong> Technický checklist slúži ako pomôcka pri kontrole. Nezaručuje bezchybnosť zariadenia a nenahrádza odbornú servisnú diagnostiku.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPARISON MODAL (SIDE-BY-SIDE) -->
+    <div id="compareReportOverlay" hidden>
+      <div class="expert-report-window comparison-window">
+        <div class="expert-header-top">
+          <div class="expert-title-group">
+            <h2 id="compareTitle">Porovnanie modelov</h2>
+            <div class="expert-subtitle">Rozhodni sa na základe expertných dát</div>
+          </div>
+          <button id="closeCompareReport">✕</button>
+        </div>
+
+        <div class="expert-scroll-area">
+          <div class="compare-grid">
+            <!-- Left Model Selector -->
+            <div class="compare-col" id="compareColA">
+              <div class="compare-selector">
+                <select class="auditInput select-compare" data-compare-cat-a disabled>
+                   <option value="Mobil">Mobil</option>
+                   <option value="Notebook">Notebook</option>
+                   <option value="Konzola">Konzola</option>
+                   <option value="Tablet">Tablet</option>
+                   <option value="Hodinky">Hodinky</option>
+                   <option value="Slúchadlá">Slúchadlá</option>
+                </select>
+                <select class="auditInput select-compare" data-compare-model-a disabled>
+                   <option value="" disabled selected>Váš vybraný model</option>
+                </select>
+              </div>
+              <div class="compare-content" id="compareContentA">
+                <!-- Data will be injected here -->
+              </div>
+            </div>
+
+            <!-- VS Divider -->
+            <div class="compare-vs">VS</div>
+
+            <!-- Right Model Selector -->
+            <div class="compare-col" id="compareColB">
+              <div class="compare-selector">
+                <select class="auditInput select-compare" data-compare-cat-b>
+                   <option value="" disabled selected>Porovnať s...</option>
+                   <option value="Mobil">Mobil</option>
+                   <option value="Notebook">Notebook</option>
+                   <option value="Konzola">Konzola</option>
+                   <option value="Tablet">Tablet</option>
+                   <option value="Hodinky">Hodinky</option>
+                   <option value="Slúchadlá">Slúchadlá</option>
+                </select>
+                <select class="auditInput select-compare" data-compare-model-b disabled>
+                   <option value="" disabled selected>Vyberte model</option>
+                </select>
+              </div>
+              <div class="compare-content" id="compareContentB">
+                <!-- Data will be injected here -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Summary Section -->
+          <div id="compareSummarySection" class="compare-summary-box" hidden>
+             <h4 class="card-label">✨ Expertné zhodnotenie</h4>
+             <div class="summary-flex">
+                <div class="summary-item" id="summaryA"></div>
+                <div class="summary-item" id="summaryB"></div>
+             </div>
+          </div>
+        </div>
+
+        <div class="expert-footer-simple">
+          <p>© 2026 Auditlyio Expert Comparison System.</p>
+          <div style="font-size: 10px; line-height: 1.5; opacity: 0.6; max-width: 800px; margin: 15px auto 0; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+            <strong>PRÁVNE UPOZORNENIE:</strong> Tento porovnávací report je generovaný automatizovaným systémom na základe verejne dostupných technických údajov a AI analýzy. Má výhradne informatívny charakter a neslúži ako záväzné odporúčanie, finančné alebo investičné poradenstvo. Prevádzkovateľ nezodpovedá za stopercentnú presnosť údajov tretích strán ani za žiadne obchodné rozhodnutia (kúpa/predaj) vykonané na základe týchto informácií. Každé zariadenie na sekundárnom trhu má unikátny technický stav, ktorý si vyžaduje osobnú fyzickú kontrolu odborníkom. Všetky názvy produktov a značiek sú registrovanými ochrannými známkami ich príslušných vlastníkov.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./assets/js/slogans.js?v=1"></script>
+    <script src="./assets/js/main.js?v=168"></script>
+
+    <!-- AI SCANNER MODAL -->
+    <div id="aiScannerOverlay" style="display: none;">
+        <div class="scanner-container">
+            <div id="scannerClose" class="scanner-close-x">×</div>
+            
+            <div class="scanner-progress">
+                <div class="progress-dot active" data-step="1"></div>
+                <div class="progress-dot" data-step="2"></div>
+                <div class="progress-dot" data-step="3"></div>
+            </div>
+
+            <h3 class="scanner-step-title" id="scannerTitle">Skenovanie ZADNEJ strany</h3>
+            <p class="scanner-step-desc" id="scannerDesc">Umiestnite zariadenie tak, aby bolo vidieť celé telo a šošovky.</p>
+
+            <div class="scanner-view">
+                <div class="scanner-laser" id="scannerLaser"></div>
+                <div class="scanning-dots" id="scanningDots"></div>
+                <img id="scannerImg" src="" style="display: none;">
+                <div class="placeholder-icon" id="scannerPlaceholder">📸</div>
+            </div>
+
+            <div class="scanner-result" id="scannerResult">
+                <div class="scanner-result__item">
+                    <span class="scanner-result__label">Odhadovaný model:</span>
+                    <span class="scanner-result__value" id="aiModelName">---</span>
+                </div>
+                <div class="scanner-result__item">
+                    <span class="scanner-result__label">Odhad vizuálneho stavu:</span>
+                    <span class="scanner-result__value" id="aiConditionScore">---</span>
+                </div>
+                <div class="scanner-result__item">
+                    <span class="scanner-result__label">Kategória:</span>
+                    <span class="scanner-result__value" id="aiCategory">---</span>
+                </div>
+                <div class="scanner-result__defects" id="aiDefectsContainer" style="display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed #e2e8f0;">
+                    <div style="font-size: 13px; color: #ff3b30; font-weight: 700; margin-bottom: 8px;">🔍 Zistené nedostatky:</div>
+                    <ul id="aiDefectsList" style="text-align: left; font-size: 13px; color: #48484a; padding-left: 20px;">
+                        <!-- AI defects go here -->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="scanner-footer" id="scannerFooter">
+                <button class="btn-scanner btn-scanner--primary" id="scannerActionBtn">
+                    Odfotiť Zadnú Stranu
+                </button>
+                <input type="file" id="ai-photo-input" accept="image/*" capture="environment" hidden>
+            </div>
+
+            <div class="scanner-footer" id="scannerConfirmFooter" style="display: none;">
+                <button class="btn-scanner btn-scanner--secondary" id="scannerManualBtn">Zadať ručne</button>
+                <button class="btn-scanner btn-scanner--primary" id="scannerConfirmBtn">Áno, súhlasí</button>
+            </div>
+
+            <p class="ai-disclaimer">
+                💡 <b>AI sa môže mýliť.</b> Ak rozpoznanie nie je presné, môžete údaje kedykoľvek opraviť ručne. Vaše fotky sú analyzované v reálnom čase pre zvýšenie presnosti auditu.
+            </p>
+
+            <div class="ai-dna-explanation" style="margin-top: 15px; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 10px; font-size: 10px; line-height: 1.4; color: #94a3b8; border: 1px solid rgba(255,255,255,0.05);">
+                Moderné smartfóny často využívají identický dizajn, rozloženie šošoviek a rozmery naprieč viacerými generáciami. Naša AI pri vizuálnom skenovaní identifikuje všetky modely, ktoré zdieľajú rovnakú DNA. 
+                <br><br>
+                Toto nie je chyba, ale bezpečnostný filter. Upozorňujeme vás na modely, ktoré by predajca mohol zameniť (úmyselne alebo omylom). Pre definitívne potvrdenie konkrétnej generácie a konfigurácie použite naše overovacie odkazy v ľavom dolnom rohu, ktoré pracujú s unikátnym sériovým číslom (SN) priamo v databázach výrobcu.
+            </div>
+        </div>
+    </div>
+    <!-- ONBOARDING / WELCOME MODAL -->
+    <div id="welcomeOverlay" style="display: none;">
+      <div class="expert-report-window welcome-window" style="max-width: 500px !important;">
+        <div style="text-align: center; padding: 40px 20px;">
+          <div style="font-size: 50px; margin-bottom: 20px;">🛡️</div>
+          <h2 style="font-size: 28px; font-weight: 800; color: #ffffff; margin-bottom: 15px;">Vitajte v Auditly.io</h2>
+          <p style="color: #94a3b8; font-size: 16px; line-height: 1.6; margin-bottom: 35px;">
+            Váš expertný systém na audit a ocenenie bazárovej elektroniky. Zvýšte hodnotu svojho inzerátu za pár sekúnd.
+          </p>
+          
+          <div class="welcome-steps" style="text-align: left; margin-bottom: 40px; display: flex; flex-direction: column; gap: 20px;">
+            <div style="display: flex; gap: 15px; align-items: center;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(167, 139, 250, 0.2); color: #a78bfa; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">1</div>
+              <div style="color: #cbd5e1; font-weight: 600;">Vyberte model alebo použite 📸 AI skener</div>
+            </div>
+            <div style="display: flex; gap: 15px; align-items: center;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(167, 139, 250, 0.2); color: #a78bfa; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">2</div>
+              <div style="color: #cbd5e1; font-weight: 600;">Získajte technický audit a férovú cenu</div>
+            </div>
+            <div style="display: flex; gap: 15px; align-items: center;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(167, 139, 250, 0.2); color: #a78bfa; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">3</div>
+              <div style="color: #cbd5e1; font-weight: 600;">Vygenerujte profi inzerát s Live Reportom</div>
+            </div>
+          </div>
+
+          <button id="closeWelcomeBtn" class="btn-scanner btn-scanner--primary" style="width: 100%; height: 55px; font-size: 16px;">
+            Začať audit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRICING MODAL -->
+    <div id="pricingOverlay" style="display: none;">
+      <div class="expert-report-window pricing-window" style="max-width: 600px !important;">
+        <div style="padding: 40px 30px; text-align: center;">
+          <div style="font-size: 40px; margin-bottom: 20px;">💳</div>
+          <h2 style="font-size: 28px; font-weight: 800; color: #ffffff; margin-bottom: 10px;">Cenník auditov</h2>
+          <p style="color: #94a3b8; font-size: 15px; line-height: 1.5; margin-bottom: 40px;">
+            Vyberte si balík, ktorý vám najviac vyhovuje. Audity sú platné 30 dní.
+          </p>
+
+          <div class="pricing-modal-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+            <div class="pricing-modal-card" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 25px; transition: all 0.3s ease;">
+              <div style="font-size: 12px; font-weight: 800; color: #a78bfa; margin-bottom: 10px;">JEDNORAZOVÝ</div>
+              <div style="font-size: 32px; font-weight: 900; color: #ffffff;">4,99 €</div>
+              <div style="font-size: 13px; color: #94a3b8; margin-top: 5px;">1 expertný report</div>
+              <button class="btn-scanner btn-scanner--secondary btn-buy-test" data-plan="single" style="margin-top: 20px; width: 100%; height: 45px; font-size: 14px;">Vybrať</button>
+            </div>
+            <div class="pricing-modal-card" style="background: rgba(167, 139, 250, 0.1); border: 2px solid #a78bfa; border-radius: 20px; padding: 25px; position: relative;">
+              <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #a78bfa; color: white; padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 800;">NAJVÝHODNEJŠIE</div>
+              <div style="font-size: 12px; font-weight: 800; color: #a78bfa; margin-bottom: 10px;">BALÍK</div>
+              <div style="font-size: 32px; font-weight: 900; color: #ffffff;">9,99 €</div>
+              <div style="font-size: 13px; color: #94a3b8; margin-top: 5px;">3 expertné reporty</div>
+              <button class="btn-scanner btn-scanner--primary btn-buy-test" data-plan="triple" style="margin-top: 20px; width: 100%; height: 45px; font-size: 14px;">Vybrať</button>
+            </div>
+          </div>
+
+          <p style="font-size: 12px; color: #64748b;">
+            Všetky ceny sú konečné. Po zakúpení získate okamžitý prístup k hĺbkovej analýze, checklistu rizík a generovaniu inzerátov.
+          </p>
+
+          <button id="closePricingModalBtn" style="position: absolute; top: 20px; right: 20px; background: transparent; border: none; color: #94a3b8; font-size: 24px; cursor: pointer;">✕</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAYMENT CONFIRMATION MODAL (Test) -->
+    <div id="paymentConfirmOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 10000; align-items: center; justify-content: center; padding: 20px;">
+      <div class="expert-report-window" style="max-width: 400px !important; text-align: center; padding: 40px 30px;">
+        <div style="font-size: 50px; margin-bottom: 20px;">🎉</div>
+        <h2 style="font-size: 24px; font-weight: 800; color: #ffffff; margin-bottom: 10px;">Testovací režim</h2>
+        <p style="color: #94a3b8; font-size: 15px; line-height: 1.6; margin-bottom: 30px;">
+          Simulujeme platobnú bránu Stripe. Dnes máte tento report <span style="color: #10b981; font-weight: 800;">ZADARMO</span> v rámci testovania.
+        </p>
+        <button id="btnConfirmFree" class="btn-scanner btn-scanner--primary" style="height: 55px; width: 100%; font-size: 16px;">Pokračovať na report</button>
+      </div>
+    </div>
+
+    <!-- AUTH & PROFILE MODAL (Consolidated) -->
+    <div id="authOverlay" style="display: none;">
+      <div class="expert-report-window auth-window" style="max-width: 450px !important;">
+        <button id="closeAuthModal" class="close-x">✕</button>
+        
+        <!-- LOGIN VIEW -->
+        <div id="loginView" style="padding: 40px 30px; text-align: center;">
+          <div style="font-size: 40px; margin-bottom: 20px;">🛡️</div>
+          <h2 style="font-size: 26px; font-weight: 800; color: #ffffff; margin-bottom: 10px;">Prihlásenie</h2>
+          <p style="color: #94a3b8; font-size: 14px; line-height: 1.5; margin-bottom: 30px;">
+            Prihláste sa pre uloženie auditu a správu vašich inzerátov.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+            <input type="email" id="authEmail" placeholder="E-mail" class="auth-input">
+            <input type="password" id="authPassword" placeholder="Heslo" class="auth-input">
+            <button id="btnSubmitLogin" class="btn-scanner btn-scanner--primary" style="height: 55px; font-size: 16px;">Prihlásiť sa</button>
+          </div>
+          
+          <div style="font-size: 13px; color: #94a3b8;">
+            Nemáte ešte účet? <a href="#" id="switchToRegister" style="color: #a78bfa; font-weight: 700; text-decoration: none;">Vytvoriť účet</a>
+          </div>
+        </div>
+
+        <!-- REGISTER VIEW -->
+        <div id="registerView" style="padding: 40px 30px; text-align: center; display: none;">
+          <div style="font-size: 40px; margin-bottom: 20px;">✨</div>
+          <h2 style="font-size: 26px; font-weight: 800; color: #ffffff; margin-bottom: 10px;">Nový účet</h2>
+          <p style="color: #94a3b8; font-size: 14px; line-height: 1.5; margin-bottom: 30px;">
+            Zaregistrujte sa a majte svoje audity vždy pod kontrolou.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+            <input type="email" id="regEmail" placeholder="Váš e-mail" class="auth-input">
+            <input type="password" id="regPassword" placeholder="Zvoľte si heslo" class="auth-input">
+            <button id="btnSubmitRegister" class="btn-scanner btn-scanner--primary" style="height: 55px; font-size: 16px;">Zaregistrovať sa</button>
+          </div>
+          
+          <div style="font-size: 13px; color: #94a3b8;">
+            Už máte účet? <a href="#" id="switchToLogin" style="color: #a78bfa; font-weight: 700; text-decoration: none;">Prihlásiť sa</a>
+          </div>
+        </div>
+
+        <!-- PROFILE VIEW -->
+        <div id="profileView" style="padding: 40px 30px; display: none;">
+          <div style="text-align: center; margin-bottom: 30px;">
+            <div style="font-size: 40px; margin-bottom: 15px;">👤</div>
+            <h2 id="userDisplayEmail" style="font-size: 18px; font-weight: 700; color: #ffffff;">email@priklad.com</h2>
+            <p style="color: #94a3b8; font-size: 12px;">Váš expertný profil</p>
+          </div>
+
+          <div class="profile-section">
+            <h4 style="font-size: 12px; font-weight: 800; color: #a78bfa; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 15px; display: flex; justify-content: space-between;">
+              Moje uložené audity
+              <span id="auditCount" style="background: rgba(167, 139, 250, 0.2); padding: 2px 8px; border-radius: 99px;">0</span>
+            </h4>
+            
+            <div id="historyList" style="display: grid; gap: 12px; max-height: 300px; overflow-y: auto; padding-right: 5px;">
+              <!-- Audity sa načítajú sem -->
+              <p style="text-align: center; color: #64748b; font-size: 13px; padding: 20px;">Zatiaľ nemáte žiadne audity.</p>
+            </div>
+          </div>
+
+          <button id="btnSignOut" class="btn-scanner btn-scanner--secondary" style="margin-top: 30px; width: 100%; height: 50px;">Odhlásiť sa</button>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .auth-input {
+        width: 100%; 
+        height: 50px; 
+        background: rgba(255,255,255,0.05); 
+        border: 1px solid rgba(255,255,255,0.1); 
+        border-radius: 12px; 
+        color: #ffffff; 
+        padding: 0 15px; 
+        font-size: 15px; 
+        outline: none; 
+        transition: all 0.3s;
+      }
+      .auth-input:focus {
+        border-color: #a78bfa;
+        background: rgba(255,255,255,0.08);
+      }
+      .close-x {
+        position: absolute; 
+        top: 20px; 
+        right: 20px; 
+        background: transparent; 
+        border: none; 
+        color: #94a3b8; 
+        font-size: 24px; 
+        cursor: pointer;
+        z-index: 10;
+      }
+      .close-x:hover { color: #ffffff; }
+      
+      .history-item {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 16px;
+        padding: 15px;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .history-item:hover {
+        background: rgba(255,255,255,0.06);
+        border-color: rgba(167, 139, 250, 0.3);
+        transform: translateX(5px);
+      }
+    </style>
+
+    <!-- SAVE AUDIT / AUTH MODAL (Old, will remove in JS) -->
+    <div id="adReportOverlay" hidden>
+      <div class="expert-report-window ad-modal-window">
+        <div class="expert-header-top">
+          <div class="expert-title-group">
+            <h2>✍️ Profesionálny inzerát</h2>
+            <div class="expert-subtitle">AI Generovaný text na mieru</div>
+          </div>
+          <button id="closeAdReport">✕</button>
+        </div>
+
+        <div class="expert-scroll-area">
+          <div class="ad-content-wrapper">
+            <div class="ad-field-group">
+              <label class="ad-field-label">Predmet inzerátu</label>
+              <div class="ad-copy-box">
+                <span id="adSubject">iPhone 15 Pro | 128GB | 98% Health | Stav: A+</span>
+                <button class="btnCopy" onclick="copyToClipboard('adSubject')">Kopírovať</button>
+              </div>
+            </div>
+
+            <div class="ad-field-group">
+              <label class="ad-field-label">Text inzerátu</label>
+              <div class="ad-copy-box is-multiline">
+                <div id="adBody" class="ad-text-content">
+                  <!-- Generated text goes here -->
+                </div>
+                <button class="btnCopy" onclick="copyToClipboard('adBody')">Kopírovať text</button>
+              </div>
+            </div>
+
+            <div class="ad-field-group">
+              <label class="ad-field-label">Náhľad pre kupujúceho</label>
+              <button class="btn-scanner btn-scanner--secondary" id="previewPublicReportBtn" style="width: 100%; height: 50px; border-radius: 12px; font-weight: 700;">
+                👁️ Zobraziť verejný technický audit
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="expert-footer-simple">
+          <p>💡 Tip: Profi inzerát s certifikátom od Auditly.io zvyšuje šancu na predaj o 40%.</p>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
