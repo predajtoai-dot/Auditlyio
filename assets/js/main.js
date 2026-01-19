@@ -7663,7 +7663,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     }
 
     try {
-      let r, auditId, createdAt;
+      let r, rd = {}, auditId, createdAt;
 
       if (forcedId) {
         // LOAD EXISTING AUDIT
@@ -7671,6 +7671,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         const data = await resp.json();
         if (!data.ok) throw new Error(data.error || "Audit sa nepodarilo načítať.");
         r = data.audit.products; // Joined product data
+        rd = data.audit.report_data || {};
         auditId = forcedId;
         createdAt = data.audit.created_at;
       } else {
@@ -7711,6 +7712,9 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
           const currentBattery = mode === "buy" ? qs("[data-battery-health]")?.value : qs("[data-battery-health-sell]")?.value;
           const currentCondition = qs("[data-device-condition]")?.value || "100";
           const currentStorage = storageSelect?.value || "";
+
+          // Populate rd for rendering
+          rd = { mode, battery: currentBattery, condition: currentCondition, storage: currentStorage };
 
           const saveResp = await fetch(`${API_BASE}/api/audits`, {
             method: "POST",
