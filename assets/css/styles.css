@@ -3602,11 +3602,12 @@ body.is-public-report > *:not(#publicAuditOverlay):not(#expertReportOverlay):not
 
 body.is-public-report #publicAuditOverlay:not([hidden]),
 body.is-public-report #expertReportOverlay:not([hidden]) {
-  display: block !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   position: fixed !important;
-  padding: 60px 20px !important;
+  padding: 20px !important;
   background: rgba(2, 6, 23, 0.9) !important;
-  overflow-y: auto !important;
   top: 0;
   left: 0;
   width: 100%;
@@ -3619,19 +3620,21 @@ body.is-public-report .expert-report-window {
   max-width: 1000px !important;
   width: 100% !important;
   height: auto !important;
-  min-height: auto !important;
+  max-height: 90vh !important;
   border-radius: 40px !important;
-  margin: 0 auto 60px !important;
+  margin: 0 auto !important;
   box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.5) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   background: #0f172a !important;
   overflow: hidden;
   position: relative;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 body.is-public-report .expert-scroll-area {
-  height: auto !important;
-  overflow: visible !important;
+  flex: 1 !important;
+  overflow-y: auto !important;
   padding-bottom: 60px;
 }
 
