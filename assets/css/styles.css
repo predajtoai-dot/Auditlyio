@@ -3600,8 +3600,8 @@ body.is-public-report > *:not(#publicAuditOverlay):not(#expertReportOverlay):not
   display: none !important;
 }
 
-body.is-public-report #publicAuditOverlay,
-body.is-public-report #expertReportOverlay {
+body.is-public-report #publicAuditOverlay:not([hidden]),
+body.is-public-report #expertReportOverlay:not([hidden]) {
   display: block !important;
   position: fixed !important;
   padding: 60px 20px !important;

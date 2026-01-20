@@ -8310,6 +8310,23 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       const highlightsGrid = qs("#publicSaleHighlights");
       if (highlightsGrid && saleHighlights.length > 0) {
         highlightsGrid.innerHTML = saleHighlights.map(h => `
+          <div class="public-card" style="padding: 20px;">
+            <strong style="color: #10b981; font-size: 14px; display: block; margin-bottom: 5px;">${h.title}</strong>
+            <p style="font-size: 13px; color: #cbd5e1; line-height: 1.5; margin: 0;">${h.desc}</p>
+          </div>
+        `).join('');
+      } else if (highlightsGrid) {
+        highlightsGrid.innerHTML = "<p style='grid-column: 1/-1; text-align: center; opacity: 0.5;'>Špecifické výhody pre tento kus sa načítavajú...</p>";
+      }
+
+      // Final UI cleanup
+      const loader = qs("#publicAuditLoader");
+      const content = qs("#publicAuditContent");
+      if (loader) loader.hidden = true;
+      if (content) content.hidden = false;
+      const highlightsGrid = qs("#publicSaleHighlights");
+      if (highlightsGrid && saleHighlights.length > 0) {
+        highlightsGrid.innerHTML = saleHighlights.map(h => `
           <div class="comp-point" style="border-left-color: #10b981;">
             <strong class="comp-title" style="color: #10b981;">${h.title}</strong>
             <p class="comp-desc">${h.desc}</p>
@@ -8436,7 +8453,10 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     const mainPage = qs('.page');
     if (mainPage) mainPage.style.display = 'none';
     
-    // Show overlay immediately to avoid blank screen
+    // Ensure expert is hidden
+    if (expertOverlay) expertOverlay.hidden = true;
+    
+    // Show overlay immediately
     const publicOverlay = qs("#publicAuditOverlay");
     if (publicOverlay) {
       publicOverlay.hidden = false;
@@ -8449,6 +8469,10 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     document.body.classList.add('is-public-report');
     const mainPage = qs('.page');
     if (mainPage) mainPage.style.display = 'none';
+
+    // Ensure public is hidden
+    const publicOverlay = qs("#publicAuditOverlay");
+    if (publicOverlay) publicOverlay.hidden = true;
 
     // Show overlay immediately
     if (expertOverlay) {
