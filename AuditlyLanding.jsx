@@ -318,7 +318,7 @@ export default function AuditlyLanding() {
     setError(null);
     
     try {
-      const response = await fetch(`/api/audit/report?brand=${encodeURIComponent(brand)}&model=${encodeURIComponent(model)}`);
+      const response = await fetch(`${API_BASE}/api/audit/report?brand=${encodeURIComponent(brand)}&model=${encodeURIComponent(model)}`);
       const data = await response.json();
       
       if (data.ok) {

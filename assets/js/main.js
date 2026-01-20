@@ -915,34 +915,34 @@ document.addEventListener("DOMContentLoaded", () => {
   categoryButtons.forEach(btn => {
     btn.addEventListener("click", () => {
       handleLockCheck(() => {
-        const catType = btn.dataset.catType; // E.g. "Mobil", "Konzola"...
+      const catType = btn.dataset.catType; // E.g. "Mobil", "Konzola"...
 
-        // Update UI: Toggle active state
-        categoryButtons.forEach(b => b.classList.remove("is-active"));
-        btn.classList.add("is-active");
+      // Update UI: Toggle active state
+      categoryButtons.forEach(b => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
 
-        // Sync with dropdown
-        if (categorySelect) {
-          categorySelect.value = catType;
+      // Sync with dropdown
+      if (categorySelect) {
+        categorySelect.value = catType;
           // Trigger the UI updates directly to avoid double lock check
           performCategoryChange();
           savePrevValue(categorySelect);
-        }
+      }
 
-        // Update placeholder dynamically
-        if (productNameInput) {
-          let placeholder = "Napr. iPhone 15 Pro";
-          const catLower = catType.toLowerCase();
-          if (catLower === "mobil") placeholder = "Napr. iPhone 15 Pro 128GB";
-          else if (catLower === "konzola") placeholder = "Napr. PlayStation 5 Disc Edition";
-          else if (catLower === "notebook") placeholder = "Napr. MacBook Air M2 13\" 2022";
-          else if (catLower === "hodinky") placeholder = "Napr. Apple Watch Ultra 2";
-          else if (catLower === "iné") placeholder = "Zadajte názov a model zariadenia...";
-          
-          productNameInput.placeholder = placeholder;
-        }
+      // Update placeholder dynamically
+      if (productNameInput) {
+        let placeholder = "Napr. iPhone 15 Pro";
+        const catLower = catType.toLowerCase();
+        if (catLower === "mobil") placeholder = "Napr. iPhone 15 Pro 128GB";
+        else if (catLower === "konzola") placeholder = "Napr. PlayStation 5 Disc Edition";
+        else if (catLower === "notebook") placeholder = "Napr. MacBook Air M2 13\" 2022";
+        else if (catLower === "hodinky") placeholder = "Napr. Apple Watch Ultra 2";
+        else if (catLower === "iné") placeholder = "Zadajte názov a model zariadenia...";
+        
+        productNameInput.placeholder = placeholder;
+      }
 
-        console.log(`🏷️ Category changed to: ${catType}`);
+      console.log(`🏷️ Category changed to: ${catType}`);
       });
     });
   });
@@ -955,67 +955,67 @@ document.addEventListener("DOMContentLoaded", () => {
   modeInputs.forEach(input => {
     input.addEventListener("change", (e) => {
       handleLockCheck(() => {
-        const mode = e.target.value;
-        console.log(`🔄 Mode switched to: ${mode}`);
-        
-        if (generateBtn) {
+      const mode = e.target.value;
+      console.log(`🔄 Mode switched to: ${mode}`);
+      
+      if (generateBtn) {
           generateBtn.textContent = "SPUSTIŤ ANALÝZU RIZÍK";
-        }
+      }
 
-        const generateAdBtn = qs("[data-generate-ad]");
-        if (generateAdBtn) {
-          generateAdBtn.hidden = mode === "buy";
-          generateAdBtn.style.display = mode === "buy" ? "none" : "flex";
-        }
+      const generateAdBtn = qs("[data-generate-ad]");
+      if (generateAdBtn) {
+        generateAdBtn.hidden = mode === "buy";
+        generateAdBtn.style.display = mode === "buy" ? "none" : "flex";
+      }
 
-        // 💡 Mode-Specific Guidance Toasts
+      // 💡 Mode-Specific Guidance Toasts
+      if (mode === "buy") {
+        showToast("🔍 V režime KÚPA overujeme pôvodnú konfiguráciu a hľadáme skryté riziká.", { type: "info", duration: 4000 });
+      } else {
+        showToast("📈 V režime PREDAJ optimalizujeme cenu a generujeme podklady pre inzerát.", { type: "success", duration: 4000 });
+      }
+
+      // Toggle field visibility
+      if (buyFields && sellFields) {
         if (mode === "buy") {
-          showToast("🔍 V režime KÚPA overujeme pôvodnú konfiguráciu a hľadáme skryté riziká.", { type: "info", duration: 4000 });
+          buyFields.hidden = false;
+          sellFields.hidden = true;
+          buyFields.style.display = "flex";
+          sellFields.style.display = "none";
         } else {
-          showToast("📈 V režime PREDAJ optimalizujeme cenu a generujeme podklady pre inzerát.", { type: "success", duration: 4000 });
+          buyFields.hidden = true;
+          sellFields.hidden = false;
+          buyFields.style.display = "none";
+          sellFields.style.display = "flex";
         }
+      }
 
-        // Toggle field visibility
-        if (buyFields && sellFields) {
-          if (mode === "buy") {
-            buyFields.hidden = false;
-            sellFields.hidden = true;
-            buyFields.style.display = "flex";
-            sellFields.style.display = "none";
-          } else {
-            buyFields.hidden = true;
-            sellFields.hidden = false;
-            buyFields.style.display = "none";
-            sellFields.style.display = "flex";
-          }
-        }
+      // Dynamically update battery field visibility based on category
+      const catBtn = qs(".catItem.is-active");
+      const category = categorySelect?.value || catBtn?.dataset.catType || "";
+      const catLower = category.toLowerCase();
+      const isConsole = catLower === "konzola" || catLower === "console";
+      const isWatch = catLower === "hodinky" || catLower === "watch";
+      const isAudio = catLower === "slúchadlá" || catLower === "audio";
+      
+      const needsBattery = (catLower === "mobil" || catLower === "notebook" || catLower === "tablet" || catLower === "mobile" || catLower === "laptop" || isWatch) && !isConsole && !isAudio;
+      
+      const batBuy = qs("[data-battery-field]");
+      const batSell = qs("[data-battery-field-sell]");
+      
+      if (batBuy) batBuy.style.display = (mode === "buy" && needsBattery) ? "block" : "none";
+      if (batSell) batSell.style.display = (mode === "sell" && needsBattery) ? "block" : "none";
 
-        // Dynamically update battery field visibility based on category
-        const catBtn = qs(".catItem.is-active");
-        const category = categorySelect?.value || catBtn?.dataset.catType || "";
-        const catLower = category.toLowerCase();
-        const isConsole = catLower === "konzola" || catLower === "console";
-        const isWatch = catLower === "hodinky" || catLower === "watch";
-        const isAudio = catLower === "slúchadlá" || catLower === "audio";
-        
-        const needsBattery = (catLower === "mobil" || catLower === "notebook" || catLower === "tablet" || catLower === "mobile" || catLower === "laptop" || isWatch) && !isConsole && !isAudio;
-        
-        const batBuy = qs("[data-battery-field]");
-        const batSell = qs("[data-battery-field-sell]");
-        
-        if (batBuy) batBuy.style.display = (mode === "buy" && needsBattery) ? "block" : "none";
-        if (batSell) batSell.style.display = (mode === "sell" && needsBattery) ? "block" : "none";
+      // 🎮 CONSOLE SPECIFIC: Toggle console fields on mode change
+      const consoleOnlyFields = document.querySelectorAll("[data-console-only]");
+      consoleOnlyFields.forEach(f => {
+        const isConsoleMode = (catLower === "konzola" || catLower === "console") && mode === "sell";
+        f.hidden = !isConsoleMode;
+        f.style.display = isConsoleMode ? "block" : "none";
+      });
 
-        // 🎮 CONSOLE SPECIFIC: Toggle console fields on mode change
-        const consoleOnlyFields = document.querySelectorAll("[data-console-only]");
-        consoleOnlyFields.forEach(f => {
-          const isConsoleMode = (catLower === "konzola" || catLower === "console") && mode === "sell";
-          f.hidden = !isConsoleMode;
-          f.style.display = isConsoleMode ? "block" : "none";
-        });
-
-        // 🔄 Trigger recalculation on mode switch
-        fetchHeurekaPrice();
+      // 🔄 Trigger recalculation on mode switch
+      fetchHeurekaPrice();
       }, () => {
         // Revert radio button if cancel
         const currentMode = input.value === "buy" ? "sell" : "buy";
@@ -1180,7 +1180,7 @@ const fallbackCopyToClipboard = (text) => {
             
             // 💰 SYNC PRICE: Use Central Pricing Engine (Source of truth)
             data.priceAvg = getFairPriceBasis(model, r.base_price_recommended, data.priceAvg);
-            data.priceFrom = data.priceAvg * 0.9;
+              data.priceFrom = data.priceAvg * 0.9;
 
             const checkList = qs(".checkList");
             if (checkList) {
@@ -6610,7 +6610,7 @@ const fallbackCopyToClipboard = (text) => {
             const reviewCountEl = document.querySelector("#reviewCount");
             const adsCount = reviewCountEl ? reviewCountEl.innerText : "—";
 
-            await fetch("/api/feedback", {
+            await fetch(`${API_BASE}/api/feedback`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ 
@@ -7245,13 +7245,13 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       }, 2500);
       showToast("✅ Odkaz na tento report bol skopírovaný!", { type: "success" });
     };
-
+    
     if (navigator.clipboard && window.isSecureContext) {
       navigator.clipboard.writeText(shareUrl).then(onDone).catch(err => {
         console.error('Failed to copy link: ', err);
         fallbackCopyToClipboard(shareUrl);
         onDone();
-      });
+    });
     } else {
       fallbackCopyToClipboard(shareUrl);
       onDone();
@@ -7568,7 +7568,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       if (modelLower.includes("lenovo")) brand = "Lenovo";
       if (modelLower.includes("dell")) brand = "Dell";
       
-      const response = await fetch(`/api/audit/report?brand=${encodeURIComponent(brand)}&model=${encodeURIComponent(modelName)}`);
+      const response = await fetch(`${API_BASE}/api/audit/report?brand=${encodeURIComponent(brand)}&model=${encodeURIComponent(modelName)}`);
       const data = await response.json();
       if (data.ok) {
         const r = data.report;
@@ -7599,7 +7599,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
   storageSelect?.addEventListener("change", () => {
     handleLockCheck(() => {
-      fetchHeurekaPrice();
+    fetchHeurekaPrice();
       savePrevValue(storageSelect);
     }, () => revertValue(storageSelect));
   });
@@ -7667,7 +7667,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
       if (forcedId) {
         // LOAD EXISTING AUDIT
-        const resp = await fetch(`/api/audits/${forcedId}`);
+        const resp = await fetch(`${API_BASE}/api/audits/${forcedId}`);
         const data = await resp.json();
         if (!data.ok) throw new Error(data.error || "Audit sa nepodarilo načítať.");
         r = data.audit.products; // Joined product data
@@ -7690,7 +7690,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         if (modelLower.includes("lenovo")) brand = "Lenovo";
         if (modelLower.includes("dell")) brand = "Dell";
 
-        const response = await fetch(`/api/audit/report?brand=${encodeURIComponent(brand)}&model=${encodeURIComponent(rawModel)}`);
+        const response = await fetch(`${API_BASE}/api/audit/report?brand=${encodeURIComponent(brand)}&model=${encodeURIComponent(rawModel)}`);
         const data = await response.json();
         if (!data.ok) throw new Error(data.error || "Model sa nenachádza v expertných auditoch.");
         r = data.report;
@@ -7811,7 +7811,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
           <div class="expert-check-item" data-hint="${hint}" data-price-drop="${priceDrop}" style="cursor: ${priceDrop > 0 ? 'pointer' : 'default'}">
             <span class="expert-check-icon">${icon}</span>
             <div style="display:flex; flex-direction:column; gap:2px;">
-              <span style="font-weight: 700;">${cleanLine.replace(/^[✔️❌🤝🏷️🧮•\-\s⚠️!]+/, '').trim()}</span>
+            <span style="font-weight: 700;">${cleanLine.replace(/^[✔️❌🤝🏷️🧮•\-\s⚠️!]+/, '').trim()}</span>
               ${priceDrop > 0 ? `<span class="price-impact-badge">-${priceDrop} €</span>` : ''}
             </div>
           </div>
@@ -8257,7 +8257,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         text += `<br><br><span style="font-size: 11px; opacity: 0.7; font-weight: 400;">⚠️ <strong>Upozornenie:</strong> Za pravosť technických informácií (stav batérie, vizuálny stav) zodpovedá predávajúci. Auditly.io overuje technickú špecifikáciu a pôvodnú konfiguráciu modelu.</span>`;
         
         ruleText.innerHTML = text;
-        ruleBox.style.display = "block";
+          ruleBox.style.display = "block";
       }
 
       // 6. Sale Highlights
@@ -9368,7 +9368,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
   // Update Navigation Buttons based on Auth State
   const updateAuthUI = (user) => {
-    document.querySelectorAll(".btnLogin").forEach(btn => {
+  document.querySelectorAll(".btnLogin").forEach(btn => {
       if (user) {
         btn.textContent = "Môj Profil";
         btn.dataset.authMode = "profile";
@@ -9473,9 +9473,9 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) {
         saveAuditToAccount(user);
-      } else {
+    } else {
         openAuth("login");
-      }
+    }
     });
   });
 
@@ -9490,11 +9490,11 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     const currentBattery = mode === "buy" ? qs("[data-battery-health]")?.value : qs("[data-battery-health-sell]")?.value;
     const currentCondition = qs("[data-device-condition]")?.value || "100";
     const currentStorage = storageSelect?.value || "";
-
+    
     showToast("💾 Ukladám audit do vášho účtu...", { type: "info" });
 
     try {
-      const resp = await fetch("/api/audits", {
+      const resp = await fetch(`${API_BASE}/api/audits`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -9524,8 +9524,8 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         const shareBase = isLocal ? productionDomain : window.location.origin;
         
         const shareUrl = `${shareBase}/?report=${data.id}`;
-        await copyToClipboardFallback(shareUrl);
-      } else {
+            await copyToClipboardFallback(shareUrl);
+        } else {
         throw new Error(data.error);
       }
     } catch (err) {
