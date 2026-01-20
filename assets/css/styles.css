@@ -3593,41 +3593,44 @@ input:checked + .slider-round:before {
 /* 🏁 PUBLIC REPORT PAGE MODE */
 body.is-public-report {
   background: #020617 !important;
-  overflow-y: auto !important;
+  overflow: hidden !important;
 }
 
-body.is-public-report > *:not(#publicAuditOverlay):not(.aurora-container) {
+body.is-public-report > *:not(#publicAuditOverlay):not(#expertReportOverlay):not(.aurora-container) {
   display: none !important;
 }
 
-body.is-public-report #publicAuditOverlay {
-  position: relative !important;
+body.is-public-report #publicAuditOverlay,
+body.is-public-report #expertReportOverlay {
   display: flex !important;
-  background: transparent !important;
-  backdrop-filter: none !important;
-  padding: 0 !important;
-  min-height: 100vh;
-  align-items: flex-start !important;
-  justify-content: center !important;
-  z-index: 1;
+  position: fixed !important;
+  padding: 40px 20px !important;
+  background: rgba(2, 6, 23, 0.5) !important;
+  overflow-y: auto !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
-body.is-public-report .public-audit-window {
+body.is-public-report .public-audit-window,
+body.is-public-report .expert-report-window {
   max-width: 1000px !important;
   width: 100% !important;
   height: auto !important;
-  min-height: 100vh;
-  border-radius: 0 !important;
-  margin: 0 auto !important;
-  box-shadow: none !important;
-  border: none !important;
-  background: transparent !important;
+  min-height: auto !important;
+  border-radius: 40px !important;
+  margin: auto !important;
+  box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: #0f172a !important;
+  overflow: hidden;
 }
 
 body.is-public-report .expert-scroll-area {
   height: auto !important;
   overflow: visible !important;
-  padding-bottom: 100px;
+  padding-bottom: 60px;
 }
 
 body.is-public-report .expert-header-top {
@@ -3659,6 +3662,7 @@ body.is-public-report .expert-header-top {
   justify-content: center;
   align-items: center;
   padding: 20px;
+  overflow-y: auto; /* Enable scrolling for the overlay */
 }
 
 .public-audit-window .expert-header-top #closePublicAudit {

@@ -1275,30 +1275,34 @@ const fallbackCopyToClipboard = (text) => {
 
         if (hasWarranty) fairPriceAvg += 30;
 
-        // 🆕 UPDATE CARD 3: MARKET CHART
         const bars = document.querySelectorAll('.priceChart__bar');
         const labels = document.querySelectorAll('.priceChart__bar span');
         
         if (labels.length >= 3) {
           const marketAvg = data.priceAvg;
-          // We anchor the max height to the highest of the 3 points to keep scaling consistent
-          const highestPoint = Math.max(marketAvg, fairPriceAvg, data.priceFrom);
-          const getH = (p) => Math.max(15, Math.round((p / highestPoint) * 90)); // Minimum 15% height for visibility
+          const marketFrom = data.priceFrom;
+          let displayFairPrice = Math.round(fairPriceAvg);
 
-          // Bar 1: Market From (Low end)
-          let displayPriceFrom = Math.round(data.priceFrom);
-          // 🆕 FIX: If our fair price is lower than market entry (bad condition), 
-          // ensure the graph still makes sense but show the true low value.
+          // 🆕 FIX: Ensure "Od" is not higher than "Férová" visually if user device is extremely poor condition
+          // and ensure the scale is correct
+          const highestPoint = Math.max(marketAvg, displayFairPrice, marketFrom);
+          const getH = (p) => Math.max(15, Math.round((p / highestPoint) * 90));
+
+          // Bar 1: Market From
+          // If our fair price is lower than market entry, we show our price as the new "Od" for this specific case
+          let displayPriceFrom = Math.round(marketFrom);
+          if (displayFairPrice < displayPriceFrom) {
+            labels[0].innerHTML = `<small>Trh od</small> ${displayPriceFrom}€`;
+          } else {
           labels[0].innerHTML = `<small>Od</small> ${displayPriceFrom}€`;
-          bars[0].style.height = `${getH(data.priceFrom)}%`;
-          bars[0].title = `Najnižšia bazárová ponuka (opotrebovaný stav)`;
+          }
+          bars[0].style.height = `${getH(marketFrom)}%`;
+          bars[0].title = `Bežná najnižšia ponuka na trhu`;
           
           // Bar 2 (Active): Adjusted Fair Price
-          // Ensure fair price doesn't look weirdly detached from "Od"
-          let displayFairPrice = Math.round(fairPriceAvg);
           labels[1].innerHTML = `<small>Férová</small> ${displayFairPrice}€`;
           bars[1].title = `Vaša férová cena (zohľadňuje batériu, stav a príslušenstvo)`;
-          bars[1].style.height = `${getH(fairPriceAvg)}%`;
+          bars[1].style.height = `${getH(displayFairPrice)}%`;
           
           // Bar 3: Market Average (Standard Top Condition)
           labels[2].innerHTML = `<small>TOP stav</small> ${Math.round(marketAvg)}€`;
@@ -1345,23 +1349,21 @@ const fallbackCopyToClipboard = (text) => {
             // Predavam mode or no price entered
             verdictBadge.innerText = "ANALÝZA HOTOVÁ";
             const isSellMode = currentMode === "sell";
-            if (isSellMode) {
               const deviceConditionInput = qs("[data-device-condition]");
               const conditionPct = Number(deviceConditionInput?.value) || 100;
+
+            if (isSellMode) {
               const batteryInput = qs("[data-battery-health-sell]");
               const batteryValSell = Number(batteryInput?.value) || 100;
               
-              // Apply condition adjustment for Sell mode preview too
-              const sellPricePreview = Math.round(fairPriceAvg * (conditionPct / 100));
-
-              verdictText.innerHTML = `Vaša odporúčaná predajná cena je <strong>${sellPricePreview}€</strong>.<br>
+              verdictText.innerHTML = `Vaša odporúčaná predajná cena je <strong>${Math.round(fairPriceAvg)}€</strong>.<br>
                 <span style="font-size: 11px; opacity: 0.7; margin-top: 5px; display: block;">
                   💡 Výpočet zohľadňuje vami zadaný vizuálny stav (${conditionPct}%) a batériu (${batteryValSell}%).
                 </span>`;
             } else {
               verdictText.innerHTML = `Férová bazárová cena pre toto zariadenie je približne <strong>${Math.round(fairPriceAvg)}€</strong>.<br>
                 <span style="font-size: 11px; opacity: 0.7; margin-top: 5px; display: block;">
-                  💡 Táto cena platí pre model v <strong>TOP stave</strong> (bez škrabancov, batéria 100 %). Ak je telefón obúchaný alebo má slabšiu batériu, odporúčaná cena úmerne klesá.
+                  💡 Táto cena zohľadňuje aktuálny technický stav (${conditionPct}%). Trhový priemer za 100% stav je ${Math.round(data.priceAvg)}€.
                 </span>`;
             }
           }
@@ -7221,37 +7223,62 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
   const expertOverlay = qs("#expertReportOverlay");
   const closeExpertBtn = qs("#closeExpertReport");
   const openExpertBtns = document.querySelectorAll("[data-open-master-report]");
-  const shareLinkEl = qs("#expertShareLink");
+  const shareLinkPrivate = qs("#expertShareLinkPrivate");
+  const shareLinkPublic = qs("#expertShareLinkPublic");
 
   // 🔗 SHARE AUDIT LINK LOGIC
-  window.copyAuditLink = () => {
+  window.copyPrivateLink = () => {
     const auditId = expertOverlay.dataset.currentAuditId;
     if (!auditId) return;
-    
     const productionDomain = "https://auditlyio.sk";
     const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
     const shareBase = isLocal ? productionDomain : window.location.origin;
     
-    const shareUrl = `${shareBase}/?report=${auditId}`; // Use ?report for consistent public view
+    const shareUrl = `${shareBase}/?audit=${auditId}`; // Private link uses ?audit
     
     const onDone = () => {
-      const shareBtn = qs("#expertShareLink");
+      const shareBtn = qs("#expertShareLinkPrivate");
       const originalText = shareBtn.innerHTML;
-      shareBtn.innerHTML = "✅ Odkaz bol skopírovaný!";
+      shareBtn.innerHTML = "✅ Súkromný odkaz skopírovaný!";
       shareBtn.style.color = "#10b981";
       setTimeout(() => {
         shareBtn.innerHTML = originalText;
         shareBtn.style.color = "#a78bfa";
       }, 2500);
-      showToast("✅ Odkaz na tento report bol skopírovaný!", { type: "success" });
+      showToast("✅ Súkromný odkaz bol skopírovaný!", { type: "success" });
     };
     
     if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(shareUrl).then(onDone).catch(err => {
-        console.error('Failed to copy link: ', err);
-        fallbackCopyToClipboard(shareUrl);
-        onDone();
-    });
+      navigator.clipboard.writeText(shareUrl).then(onDone);
+    } else {
+      fallbackCopyToClipboard(shareUrl);
+      onDone();
+    }
+  };
+
+  window.copyPublicLinkExpert = () => {
+    const auditId = expertOverlay.dataset.currentAuditId;
+    if (!auditId) return;
+    const productionDomain = "https://auditlyio.sk";
+    const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+    const shareBase = isLocal ? productionDomain : window.location.origin;
+    
+    const shareUrl = `${shareBase}/?report=${auditId}`; // Public link uses ?report
+    
+    const onDone = () => {
+      const shareBtn = qs("#expertShareLinkPublic");
+      const originalText = shareBtn.innerHTML;
+      shareBtn.innerHTML = "✅ Verejný odkaz skopírovaný!";
+      shareBtn.style.color = "#10b981";
+      setTimeout(() => {
+        shareBtn.innerHTML = originalText;
+        shareBtn.style.color = "#a78bfa";
+      }, 2500);
+      showToast("✅ Verejný odkaz bol skopírovaný!", { type: "success" });
+    };
+    
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(shareUrl).then(onDone);
     } else {
       fallbackCopyToClipboard(shareUrl);
       onDone();
@@ -7655,7 +7682,8 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       expertOverlay.hidden = false;
       expertContent.hidden = true;
       expertLoader.hidden = false;
-      if (shareLinkEl) shareLinkEl.style.display = "none";
+      if (shareLinkPrivate) shareLinkPrivate.style.display = "none";
+      if (shareLinkPublic) shareLinkPublic.style.display = "none";
       
       // Clear old countdown
       const existingTimer = qs("#auditTimer");
@@ -7744,9 +7772,10 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         } catch (e) { console.warn("Failed to save audit history", e); }
       }
 
-      if (auditId && shareLinkEl) {
+      if (auditId && (shareLinkPrivate || shareLinkPublic)) {
         expertOverlay.dataset.currentAuditId = auditId;
-        shareLinkEl.style.display = "block";
+        if (shareLinkPrivate) shareLinkPrivate.style.display = "block";
+        if (shareLinkPublic) shareLinkPublic.style.display = "block";
         saveAppState(); // 💾 Save state when audit is created
       }
 
@@ -7991,7 +8020,13 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     // Prepare UI
     publicOverlay.hidden = false;
     publicOverlay.style.display = "flex";
+    
+    // Only lock body scroll if NOT in full-page standalone mode
+    if (!document.body.classList.contains('is-public-report')) {
     document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = ""; // Ensure it's scrollable in standalone mode
+    }
 
     const factSheet = qs("#publicFactSheet");
     if (factSheet) {
@@ -9711,8 +9746,10 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       .map(p => `<p style="margin-bottom: 20px; line-height: 1.8; color: rgba(255,255,255,0.8); font-size: 15px;">${p.trim()}</p>`)
       .join('');
 
-    const shareLinkEl = qs("#expertShareLink");
-    if (shareLinkEl) shareLinkEl.style.display = "none"; // Share doesn't work offline anyway
+    const shareLinkPrivate = qs("#expertShareLinkPrivate");
+  const shareLinkPublic = qs("#expertShareLinkPublic");
+    if (shareLinkPrivate) shareLinkPrivate.style.display = "none"; 
+    if (shareLinkPublic) shareLinkPublic.style.display = "none"; // Share doesn't work offline anyway
   };
 
   // 📡 OFFLINE SUPPORT (IndexedDB / localStorage fallback)

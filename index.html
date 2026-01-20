@@ -659,11 +659,14 @@
           <div class="expert-title-group">
             <h2 id="expertReportName">Model Zariadenia</h2>
             <div class="expert-subtitle">Trend za posledný rok • Mobil</div>
-            <div style="display: flex; gap: 15px; align-items: center; margin-top: 10px;">
-              <div id="expertShareLink" style="font-size: 11px; color: #a78bfa; cursor: pointer; display: none;" onclick="copyAuditLink()">
-                🔗 Kopírovať odkaz
-              </div>
+          <div style="display: flex; gap: 15px; align-items: center; margin-top: 10px;">
+            <div id="expertShareLinkPrivate" style="font-size: 11px; color: #a78bfa; cursor: pointer; display: none;" onclick="copyPrivateLink()">
+              🔒 Kopírovať súkromný odkaz
             </div>
+            <div id="expertShareLinkPublic" style="font-size: 11px; color: #a78bfa; cursor: pointer; display: none;" onclick="copyPublicLinkExpert()">
+              🌐 Kopírovať verejný odkaz
+            </div>
+          </div>
           </div>
           <button id="closeExpertReport">✕</button>
         </div>
@@ -977,7 +980,7 @@
     </div>
 
     <script src="./assets/js/slogans.js?v=1"></script>
-    <script src="./assets/js/main.js?v=169"></script>
+    <script src="./assets/js/main.js?v=170"></script>
 
     <!-- AI SCANNER MODAL -->
     <div id="aiScannerOverlay" style="display: none;">
