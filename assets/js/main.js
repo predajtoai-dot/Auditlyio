@@ -8324,15 +8324,6 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       const content = qs("#publicAuditContent");
       if (loader) loader.hidden = true;
       if (content) content.hidden = false;
-      const highlightsGrid = qs("#publicSaleHighlights");
-      if (highlightsGrid && saleHighlights.length > 0) {
-        highlightsGrid.innerHTML = saleHighlights.map(h => `
-          <div class="comp-point" style="border-left-color: #10b981;">
-            <strong class="comp-title" style="color: #10b981;">${h.title}</strong>
-            <p class="comp-desc">${h.desc}</p>
-          </div>
-        `).join('');
-      }
 
       // 🛡️ Floating Verified Badge
       const existingBadge = document.querySelector(".verified-floating-badge");
