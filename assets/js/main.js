@@ -8300,7 +8300,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         }
         
         // Add Disclaimer: "napisat ze za pravost tychto informacii zodpoveda on nie ja"
-        text += `<br><br><span style="font-size: 11px; opacity: 0.7; font-weight: 400;">⚠️ <strong>Upozornenie:</strong> Za pravosť technických informácií (stav batérie, vizuálny stav) zodpovedá predávajúci. Auditly.io overuje technickú špecifikáciu a pôvodnú konfiguráciu modelu.</span>`;
+        text += `<br><br><span style="font-size: 11px; opacity: 0.8; font-weight: 400; line-height: 1.6; display: block; background: rgba(2, 6, 23, 0.2); padding: 10px; border-radius: 10px;">⚠️ <strong>Právne upozornenie:</strong> Za skutočný technický stav a pravosť údajov o batérii zodpovedá výhradne predávajúci. Auditly.io je sprostredkovateľom týchto informácií a vykonáva digitálne overenie špecifikácií na základe vstupných dát. Odporúčame vizuálnu kontrolu pri osobnom stretnutí.</span>`;
         
         ruleText.innerHTML = text;
           ruleBox.style.display = "block";
@@ -9745,7 +9745,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     qs("#expertRecommendedPrice").textContent = `${Number(report.base_price_recommended || 0).toFixed(0)} €`;
     
     // Build Specs HTML
-    const rd = savedData.data.report_data || {};
+    const rd = savedData.report_data || {};
     const mode = rd.mode || "buy";
     const batteryVal = rd.battery || "100";
     const conditionPct = rd.condition || "100";
