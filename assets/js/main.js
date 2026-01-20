@@ -7695,13 +7695,24 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
       if (forcedId) {
         // LOAD EXISTING AUDIT
-        const resp = await fetch(`${API_BASE}/api/audits/${forcedId}`);
+        const resp = await fetch(`/api/audits/${forcedId}`);
         const data = await resp.json();
         if (!data.ok) throw new Error(data.error || "Audit sa nepodarilo načítať.");
+        
         r = data.audit.products; // Joined product data
         rd = data.audit.report_data || {};
         auditId = forcedId;
         createdAt = data.audit.created_at;
+
+        // ⚖️ Final Price Recommendation: Use saved or calculate if 0
+        if (data.audit.final_price_recommendation > 0) {
+          r.base_price_recommended = data.audit.final_price_recommendation;
+        } else {
+          // If recommendation is 0, we take the base price and apply penalties manually
+          const base = getFairPriceBasis(r.name, r.base_price_recommended, 0);
+          const conditionPct = Number(rd.condition || 100);
+          r.base_price_recommended = Math.round(base * (conditionPct / 100));
+        }
       } else {
         // ... (generate new audit logic) ...
         // GENERATE NEW AUDIT
@@ -8425,15 +8436,27 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     const mainPage = qs('.page');
     if (mainPage) mainPage.style.display = 'none';
     
-    // Ensure overlay is visible and configured for public view
-    setTimeout(() => renderPublicAudit(reportParam), 100);
+    // Show overlay immediately to avoid blank screen
+    const publicOverlay = qs("#publicAuditOverlay");
+    if (publicOverlay) {
+      publicOverlay.hidden = false;
+      publicOverlay.style.display = "block";
+    }
+    
+    setTimeout(() => renderPublicAudit(reportParam), 50);
   } else if (auditParam) {
     // EXPERT REPORT VIEW (Internal/Shared): Also hide everything else
     document.body.classList.add('is-public-report');
     const mainPage = qs('.page');
     if (mainPage) mainPage.style.display = 'none';
+
+    // Show overlay immediately
+    if (expertOverlay) {
+      expertOverlay.hidden = false;
+      expertOverlay.style.display = "block";
+    }
     
-    setTimeout(() => handleOpenExpertReport(auditParam), 100);
+    setTimeout(() => handleOpenExpertReport(auditParam), 50);
   } else {
     // Check if first visit
     const hasVisited = localStorage.getItem("auditly_visited");
