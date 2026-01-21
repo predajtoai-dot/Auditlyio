@@ -20,7 +20,7 @@ const BRANDS = {
 };
 
 const MODELS = {
-  Apple: ['iPhone 17', 'iPhone 16 Pro Max', 'iPhone 15 Pro', 'iPhone 13 Pro', 'iPad Pro 12.9 M2', 'iPad Air 13 M2', 'iPad Air 5 M1', 'MacBook Air M2', 'MacBook Pro M3', 'Apple Watch Ultra 2', 'AirPods Pro (2nd Gen)'],
+  Apple: ['iPhone 17 Pro Max', 'iPhone 17 Pro', 'iPhone 17', 'iPhone 16 Pro Max', 'iPhone 15 Pro', 'iPhone 13 Pro', 'iPad Pro 12.9 M2', 'iPad Air 13 M2', 'iPad Air 5 M1', 'MacBook Air M2', 'MacBook Pro M3', 'Apple Watch Ultra 2', 'AirPods Pro (2nd Gen)'],
   Samsung: ['S24 Ultra', 'S23 Ultra', 'Tab S9 Ultra', 'Galaxy Watch 6'],
   Sony: ['PS5 Disk Edition', 'PS5 Digital', 'PS4 Pro', 'WH-1000XM5'],
   Microsoft: ['Xbox Series X', 'Xbox Series S', 'Surface Pro 9'],
@@ -29,6 +29,8 @@ const MODELS = {
 };
 
 const CAPACITIES = {
+  'iPhone 17 Pro Max': ['256 GB', '512 GB', '1 TB'],
+  'iPhone 17 Pro': ['128 GB', '256 GB', '512 GB', '1 TB'],
   'iPhone 17': ['128 GB', '256 GB', '512 GB'],
   'iPhone 16 Pro Max': ['256 GB', '512 GB', '1 TB'],
   'iPhone 15 Pro': ['128 GB', '256 GB', '512 GB', '1 TB'],

@@ -7,7 +7,7 @@ REM Remove old ZIP if exists
 if exist "predajto-vercel.zip" del "predajto-vercel.zip"
 
 REM Create ZIP with PowerShell
-powershell -Command "Compress-Archive -Path 'index.html','main.js','styles.css','server.mjs','package.json','vercel.json','categories.mjs','marketStore.mjs','pricingProtection.mjs','.gitignore','.vercelignore','env.example','privacy.html','api' -DestinationPath 'predajto-vercel.zip' -Force"
+powershell -Command "Compress-Archive -Path 'index.html','assets','server.mjs','package.json','vercel.json','categories.mjs','marketStore.mjs','pricingProtection.mjs','.gitignore','.vercelignore','env.example','privacy.html','api' -DestinationPath 'predajto-vercel.zip' -Force"
 
 echo.
 echo ====================================

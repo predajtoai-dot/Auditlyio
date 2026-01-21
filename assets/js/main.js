@@ -1279,35 +1279,34 @@ const fallbackCopyToClipboard = (text) => {
         const labels = document.querySelectorAll('.priceChart__bar span');
         
         if (labels.length >= 3) {
-          const marketAvg = data.priceAvg;
           const marketFrom = data.priceFrom;
+          const marketAvg = Math.max(data.priceAvg, marketFrom); // 🛡️ Fix: Market average cannot be lower than 'price from'
           let displayFairPrice = Math.round(fairPriceAvg);
 
-          // 🆕 FIX: Ensure "Od" is not higher than "Férová" visually if user device is extremely poor condition
-          // and ensure the scale is correct
-          const highestPoint = Math.max(marketAvg, displayFairPrice, marketFrom);
+          // 🆕 DYNAMIC ORDERING: Ensure bars always go from LOWEST to HIGHEST for logic
+          // Points: [Our Price, Market From, Market Top]
+          const points = [
+            { val: displayFairPrice, label: "Férová", active: true, title: "Vaša férová cena (zohľadňuje stav)" },
+            { val: Math.round(marketFrom), label: "Trh od", active: false, title: "Bežná najnižšia ponuka na trhu" },
+            { val: Math.round(marketAvg), label: "TOP stav", active: false, title: "Trhový priemer za 100% stav" }
+          ];
+
+          // Sort points by value to ensure the visual chart always makes sense (ascending)
+          points.sort((a, b) => a.val - b.val);
+
+          const highestPoint = points[2].val;
           const getH = (p) => Math.max(15, Math.round((p / highestPoint) * 90));
 
-          // Bar 1: Market From
-          // If our fair price is lower than market entry, we show our price as the new "Od" for this specific case
-          let displayPriceFrom = Math.round(marketFrom);
-          if (displayFairPrice < displayPriceFrom) {
-            labels[0].innerHTML = `<small>Trh od</small> ${displayPriceFrom}€`;
-          } else {
-          labels[0].innerHTML = `<small>Od</small> ${displayPriceFrom}€`;
-          }
-          bars[0].style.height = `${getH(marketFrom)}%`;
-          bars[0].title = `Bežná najnižšia ponuka na trhu`;
-          
-          // Bar 2 (Active): Adjusted Fair Price
-          labels[1].innerHTML = `<small>Férová</small> ${displayFairPrice}€`;
-          bars[1].title = `Vaša férová cena (zohľadňuje batériu, stav a príslušenstvo)`;
-          bars[1].style.height = `${getH(displayFairPrice)}%`;
-          
-          // Bar 3: Market Average (Standard Top Condition)
-          labels[2].innerHTML = `<small>TOP stav</small> ${Math.round(marketAvg)}€`;
-          labels[2].title = `Trhový priemer za zariadenie v 100% stave`;
-          bars[2].style.height = `${getH(marketAvg)}%`;
+          points.forEach((pt, idx) => {
+            labels[idx].innerHTML = `<small>${pt.label}</small> ${pt.val}€`;
+            bars[idx].style.height = `${getH(pt.val)}%`;
+            bars[idx].title = pt.title;
+            if (pt.active) {
+              bars[idx].classList.add("is-active");
+            } else {
+              bars[idx].classList.remove("is-active");
+            }
+          });
         }
 
         // Update freshness info in UI
@@ -1368,6 +1367,9 @@ const fallbackCopyToClipboard = (text) => {
             }
           }
         }
+
+        // 🚥 Update Deal Meter
+        updateDealMeter(sellerPrice, fairPriceAvg);
 
         showToast(`Trh: Férová cena ${Math.round(fairPriceAvg)}€ (Batéria: ${batteryVal}%)`, { type: "info" });
 
@@ -1915,6 +1917,45 @@ const fallbackCopyToClipboard = (text) => {
     return data.data;
   };
 
+  const updateDealMeter = (sellerPrice, recommended) => {
+    const dealStatusEl = qs("[data-deal-status]");
+    const meterFillEl = qs("[data-meter-fill]");
+    const dealLabelEl = qs(".dealMeter__label");
+    const currentMode = document.querySelector('input[name="auditMode"]:checked')?.value || "buy";
+
+    if (!dealStatusEl || !meterFillEl) return;
+
+    if (sellerPrice > 0 && recommended > 0) {
+      const diff = ((sellerPrice - recommended) / recommended) * 100;
+      let status = "FÉROVÁ CENA";
+      let color = "var(--orange)";
+
+      if (dealLabelEl) {
+        dealLabelEl.textContent = currentMode === "sell" ? "Výhodnosť Predaja" : "Výhodnosť Kúpy";
+      }
+      
+      let posPct = 50 - (diff * 2); 
+      posPct = Math.min(95, Math.max(5, posPct));
+
+      if (diff < -5) {
+        status = currentMode === "sell" ? "RÝCHLY PREDAJ" : `SKVELÁ CENA (Ušetríš ${Math.round(recommended - sellerPrice)}€)`;
+        color = "var(--green)";
+      } else if (diff > 5) {
+        status = currentMode === "sell" ? "NÍZKA ŠANCA NA PREDAJ" : "PREDRAŽENÉ";
+        color = "var(--red)";
+      }
+
+      dealStatusEl.textContent = status;
+      dealStatusEl.style.color = color;
+      meterFillEl.style.left = `${posPct}%`;
+      console.log(`🚥 Deal Meter Updated: Pos=${posPct}%, Status=${status}`);
+    } else {
+      dealStatusEl.textContent = "ZADAJTE ÚDAJE...";
+      dealStatusEl.style.color = "var(--muted)";
+      meterFillEl.style.left = "0%";
+    }
+  };
+
   const applyPricesToUI = (prices) => {
     console.log("💰 applyPricesToUI called with:", prices);
     
@@ -1963,7 +2004,7 @@ const fallbackCopyToClipboard = (text) => {
     );
     const quick = Number(prices.price_quick ?? prices.quick ?? prices.price_low ?? 0);
     const premium = Number(prices.price_max ?? prices.premium ?? prices.price_high ?? 0);
-    const market = Number(prices.market ?? recommended);
+    const market = Math.max(Number(prices.market ?? recommended), quick); // 🛡️ Fix: Market price cannot be lower than 'price from' (quick)
     
     console.log(`✅ Applying prices: Quick=${quick}€, Market=${market}€, Premium=${premium}€, Recommended=${recommended}€`);
     
@@ -2088,51 +2129,8 @@ const fallbackCopyToClipboard = (text) => {
       }
     }
 
-    // 🆕 AUDITLYIO: Value Traffic Light (Deal Meter)
-    const dealStatusEl = qs("[data-deal-status]");
-    const meterFillEl = qs("[data-meter-fill]");
-    const dealLabelEl = qs(".dealMeter__label");
-
-    if (sellerPrice > 0 && recommended > 0) {
-      const diff = ((sellerPrice - recommended) / recommended) * 100;
-      let status = "FÉROVÁ CENA";
-      let color = "var(--orange)";
-
-      if (dealLabelEl) {
-        dealLabelEl.textContent = currentMode === "sell" ? "Výhodnosť Predaja" : "Výhodnosť Kúpy";
-      }
-      
-      // Calculate position from 0% (red) to 100% (green)
-      // For BUY mode: lower price = greener (higher posPct)
-      // For SELL mode: higher price = redder (lower posPct) - wait, if I sell high, it's good for ME but bad for sale chance.
-      // Let's stick to "Deal for the user" logic: 
-      // Buy: Low price = Good (Green)
-      // Sell: High price = Bad for sale chance (Red), but good for wallet.
-      // Usually these meters show "Chance of sale" or "Market value".
-      // Let's make it "Chance of sale" for Sell mode: High price = Low chance (Red).
-      
-      let posPct = 50 - (diff * 2); 
-      posPct = Math.min(95, Math.max(5, posPct));
-
-      if (diff < -5) {
-        status = currentMode === "sell" ? "RÝCHLY PREDAJ" : `SKVELÁ CENA (Ušetríš ${Math.round(recommended - sellerPrice)}€)`;
-        color = "var(--green)";
-      } else if (diff > 5) {
-        status = currentMode === "sell" ? "NÍZKA ŠANCA NA PREDAJ" : "PREDRAŽENÉ";
-        color = "var(--red)";
-      }
-
-      if (dealStatusEl) {
-        dealStatusEl.textContent = status;
-        dealStatusEl.style.color = color;
-      }
-      if (meterFillEl) {
-        meterFillEl.style.left = `${posPct}%`;
-        // Background not needed for handle
-      }
-
-      console.log(`🚥 Deal Meter: Seller=${sellerPrice}€, Market=${recommended}€, Diff=${diff.toFixed(1)}%, Status=${status}`);
-    }
+    // 🚥 Update Deal Meter
+    updateDealMeter(sellerPrice, recommended);
 
     // Segmented cards under slider
     if (quickPriceEl && Number.isFinite(quick) && quick > 0) quickPriceEl.textContent = String(quick);
@@ -9870,6 +9868,17 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
   initAIScanner();
   loadAppState();
+
+  // 🛡️ ACCIDENTAL RELOAD PROTECTION
+  window.addEventListener("beforeunload", (e) => {
+    if (isTestPaid) {
+      // Standard browser way to prevent accidental loss of paid report
+      e.preventDefault();
+      // For most modern browsers, the message is ignored, but some still use it
+      e.returnValue = "Máte rozpracovaný zaplatený report. Ak stránku opustíte, prídete oň.";
+      return e.returnValue;
+    }
+  });
 });
 
 

@@ -1,3 +1,49 @@
+html, body {
+  background: #020617 !important;
+  color: #ffffff;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  overscroll-behavior-y: contain; /* Zabráni náhodnému pull-to-refresh na mobile */
+}
+
+/* 📱 MOBILE FIXES */
+@media (max-width: 768px) {
+  .luxuryBadge {
+    width: 95% !important;
+    margin: 0 auto;
+    padding: 20px 15px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .luxuryBadge__title {
+    font-size: 22px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+  }
+
+  .luxuryBadge__title span {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .luxuryBadge__footer {
+    font-size: 10px !important;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .heroSection {
+    padding: 30px 0 !important;
+    overflow: hidden;
+  }
+}
+
 :root{
   --bg0:#020617;
   --ink:#ffffff;
@@ -3250,6 +3296,59 @@ input:checked + .slider-round:before {
   font-size: 18px;
 }
 
+/* 📱 MOBILE RESPONSIVENESS FIXES */
+@media (max-width: 768px) {
+  .luxuryBadge {
+    padding: 20px 15px;
+    width: 95%;
+    margin: 0 auto;
+    border-radius: 24px;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .luxuryBadge__title {
+    font-size: 24px !important;
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+    white-space: normal !important;
+    word-break: break-word;
+    width: 100%;
+  }
+
+  .luxuryBadge__title span {
+    display: block;
+    width: 100%;
+    white-space: normal !important;
+  }
+
+  .luxuryBadge__footer {
+    font-size: 10px;
+    gap: 5px;
+    text-align: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .luxuryBadge__footer .subtitle {
+    white-space: normal;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  .heroSection {
+    padding: 20px 0;
+    min-height: auto;
+  }
+}
+
+/* Fix for white flash during overscroll/reload on mobile */
+html, body {
+  background-color: #020617 !important;
+  overscroll-behavior-y: contain; /* Prevents pull-to-refresh if desired, or at least controls it */
+}
+
 @media (max-width: 768px) {
   .reportGrid {
     grid-template-columns: 1fr;
@@ -3338,8 +3437,63 @@ input:checked + .slider-round:before {
 }
 
 /* 🍞 TOAST */
-/* ✨ PREMIUM TOAST UPGRADE */
-.toast {
+/* ✨ MODERN LOADER UPGRADE */
+.loader-spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(167, 139, 250, 0.1);
+  border-radius: 50%;
+  border-top-color: var(--purple-main);
+  border-right-color: var(--blue-main);
+  animation: spin 1s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  margin: 0 auto 20px;
+  box-shadow: 0 0 30px rgba(167, 139, 250, 0.2);
+  position: relative;
+}
+
+.loader-spinner::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border: 2px solid transparent;
+  border-top-color: rgba(96, 165, 250, 0.3);
+  border-radius: 50%;
+  animation: spin 2s linear infinite reverse;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.reportOverlay__loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Fix for mobile clipping */
+.luxuryBadge__title {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #fff 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 15px;
+  display: block;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .luxuryBadge__title {
+    font-size: 24px !important;
+    white-space: normal !important;
+    word-break: break-word;
+  }
+}
   background: rgba(15, 23, 42, 0.9);
   color: #fff;
   border: 1px solid rgba(167, 139, 250, 0.3);

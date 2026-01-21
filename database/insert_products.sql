@@ -693,88 +693,64 @@ VALUES (
     $auditly$Apple$auditly$,
     $auditly$iPhone 17 Pro$auditly$,
     $auditly$Mobile$auditly$,
-    $auditly$📱 6.3" LTPO Super Retina XDR OLED (ProMotion 1-120Hz).$auditly$,
+    $auditly$📱 6.3" OLED s rozlíšením 2622 × 1206 a plnou podporou ProMotion (120 Hz). Jas Outdoor Peak 3 000 nitov.$auditly$,
     $auditly$[
-        "⚠️ Haptika: Skús stlačiť Camera Control. Odozva musí byť pevná. Ak cítiš vibráciu v celom tele mobilu, Taptic Engine je zle uchytený.",
-        "⚠️ Audio: i17 Pro má vylepšený horný reproduktor pre širšie stereo. Pusti si Spatial Audio test.",
-        "⚠️ Test barometra: Appka Barometer Plus. Zatlač na displej. Tesnenie u i17 Pro musí byť nepriestrelné (IP68 do 6 metrov).",
-        "⚠️ Locked Parts (iOS 19+): Reštartuj. Skontroluj Parts and Service History. Apple pri i17 sprísnil kontrolu spárovaných dielov.",
-        "⚠️ Sériové číslo: Over ho na checkover.apple.com. Musí svietiť platná záruka.",
-        "⚠️ MDM Check: Vymaž mobil do továrenských nastavení. Ak sa objaví Remote Management, mobil vráť.",
-        "⚠️ Vizuál (Narrow Island): Prvýkrát dochádza k zmenšeniu technológie FaceID (metalens), Dynamic Island je užší.",
-        "⚠️ 5x Zoom: Už aj menšie Pro má 5x optický zoom štandardne (ako Max verzia)."
+        "⚠️ Test barometra: Pri modeli Pro je tesnenie okolo titánového rámu kľúčové; pnutie vzduchu v Barometer Plus musí byť okamžité.",
+        "⚠️ Locked Parts: Skontroluj Nastavenia -> Informácie; iOS 26 pri modeli Pro prísne stráži originalitu batérie a všetkých 48 Mpx snímačov.",
+        "⚠️ Pôvod: Pri verzii 256 GB strieborná over, či ide o oficiálnu distribúciu (Single SIM + eSIM)."
     ]$auditly$,
-    $auditly$🔋 • Čip: A19 Pro (2nm) – energetický zázrak, ktorý takmer neprodukuje odpadové teplo.
-• RAM: 12GB – zásadné pre lokálny chod Apple Intelligence (modely i16 Pro mali len 8GB).
-• Audit pravidlo: iPhone 17 Pro ukazuje cykly batérie a dátum prvého použitia.
-• Kontrola: Pri modeli z konca roka 2025 musí byť zdravie batérie 100 %. Ak uvidíš 98 % a menej, pýtaj sa na používanie v extrémnych podmienkach.$auditly$,
-    $auditly$Titán Grade 5 s novou povrchovou úpravou odolnou voči odtlačkom prstov.$auditly$,
+    $auditly$🔋 • Čip: Apple A19 Pro – najvýkonnejší čip na trhu s pokročilou správou tepla a brutálnym výkonom pre AI.
+• RAM: 12 GB zabezpečuje bleskový multitasking a plynulý chod Apple Intelligence.
+• Batéria: Kapacita 3988 mAh s podporou rýchleho nabíjania.
+• Audit pravidlo: iPhone 17 Pro natívne zobrazuje cykly batérie v menu. iOS 26 je pri 12 GB RAM extrémne svižný.$auditly$,
+    $auditly$Špičkový titánový rám s matným povrchom, ktorý lepšie odoláva odtlačkom a škrabancom. Certifikácia IP68.$auditly$,
     $auditly$🤝 • Kalkulačka nákladov:
-  - Hlboký škrabanec na titáne: -80 €
-  - Chýbajúca faktúra/bloček: -50 €
-• Veta na zľavu: „Tento iPhone 17 Pro je super, ale vidím, že už má cez 100 cyklov za necelé 3 mesiace. To je intenzívne používanie. Vedeli by ste mi spustiť z ceny?“
-• Veta na preverenie: „Rád by som skúsil ten nový 48MP zoom vonku na dennom svetle, či je obraz čistý.“
+  - Chýbajúca faktúra: -100 €
+  - Odreniny na titáne: -50 €
+  - Zdravie batérie pod 95 %: -60 €
 • ULTIMÁTNY CHECKLIST:
-  [ ] Zmenšený Island: Je symetrický a čistý?
-  [ ] 5x Zoom: Je obraz ostrý pri maximálnom optickom zoome?
-  [ ] Záruka: Súhlasí IMEI na krabici, v systéme a na faktúre?$auditly$,
-    $auditly$📱 HLAVNÝ AUDIT REPORT: iPhone 17 Pro
-Kód modelu: i17P | Status: Aktuálny "Performance Compact"
-🏗️ 1. DISPLEJ & PORT (The Visuals)
-    • Technológia: 6.3" LTPO Super Retina XDR OLED (ProMotion 1-120Hz).
-    • Jas: 1600 nitov (typický), 2500 nitov (HDR Peak).
-    • Vizuál (Narrow Island): Prvýkrát v histórii Pro rady dochádza k zmenšeniu technológie FaceID (metalens), vďaka čomu je Dynamic Island užší a uvoľňuje viac miesta pre stavové ikony.
-    • Port: USB-C (USB 3.2 – podpora pre extrémne rýchly prenos ProRes videa).
-    • Checklist: Skontroluj odozvu pri veľmi pomalom skrolovaní. LTPO panel musí plynulo meniť frekvenciu bez preblikávania jasu.
-    • True Tone: Povinný test. Pri i17 Pro je senzor citlivejší na spektrum umelého svetla.
-💎 2. RÁM & KONŠTRUKCIA (The Frame)
-    • Materiál: Titán Grade 5 s novou povrchovou úpravou odolnou voči odtlačkom prstov.
-    • Váha: Cca 199g – vďaka novej vnútornej štruktúre pôsobí mobil v ruke vyváženejšie než i16 Pro.
-    • Wau-Pikoška (Integrated Camera Control): Tlačidlo Camera Control je teraz zapustené v jednej rovine s rámom a kryté zafírovým sklíčkom, ktoré takmer nejde poškriabať.
-    • Checklist: Prejdi prstom po pravej strane rámu. Ak cítiš ostrý prechod pri tlačidle Camera Control, mobil mohol byť v neodbornom servise (tlačidlo je pevnou súčasťou rámu).
-🔋 3. BATÉRIA & VÝKON (The Energy)
-    • Čip: A19 Pro (2nm) – energetický zázrak, ktorý takmer neprodukuje odpadové teplo.
-    • RAM: 12GB – zásadné pre lokálny chod Apple Intelligence (modely i16 Pro mali len 8GB).
-    • Audit pravidlo: iPhone 17 Pro ukazuje cykly batérie a dátum prvého použitia.
-    • Kontrola: Pri modeli z konca roka 2025 musí byť zdravie batérie 100 %. Ak uvidíš 98 % a menej, pýtaj sa na používanie v extrémnych podmienkach.
-📸 4. FOTOAPARÁT (The Optics)
-    • Senzor: Trojitý 48MP systém. Už aj teleobjektív (zoom) dostal 48MP snímač, čo umožňuje brutálne ostré portréty.
-    • Pikoška: 5x optický zoom je teraz štandardom aj pre menšie Pro (rovnako ako pri Max verzii).
-    • Checklist: Prejdi na 5x priblíženie. Obraz musí byť v zlomku sekundy dokonale ostrý. Ak vidíš „pumping“ (neustále preostrovanie), laserový autofocus je zanesený alebo poškodený.
-⚖️ 5. PREČO KÚPIŤ / NEKÚPIŤ
-    • KÚPIŤ: Chceš 12GB RAM pre budúce AI funkcie, zmenšený Dynamic Island a najlepší zoom v kompaktnom tele.
-    • NEKÚPIŤ: Ak ti stačí i16 Pro; rozdiely vo výkone A18 vs A19 pocítiš len pri extrémnej práci s videom.
+  [ ] True Tone: Funguje senzor správne?
+  [ ] 120 Hz: Sú prechody plynulé bez farebných máp?
+  [ ] Camera Control: Majú haptické motory jasnú odozvu?$auditly$,
+    $auditly$📱 ULTIMÁTNY AUDIT REPORT: iPhone 17 Pro
+Kód modelu: i17Pro | Status: Elitný vlajkový model (Január 2026)
 
-🔍 SEKUNDÁRNY AUDIT: iPhone 17 Pro
-Focus: Forenzná analýza & Vyjednávanie
-⚡ 1. RÝCHLA KONTROLA CHÝB (Quick Scan)
-    • Haptika: Skús stlačiť Camera Control. Odozva musí byť "pevná". Ak cítiš vibráciu v celom tele mobilu (nielen pod prstom), Taptic Engine je zle uchytený.
-    • Audio: i17 Pro má vylepšený horný reproduktor pre širšie stereo. Pusti si Spatial Audio test na YouTube.
-🔬 2. FORENZNÁ KONTROLA (Profesionálne testy na mieste)
-    • 🎈 Test barometra: Appka Barometer Plus. Zatlač na displej. Tesnenie u i17 Pro musí byť nepriestrelné (IP68 do 6 metrov).
-    • 🔒 Locked Parts (iOS 19+): Reštartuj. Skontroluj „Parts and Service History“. Apple pri i17 sprísnil kontrolu spárovaných dielov.
-🧼 3. SERVISNÁ HYGIÉNA (Detektor klamstva)
-    • Sériové číslo: Over ho na checkover.apple.com. Musí svietiť platná záruka (v roku 2026 je tento model stále v krytí).
-    • MDM Check: Vymaž mobil do továrenských nastavení pred kúpou. Ak sa objaví "Remote Management", mobil vráť.
-📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena (Január 2026): (podľa trhu)
-    • Hlboký škrabanec na titáne: -80 €
-    • Chýbajúca faktúra/bloček: -50 €
-    • REÁLNA HODNOTA: (výsledok po zrážkach)
-💬 5. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
-    • Veta na zľavu: „Tento iPhone 17 Pro je super, ale vidím, že už má 120 cyklov za necelé 3 mesiace. To je intenzívne používanie. Spustíte niečo z ceny?“
-    • Veta na preverenie: „Rád by som skúsil ten nový 48MP zoom vonku na dennom svetle, či je obraz čistý.“
-✅ 6. ULTIMÁTNY CHECKLIST (Vytiahnuť pri kúpe)
-    • [ ] Zmenšený Island: Je symetrický a čistý?
-    • [ ] 5x Zoom: Je obraz ostrý pri maximálnom optickom zoome?
-    • [ ] Záruka: Súhlasí IMEI na krabici, v systéme a na faktúre?
+💎 1. DISPLEJ & PORT (The Visuals)
+    • Technológia: 6,3" OLED s rozlíšením 2622 × 1206 a plnou podporou ProMotion (120 Hz) pre maximálnu plynulosť.
+    • Jas (Outdoor Extreme): 1600 nitov (typický) až po extrémnych 3 000 nitov (Outdoor Peak) na priamom slnku.
+    • Ochrana: Nová generácia Ceramic Shield 2 s vylepšenou štruktúrou proti poškriabaniu.
+    • Port: USB-C s podporou rýchleho nabíjania 36 W.
+    • Audit Checklist: Skontroluj True Tone a plynulosť prechodov pri 120 Hz; displej nesmie pri nízkom jase vykazovať žiadne farebné mapy.
+🏗️ 2. RÁM & KONŠTRUKCIA (The Frame)
+    • Materiál: Špičkový titánový rám s matným povrchom, ktorý lepšie odoláva odtlačkom a škrabancom.
+    • Odolnosť: Certifikácia IP68 (úplná prachotesnosť a vodoodolnosť).
+    • Layout: Trojitý kamerový systém na zadnej strane; skontroluj, či sú všetky šošovky bez prachu pod krycím sklom.
+    • Tlačidlá: Over odozvu Action Button a Camera Control; u verzie Pro sú haptické motory silnejšie a presnejšie.
+🧠 3. BATÉRIA & VÝKON (The Energy)
+    • Čip: Apple A19 Pro – najvýkonnejší čip na trhu s pokročilou správou tepla a brutálnym výkonom pre AI.
+    • RAM: Navýšená na 12 GB, čo zabezpečuje bleskový multitasking a plynulý chod Apple Intelligence.
+    • Batéria: Kapacita 3988 mAh s podporou rýchleho nabíjania; iPhone 17 Pro natívne zobrazuje cykly batérie v menu.
+    • Kritický bod: Pri modeli Pro s 12 GB RAM je systém iOS 26 extrémne svižný; akékoľvek zaváhanie pri otváraní aplikácií naznačuje softvérový alebo hardvérový problém.
+📸 4. FOTOAPARÁT (The Optics)
+    • Hlavný systém: Štvoritá zostava 48 Mpx (Hlavný f/1,78 + Širokouhlý + Teleobjektív + Makro).
+    • Selfie: Predná kamera s rozlíšením 18 Mpx pre detailné portréty and FaceTime.
+    • Konektivita: Podpora 5G, Wi-Fi 7 (model 2025) a vylepšené GPS.
+    • Checklist: Otestuj 5x optický zoom (ak je prítomný v teleobjektíve); obraz musí byť stabilný aj pri maximálnom priblížení.
+
+🔍 SEKUNDÁRNY AUDIT: Forenzná analýza
+    • 🧪 Test barometra: Pri modeli Pro je tesnenie okolo titánového rámu kľúčové; pnutie vzduchu v Barometer Plus musí byť okamžité.
+    • 🔐 Locked Parts: Skontroluj Nastavenia -> Informácie; iOS 26 pri modeli Pro prísne stráži originalitu batérie a všetkých 48 Mpx snímačov.
+    • Pôvod: Pri verzii 256 GB strieborná over, či ide o oficiálnu distribúciu (Single SIM + eSIM).
+📉 KALKULAČKA HODNOTY (Január 2026)
+    • Zrážky: Chýbajúca faktúra (-100 €), Odreniny na titáne (-50 €), Zdravie batérie pod 95 % (-60 €).
 
 ⚖️ DISKLAIMER (Právna doložka)
-    • Informačný charakter: Tento report je súhrnom subjektívnych skúseností komunity a slúži ako neoficiálna metodická pomôcka.
+Tento report vychádza z dostupných trhových špecifikácií k 21. 1. 2026. Maximálny jas 3 000 nitov a výkon čipu A19 Pro sú parametre platné pre ideálne laboratórne a outdoorové podmienky. Autor nezodpovedá za technický stav preverovaných zariadení ani za škody vzniknuté pri testovaní.
+Informačný charakter: Tento report je súhrnom subjektívnych skúseností komunity a slúži ako neoficiálna metodická pomôcka.
     • Vylúčenie zodpovednosti: Autor nezodpovedá za technický stav zariadenia ani za škody pri vykonávaní testov.
     • Žiadna záruka: Informácie o vadách nie sú potvrdením, že každý kus nimi trpí. Všetko robíte na vlastné riziko.
     • Ochrana značky: Názvy sú majetkom Apple Inc., použité len na identifikáciu.$auditly$,
-    NULL
+    1050.00
 );
 -- iPhone 17 Pro Max (2025)
 INSERT INTO products (name, brand, model_name, category, display_tech, common_faults, battery_risks, frame_material, negotiation_tips, full_report, base_price_recommended) 
@@ -783,84 +759,86 @@ VALUES (
     $auditly$Apple$auditly$,
     $auditly$iPhone 17 Pro Max$auditly$,
     $auditly$Mobile$auditly$,
-    $auditly$📱 6.9" LTPO Super Retina XDR OLED s novou vrstvou Ceramic Shield 2 (odolnejšia voči mikro-škrabancom).$auditly$,
+    $auditly$📱 Masívny 6,9" OLED s rozlíšením 2868 × 1320 a technológiou LTPO (120 Hz ProMotion). Jas Outdoor Peak 3 000 nitov.$auditly$,
     $auditly$[
-        "⚠️ Display Glitch: Skontroluj, či pri prepínaní medzi aplikáciami nevzniká stutter (zaseknutie). Niektoré prvé série i17 mali chybu firmvéru displeja.",
-        "⚠️ LiDAR 2.0: Skús appku Meradlo v tme. Nový LiDAR by mal vidieť detaily aj na 5 metrov.",
-        "⚠️ Test barometra: Appka Barometer Plus. Zatlač na stred displeja. Tesnenie u i17 Pro Max musí byť absolútne nepriestrelné.",
-        "⚠️ Activation Lock: Pozor na splátkové podvody! iPhone 17 Pro Max je v roku 2026 najväčším lákadlom pre podvodníkov. Over si faktúru z overeného e-shopu.",
-        "⚠️ Záruka: Sériové číslo musí v Apple systéme ukazovať minimálne 9-10 mesiacov zostávajúcej záruky.",
-        "⚠️ Camera Control (nová generácia): Teraz by malo mať ešte jemnejšiu haptickú odozvu. Ak sa tlačidlo kýve, je to mechanická vada.",
-        "⚠️ Wau-Pikoška (Zmenšený Dynamic Island): Model 17 Pro Max je prvý, ktorý vďaka technológii metalens výrazne zmenšil Dynamic Island."
+        "⚠️ Test barometra: U modelu Max je integrita tesnenia kritická; barometer v Barometer Plus musí na tlak reagovať bleskovo. Tesnenie u i17PM musí byť absolútne nepriestrelné.",
+        "⚠️ Locked Parts: iOS 26 pri modeli Pro Max okamžite nahlási výmenu displeja, batérie alebo snímačov za neoriginálne diely.",
+        "⚠️ Audio: Pusti zvuk na 100 %; stereoreproduktory nesmú pri basových linkách rezonovať ani drnčať.",
+        "⚠️ Dynamic Island: Skontroluj, či je zmenšený Dynamic Island symetrický a bez vád.",
+        "⚠️ Camera Control: Reaguje na jemné swipovanie v novom menu?",
+        "⚠️ Activation Lock: Pozor na splátkové podvody! iPhone 17 Pro Max je v roku 2026 najväčším lákadlom pre podvodníkov. Over si faktúru z overeného e-shopu."
     ]$auditly$,
-    $auditly$🔋 • Čip: A19 Pro (2nm proces) – prvý čip tejto kategórie, extrémne výkonný pre lokálnu AI.
-• RAM: 12GB (štandard u i17 Pro) – kľúčové pre plynulý multitasking.
-• Audit pravidlo: iPhone 17 Pro Max ukazuje cykly batérie a presný dátum aktivácie.
-• Kontrola: Keďže je mobil vonku len pár mesiacov, zdravie batérie must be 100 %. Ak uvidíš 99 %, pýtaj sa na dôvod (pravdepodobne časté používanie MagSafe v aute).
-• Cykly batérie: Ak má mobil za 3 mesiace 100 cyklov, predajca ho nepúšťal z ruky.$auditly$,
-    $auditly$Nový titánový zliatinový rám s vysokou hustotou (odolnejší voči nárazom).$auditly$,
-    $auditly$🤝 • Veta na zľavu: „Je to zánovný kus, ale už má pár mikro-škrabancov na ráme, čo pri titáne i17 nejde vyleštiť. Ak by ste spustili z ceny kvôli kozmetickým vadám, vezmem ho hneď.“
+    $auditly$🔋 • Čip: Apple A19 Pro – špeciálne optimalizovaný pre masívny multitasking a Apple Intelligence na iOS 26.
+• Pamäť: 12 GB RAM – zabezpečuje bleskový chod lokálnych AI modelov bez sekania.
+• Batéria: Obrovská kapacita 4823 mAh; podporuje 25 W bezdrôtové nabíjanie.
+• Audit pravidlo: iPhone 17 Pro Max natívne zobrazuje cykly batérie; vyžaduj podrobné štatistiky zdravia priamo v menu.$auditly$,
+    $auditly$Letecký titán s matnou úpravou pre ideálny pomer hmotnosti a pevnosti. Certifikácia IP68.$auditly$,
+    $auditly$🤝 • Kalkulačka nákladov:
+  - Chýbajúca faktúra: -120 €
+  - Vrypy v titánovom ráme: -70 €
+  - Zdravie batérie pod 96 %: -80 €
+  - Chýbajúca originálna krabica: -50 €
+• Veta na zľavu: „Je to zánovný kus, ale už má pár mikro-škrabancov na ráme, čo pri titáne i17 nejde vyleštiť.“
 • Veta na preverenie: „Môžeme overiť cez IMEI, či nie je braný na paušál, ktorý by sa mohol zablokovať?“
 • ULTIMÁTNY CHECKLIST:
-  [ ] Zmenšený Dynamic Island: Je symetrický a bez vád?
-  [ ] Camera Control: Reaguje na jemné swipovanie v novom menu?
-  [ ] Záruka: Súhlasí sériové číslo so systémom?$auditly$,
-    $auditly$📱 HLAVNÝ AUDIT REPORT: iPhone 17 Pro Max
-Kód modelu: i17PM | Status: Aktuálny "State-of-the-Art"
-🏗️ 1. DISPLEJ & PORT (The Visuals)
-    • Technológia: 6.9" LTPO Super Retina XDR OLED s novou vrstvou Ceramic Shield 2 (odolnejšia voči mikro-škrabancom).
-    • Jas: Peak až 2500 nitov.
-    • Port: USB-C (USB 3.2 – rýchlosť až 20 Gbps).
-    • Wau-Pikoška (Zmenšený Dynamic Island): Model 17 Pro Max je prvý, ktorý vďaka technológii „metalens“ výrazne zmenšil Dynamic Island (je užší a pôsobí menej rušivo).
-    • Checklist: Skontroluj odozvu pri 120Hz (ProMotion). Ak sa ti zdá skrolovanie trhané, skontroluj, či nie je zapnutý režim nízkej spotreby.
-    • True Tone: Pri tomto modeli je snímač True Tone integrovaný hlbšie pod displejom – skontroluj plynulosť zmeny farieb pri umelom osvetlení.
-💎 2. RÁM & KONŠTRUKCIA (The Frame)
-    • Materiál: Nový titánový zliatinový rám s vysokou hustotou (odolnejší voči nárazom).
-    • Wau-Pikoška (Unibody Buttons): Tlačidlá hlasitosti a Action Button sú teraz viac integrované do rámu pre lepšiu vodeodolnosť.
-    • Checklist: Skontroluj Camera Control (nová generácia). Teraz by malo mať ešte jemnejšiu haptickú odozvu. Ak sa tlačidlo "kýve", je to mechanická vada.
-🔋 3. BATÉRIA & VÝKON (The Energy)
-    • Čip: A19 Pro (2nm proces) – prvý čip tejto kategórie, extrémne výkonný pre lokálnu AI.
-    • RAM: 12GB (štandard u i17 Pro) – kľúčové pre plynulý multitasking.
-    • Audit pravidlo: iPhone 17 Pro Max ukazuje cykly batérie a presný dátum aktivácie.
-    • Kontrola: Keďže je mobil vonku len pár mesiacov, zdravie batérie musí byť 100 %. Ak uvidíš 99 %, pýtaj sa na dôvod (pravdepodobne časté používanie MagSafe v aute).
-📸 4. FOTOAPARÁT (The Optics)
-    • Senzor: Trojitý 48MP systém (všetky tri šošovky – Wide, Ultra-Wide aj Telephoto – majú teraz 48MP rozlíšenie!).
-    • Pikoška: 5x-10x kontinuálny optický zoom.
-    • Checklist: Otestuj 10x digitálny/optický hybridný zoom. Obraz musí byť v roku 2026 vďaka novému spracovaniu AI dokonale čistý bez šumu.
-⚖️ 5. PREČO KÚPIŤ / NEKÚPIŤ
-    • KÚPIŤ: Chceš to najlepšie, čo existuje, zmenšený Dynamic Island a brutálny výkon pre AI.
-    • NEKÚPIŤ: Ak ti stačí i16 Pro Max, ktorý je o 300 € lacnejší a rozdiely v praxi nie sú pre bežného človeka priepastné.
+  [ ] Dynamic Island: Symetrický a bez vád?
+  [ ] Camera Control: Reaguje na swipovanie?
+  [ ] Záruka: Súhlasí sériové číslo?$auditly$,
+    $auditly$📱 ULTIMÁTNY AUDIT REPORT: iPhone 17 Pro Max
+Kód modelu: i17ProMax | Status: Absolútny vrchol ponuky (Január 2026)
 
-🔍 SEKUNDÁRNY AUDIT: iPhone 17 Pro Max
-Focus: Forenzná analýza & Vyjednávanie
-⚡ 1. RÝCHLA KONTROLA CHÝB (Quick Scan)
-    • Display Glitch: Skontroluj, či pri prepínaní medzi aplikáciami nevzniká "stutter" (zaseknutie). Niektoré prvé série i17 mali chybu firmvéru displeja.
-    • LiDAR 2.0: Skús appku Meradlo v tme. Nový LiDAR by mal "vidieť" detaily aj na 5 metrov.
-🔬 2. FORENZNÁ KONTROLA (Profesionálne testy na mieste)
-    • 🎈 Test barometra: Appka Barometer Plus. Zatlač na stred displeja. Tesnenie u i17PM musí byť absolútne nepriestrelné.
-    • 🔒 Activation Lock: Pozor na splátkové podvody! iPhone 17 Pro Max je v roku 2026 najväčším lákadlom pre podvodníkov. Over si faktúru z overeného e-shopu.
-🧼 3. SERVISNÁ HYGIÉNA (Detektor klamstva)
-    • Záruka: Sériové číslo musí v Apple systéme ukazovať minimálne 9-10 mesiacov zostávającej záruky.
+💎 1. DISPLEJ & PORT (The Visuals)
+    • Technológia: Masívny 6,9" OLED s rozlíšením 2868 × 1320 a technológiou LTPO (120 Hz ProMotion).
+    • Jas (Outdoor Extreme): 1600 nitov (typický) až po extrémnych 3 000 nitov (Outdoor Peak) na priamom slnku.
+    • Ochrana: Nová generácia Ceramic Shield 2 s vylepšenou odolnosťou proti škrabancom.
+    • Port: USB-C s podporou rýchleho nabíjania 36 W.
+    • Audit Checklist: Skontroluj odozvu na dotyk v každom rohu masívneho displeja a over plynulosť 120 Hz prechodov pri skrolovaní.
+🏗️ 2. RÁM & KONŠTRUKCIA (The Frame)
+    • Materiál: Letecký titán s matnou úpravou pre idealny pomer hmotnosti a pevnosti.
+    • Odolnosť: Certifikácia IP68 (voda, prach) – povinná kontrola neporušenosti celého obvodu rámu.
+    • Layout: Výrazný trojitý kamerový modul; šošovky sú kvôli novým 48 Mpx senzorom rozmernejšie.
+    • Tlačidlá: Akčná klávesa (Action Button) and Camera Control musia mať jasnú odozvu; u Pro Max sú haptické motory najpresnejšie.
+🧠 3. BATÉRIA & VÝKON (The Energy)
+    • Čip: Apple A19 Pro – špeciálne optimalizovaný pre masívny multitasking a Apple Intelligence na iOS 26.
+    • Pamäť: 12 GB RAM – zabezpečuje bleskový chod lokálnych AI modelov bez sekania.
+    • Batéria: Obrovská kapacita 4823 mAh; podporuje 25 W bezdrôtové nabíjanie.
+    • Audit pravidlo: iPhone 17 Pro Max natívne zobrazuje cykly batérie; vyžaduj podrobné štatistiky zdravia priamo v menu.
+📸 4. FOTOAPARÁT & OPTIKA (The Optics)
+    • Hlavný systém: Trojitý 48 Mpx systém (Hlavný f/1,78 + Širokouhlý + Teleobjektív).
+    • Zoom (8-násobný): Podpora až 8-násobného bezstratového zoomu vďaka kombinácii tetraprismatickej optiky a AI výrezu čipu A19 Pro.
+    • LiDAR: Skener 4. generácie pre bleskové nočné ostrenie, profesionálne 3D skenovanie a AR merania.
+    • Selfie: 18 Mpx predná kamera s pokročilým spracovaním portrétov cez Neural Engine.
+    • Checklist: Otestuj prepínanie medzi snímačmi a vyskúšaj LiDAR v aplikácii "Meradlo"; odozva musí byť okamžitá.
+
+🔍 SEKUNDÁRNY AUDIT: Forenzná analýza
+    • 🧪 Test barometra: U modelu Max je integrita tesnenia kritická; barometer v Barometer Plus musí na tlak reagovať bleskovo.
+    • 🔐 Locked Parts: iOS 26 pri modeli Pro Max okamžite nahlási výmenu displeja, batérie alebo snímačov za neoriginálne diely.
+    • Audio: Pusti zvuk na 100 %; stereoreproduktory nesmú pri basových linkách rezonovať ani drnčať.
+📉 KALKULAČKA HODNOTY (Január 2026)
+    • Zrážky: Chýbajúca faktúra (-120 €), vrypy v titánovom ráme (-70 €), zdravie batérie pod 96 % (-80 €).
+🔍 2. FORENZNÁ KONTROLA (Profesionálne testy na mieste)
+    • 🧪 Test barometra: Appka Barometer Plus. Jemne a opatrne zatlač na stred displeja. Tesnenie u i17PM musí byť absolútne nepriestrelné. 
+    • 🔐 Activation Lock: Pozor na splátkové podvody! iPhone 17 Pro Max je v roku 2026 najväčším lákadlom pre podvodníkov. Over si faktúru z overeného e-shopu.
+🕵️‍♂️ 3. SERVISNÁ HYGIÉNA (Detektor klamstva)
+    • Záruka: Sériové číslo musí v Apple systéme ukazovať minimálne 9-10 mesiacov zostávajúcej záruky.
     • Cykly batérie: Ak má mobil za 3 mesiace 100 cyklov, predajca ho nepúšťal z ruky.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena (Január 2026): (podľa trhu)
     • Chýbajúca originálna krabica: -50 €
     • Mikro-škrabance na titáne: -70 €
-    • REÁLNA HODNOTA: (výsledok po zrážkach)
-💬 5. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
-    • Veta na zľavu: „Je to zánovný kus, ale už má pár mikro-škrabancov na ráme, čo pri titáne i17 nejde vyleštiť. Ak pôjdete niečo nižšie s cenou, vezmem ho hneď.“
+🤝 5. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
+    • Veta na zľavu: „Je to zánovný kus, ale už má pár mikro-škrabancov na ráme, čo pri titáne i17 nejde vyleštiť. 
     • Veta na preverenie: „Môžeme overiť cez IMEI, či nie je braný na paušál, ktorý by sa mohol zablokovať?“
-✅ 6. ULTIMÁTNY CHECKLIST (Vytiahnuť pri kúpe)
+📋 6. ULTIMÁTNY CHECKLIST (Vytiahnuť pri kúpe)
     • [ ] Zmenšený Dynamic Island: Je symetrický a bez vád?
     • [ ] Camera Control: Reaguje na jemné swipovanie v novom menu?
-    • [ ] Záruka: Súhlasí sériové číslo so systémom?
-
+      [ ] Záruka: Súhlasí sériové číslo so systémom?
 ⚖️ DISKLAIMER (Právna doložka)
+Tento report vychádza z aktuálnych trhových špecifikácií k 21. 1. 2026. Maximálny jas 3 000 nitov a 8-násobný zoom sú parametre závislé od špecifických svetelných podmienok a nastavení systému. Autor nezodpovedá za technický stav zariadenia ani za škody vzniknuté pri testovaní barometra či tuhosti konštrukcie. Všetko robíte na vlastné riziko.
     • Informačný charakter: Tento report je súhrnom subjektívnych skúseností komunity a slúži ako neoficiálna metodická pomôcka.
     • Vylúčenie zodpovednosti: Autor nezodpovedá za technický stav zariadenia ani za škody pri vykonávaní testov.
     • Žiadna záruka: Informácie o vadách nie sú potvrdením, že každý kus nimi trpí. Všetko robíte na vlastné riziko.
-    • Ochrana značky: Názvy sú majetkom Apple Inc., použité len na identifikáciu.$auditly$,
-    NULL
+Ochrana značky: Názvy sú majetkom Apple Inc., použité len na identifikáciu.$auditly$,
+    1150.00
 );
 -- iPhone 16e (2025)
 INSERT INTO products (name, brand, model_name, category, display_tech, common_faults, battery_risks, frame_material, negotiation_tips, full_report, base_price_recommended) 
