@@ -1,5 +1,5 @@
 html, body {
-  background: #111827 !important;
+  background: #1e293b !important;
   color: #ffffff;
   min-height: 100%;
   margin: 0;
@@ -45,7 +45,7 @@ html, body {
 }
 
 :root{
-  --bg0:#111827;
+  --bg0:#1e293b;
   --ink:#ffffff;
   --muted:rgba(255, 255, 255, 0.5);
   --glass:rgba(255, 255, 255, 0.03);
@@ -76,7 +76,7 @@ html, body {
 .expert-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(17, 24, 39, 0.95);
+  background: rgba(30, 41, 59, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   z-index: 10000;
@@ -554,7 +554,7 @@ html, body {
   position: fixed;
   inset: 0;
   z-index: 10000;
-  background: rgba(17, 24, 39, 0.85); /* Darker backdrop for focus */
+  background: rgba(30, 41, 59, 0.85); /* Darker backdrop for focus */
   backdrop-filter: blur(20px);
   display: flex;
   align-items: center;
