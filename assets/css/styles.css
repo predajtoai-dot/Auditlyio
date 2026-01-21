@@ -1,5 +1,5 @@
 html, body {
-  background: #020617 !important;
+  background: #0f172a !important;
   color: #ffffff;
   min-height: 100%;
   margin: 0;
@@ -45,7 +45,7 @@ html, body {
 }
 
 :root{
-  --bg0:#020617;
+  --bg0:#0f172a;
   --ink:#ffffff;
   --muted:rgba(255, 255, 255, 0.5);
   --glass:rgba(255, 255, 255, 0.03);
@@ -76,7 +76,7 @@ html, body {
 .expert-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(2, 6, 23, 0.95);
+  background: rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   z-index: 10000;
@@ -97,7 +97,7 @@ html, body {
   color: #0f172a;
   width: 100%;
   max-width: 1100px;
-  max-height: 92vh;
+  max-height: 95vh;
   border-radius: 48px;
   overflow: hidden;
   display: flex;
@@ -554,7 +554,7 @@ html, body {
   position: fixed;
   inset: 0;
   z-index: 10000;
-  background: rgba(2, 6, 23, 0.85); /* Darker backdrop for focus */
+  background: rgba(15, 23, 42, 0.85); /* Darker backdrop for focus */
   backdrop-filter: blur(20px);
   display: flex;
   align-items: center;
@@ -722,7 +722,7 @@ html, body {
 .expert-report-window {
   width: 100%;
   max-width: 1100px;
-  max-height: 94vh;
+  max-height: 96vh;
   background: #0f172a; /* Solid dark base for readability */
   background: linear-gradient(165deg, #1e293b 0%, #0f172a 100%);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -1039,11 +1039,51 @@ html, body {
 }
 
 @media (max-width: 768px) {
-  .verified-floating-badge {
-    bottom: 20px;
-    right: 20px;
-    padding: 10px 15px;
-    font-size: 11px;
+  .expert-report-window {
+    border-radius: 24px;
+    max-height: 98vh;
+  }
+  
+  .expert-header-top {
+    padding: 20px;
+  }
+
+  #expertReportName, #risksReportName {
+    font-size: 28px !important;
+  }
+
+  .expert-visual-area {
+    padding: 20px;
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+  #expertRecommendedPrice {
+    font-size: 42px !important;
+  }
+
+  .expert-price-tag {
+    text-align: center;
+  }
+
+  .expert-info-grid {
+    grid-template-columns: 1fr !important;
+    gap: 15px;
+  }
+
+  .info-card, .analysis-card {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .expert-risk-item, .expert-check-item, .expert-manual-item {
+    padding: 15px;
+    font-size: 13px;
+  }
+
+  .expert-scroll-area {
+    padding: 20px;
   }
 }
   content: attr(data-hint);
@@ -1252,6 +1292,8 @@ select.auditInput:disabled {
   align-items: flex-start;
   gap: 16px;
   border: 1px solid rgba(251, 191, 36, 0.1);
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .expert-risk-item span {

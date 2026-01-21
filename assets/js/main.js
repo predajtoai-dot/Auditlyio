@@ -7357,10 +7357,10 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
   const CATALOG = {
     "Mobil": [
-      { name: "iPhone 17 Pro Max", storage: ["128GB", "256GB", "512GB", "1TB"] },
+      { name: "iPhone 17 Pro Max", storage: ["256GB", "512GB", "1TB"] },
       { name: "iPhone 17 Pro", storage: ["128GB", "256GB", "512GB", "1TB"] },
       { name: "iPhone 17", storage: ["128GB", "256GB", "512GB"] },
-      { name: "iPhone 16 Pro Max", storage: ["128GB", "256GB", "512GB", "1TB"] },
+      { name: "iPhone 16 Pro Max", storage: ["256GB", "512GB", "1TB"] },
       { name: "iPhone 16 Pro", storage: ["128GB", "256GB", "512GB", "1TB"] },
       { name: "iPhone 16", storage: ["128GB", "256GB", "512GB"] },
       { name: "iPhone 15 Pro Max", storage: ["128GB", "256GB", "512GB", "1TB"] },
@@ -7483,10 +7483,19 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       f.style.display = (category === "Konzola" && mode === "sell") ? "block" : "none";
     });
 
-    const models = DB_CATALOG[category] || CATALOG[category] || [];
+    const modelsFromDB = DB_CATALOG[category] || [];
+    const modelsFromHardcoded = CATALOG[category] || [];
     
+    // Merge and unique by name
+    const allModels = [...modelsFromDB];
+    modelsFromHardcoded.forEach(hm => {
+      if (!allModels.find(m => m.name === hm.name)) {
+        allModels.push(hm);
+      }
+    });
+
     modelSelect.innerHTML = `<option value="" disabled selected>Vyberte model</option>` + 
-      models.map(m => `<option value="${m.name}">${m.name}</option>`).join('');
+      allModels.map(m => `<option value="${m.name}">${m.name}</option>`).join('');
     
     modelSelect.disabled = false;
     storageSelect.disabled = true;
