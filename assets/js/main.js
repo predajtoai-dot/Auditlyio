@@ -7713,23 +7713,32 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         
         let fetchedData;
         try {
-          const resp = await fetch(`${API_BASE}/api/audits/${forcedId}?view=private`, { signal: controller.signal });
+          const fetchUrl = `${API_BASE}/api/audits/${forcedId}?view=private`;
+          console.log(`📡 [handleOpenExpertReport] Fetching: ${fetchUrl}`);
+          
+          const resp = await fetch(fetchUrl, { signal: controller.signal });
           clearTimeout(timeoutId);
           
           if (!resp.ok) {
             const errData = await resp.json().catch(() => ({}));
+            console.error("❌ [handleOpenExpertReport] Server returned error:", resp.status, errData);
             throw new Error(errData.error || `Server vrátil chybu ${resp.status}`);
           }
           
           fetchedData = await resp.json();
-          if (!fetchedData.ok) throw new Error(fetchedData.error || "Audit sa nepodarilo načítať.");
+          if (!fetchedData.ok || !fetchedData.audit) {
+            throw new Error(fetchedData.error || "Audit sa nepodarilo načítať alebo chýbajú dáta.");
+          }
         
-          r = fetchedData.audit.products; // Joined product data
+          r = fetchedData.audit.products || { name: "Zariadenie" }; 
           rd = fetchedData.audit.report_data || {};
-        auditId = forcedId;
+          auditId = forcedId;
           createdAt = fetchedData.audit.created_at;
+          
+          console.log("✅ [handleOpenExpertReport] Data loaded successfully:", fetchedData.audit);
         } catch (fErr) {
           clearTimeout(timeoutId);
+          console.error("❌ [handleOpenExpertReport] Fetch error:", fErr);
           if (fErr.name === 'AbortError') throw new Error("Požiadavka na server vypršala. Skúste to prosím znova.");
           throw fErr;
         }
@@ -7746,14 +7755,18 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
         // 🏠 DASHBOARD FILL LOGIC (New Request)
         if (options.fillDashboard) {
-          console.log("🏠 Filling dashboard with audit data:", rd);
+          console.log("🏠 [Dashboard Mode] STARTING FILL PROCESS", rd);
           
           // Safeguard: Wait for catalog to be loaded and dropdown to be populated
           let attempts = 0;
-          while ((Object.keys(DB_CATALOG).length === 0 || !categorySelect || categorySelect.options.length <= 1) && attempts < 10) {
-            console.log("⏳ Waiting for catalog initialization (attempt " + (attempts+1) + ")...");
+          while ((Object.keys(DB_CATALOG).length === 0 || !categorySelect || categorySelect.options.length <= 1) && attempts < 15) {
+            console.log("⏳ [Dashboard Mode] Waiting for catalog initialization (attempt " + (attempts+1) + ")...");
             await new Promise(res => setTimeout(res, 500));
             attempts++;
+          }
+
+          if (Object.keys(DB_CATALOG).length === 0) {
+            throw new Error("Katalóg modelov sa nepodarilo načítať včas. Skúste prosím obnoviť stránku.");
           }
 
           // 1. Set Category (Handle mapping between DB/UI names)
@@ -7764,20 +7777,20 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
             };
             const targetCat = catMapping[rd.category] || rd.category;
             
-            console.log("📂 Setting category to:", targetCat);
+            console.log("📂 [Dashboard Mode] Setting category to:", targetCat);
             categorySelect.value = targetCat;
             categorySelect.dispatchEvent(new Event("change"));
             
             // 2. Set Model (Need short delay to let model list populate)
-            // Wait until modelSelect is populated after category change
             let modelAttempts = 0;
-            while ((!modelSelect || modelSelect.options.length <= 1) && modelAttempts < 10) {
+            while ((!modelSelect || modelSelect.options.length <= 1) && modelAttempts < 15) {
+              console.log("⏳ [Dashboard Mode] Waiting for model list to populate...");
               await new Promise(res => setTimeout(res, 200));
               modelAttempts++;
             }
 
             if (rd.model && modelSelect) {
-              console.log("📱 Setting model to:", rd.model);
+              console.log("📱 [Dashboard Mode] Setting model to:", rd.model);
               // Try to find the matching option value
               let found = false;
               for (let opt of modelSelect.options) {
@@ -7800,11 +7813,17 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
                 }
               }
 
-              modelSelect.dispatchEvent(new Event("change"));
+              if (found) {
+                console.log("✅ [Dashboard Mode] Model found and set!");
+                modelSelect.dispatchEvent(new Event("change"));
+              } else {
+                console.warn("⚠️ [Dashboard Mode] Model NOT found in dropdown:", rd.model);
+              }
               
               // 3. Set Storage, Battery, Condition (Another delay for storage list)
               let storageAttempts = 0;
-              while ((!storageSelect || storageSelect.options.length <= 1) && storageAttempts < 10) {
+              while ((!storageSelect || storageSelect.options.length <= 1) && storageAttempts < 15) {
+                console.log("⏳ [Dashboard Mode] Waiting for storage list to populate...");
                 await new Promise(res => setTimeout(res, 200));
                 storageAttempts++;
               }
@@ -7837,13 +7856,13 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
               }
               
               // Finally trigger price fetch
-              setTimeout(fetchHeurekaPrice, 500);
+              console.log("🚀 [Dashboard Mode] Triggering final price fetch...");
+              setTimeout(fetchHeurekaPrice, 800);
               
               showToast(`✅ Úspešne načítaný audit: ${rd.model}`, { type: "success" });
             }
           }
           
-          // Since we are in dashboard mode, we don't want to continue showing the modal
           return; 
         }
       } else {

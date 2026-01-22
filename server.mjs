@@ -4607,14 +4607,14 @@ const server = http.createServer(async (req, res) => {
 
     if (pathname.startsWith("/api/audits/") && req.method === "GET") {
       const id = pathname.split("/").pop();
-      if (!id || id === "audits") return json(res, 400, { ok: false, error: "Missing ID" });
+      if (!id || id === "audits") return json(res, 400, { ok: false, error: "Chýba ID auditu." });
       
       console.log(`📡 [API Audits] Fetching audit ID: ${id}`);
       
       try {
-        if (!supabase) throw new Error("Database not connected");
+        if (!supabase) throw new Error("Databáza nie je pripojená.");
 
-        // 1. Fetch Audit Data first
+        // 1. Fetch Audit Data
         const { data: audit, error: auditErr } = await supabase
           .from('audits')
           .select('*')
@@ -4623,38 +4623,35 @@ const server = http.createServer(async (req, res) => {
 
         if (auditErr) {
           console.error("❌ [API Audits] DB Error:", auditErr.message);
-          throw auditErr;
+          throw new Error("Chyba pri hľadaní auditu v databáze.");
         }
-        if (!audit) return json(res, 404, { ok: false, error: "Audit report not found." });
+        
+        if (!audit) {
+          return json(res, 404, { ok: false, error: "Audit report sa nenašiel. Skontrolujte, či je ID správne." });
+        }
 
-        // 2. Fetch associated Product Data separately
-        let product = null;
+        // 2. Fetch Product Data (Separate to avoid JOIN issues)
+        let product = { name: "Neznáme zariadenie", category: "Other" };
         if (audit.product_id) {
-          const { data: prodData } = await supabase
-          .from('products')
-          .select('*')
-          .eq('id', audit.product_id)
-          .maybeSingle();
-          product = prodData;
+          const { data: prodData, error: prodErr } = await supabase
+            .from('products')
+            .select('*')
+            .eq('id', audit.product_id)
+            .maybeSingle();
+          if (!prodErr && prodData) product = prodData;
         }
 
-        // 3. Increment View Count (Non-blocking)
-        supabase.from('audits')
-            .update({ view_count: (audit.view_count || 0) + 1 })
-          .eq('id', id)
-          .then(() => {})
-          .catch(e => console.warn("⚠️ View count update failed:", e.message));
-
-        // Merge data
-        audit.products = product || { name: "Neznáme zariadenie", category: "Other" };
-
+        // 3. View Logic & Expiration
         const createdAt = new Date(audit.created_at);
         const now = new Date();
-        const diffHours = Math.abs(now - createdAt) / (1000 * 60 * 60);
+        const diffMs = Math.abs(now.getTime() - createdAt.getTime());
+        const diffHours = diffMs / (1000 * 60 * 60);
         const diffDays = diffHours / 24;
         
-        const viewType = url.searchParams.get("view"); // 'public' or 'private'
-        
+        const viewType = url.searchParams.get("view"); 
+
+        console.log(`🕒 [API Audits] ID: ${id}, View: ${viewType || 'private'}, Age: ${diffHours.toFixed(1)}h`);
+
         if (viewType === 'public') {
           if (diffDays > 30) {
             return json(res, 410, { ok: false, error: "Tento verejný certifikát už expiroval (platnosť 30 dní)." });
@@ -4666,10 +4663,20 @@ const server = http.createServer(async (req, res) => {
           }
         }
 
-        return json(res, 200, { ok: true, audit });
+        // 4. Increment View Count (Non-blocking)
+        supabase.from('audits')
+          .update({ view_count: (audit.view_count || 0) + 1 })
+          .eq('id', id)
+          .then(() => {})
+          .catch(e => console.warn("⚠️ View count update failed:", e.message));
+
+        // Clone audit object to ensure we can modify it
+        const auditResponse = { ...audit, products: product };
+        return json(res, 200, { ok: true, audit: auditResponse });
+
       } catch (err) {
-        console.error("❌ [API Audits] Final error:", err.message);
-        return json(res, 500, { ok: false, error: "Nepodarilo sa načítať dáta auditu.", details: err.message });
+        console.error("❌ [API Audits] Final Error:", err.message);
+        return json(res, 500, { ok: false, error: "Chyba pri načítaní auditu.", details: err.message });
       }
     }
 
