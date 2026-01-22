@@ -7748,21 +7748,49 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         if (options.fillDashboard) {
           console.log("🏠 Filling dashboard with audit data:", rd);
           
-          // 1. Set Category
+          // Safeguard: Wait for catalog to be loaded from DB if it's still empty
+          if (Object.keys(DB_CATALOG).length === 0) {
+            console.log("⏳ Catalog not ready yet, waiting for initialization...");
+            await new Promise(res => setTimeout(res, 800));
+          }
+
+          // 1. Set Category (Handle mapping between DB/UI names)
           if (rd.category && categorySelect) {
-            categorySelect.value = rd.category;
+            const catMapping = {
+              'Mobile': 'Mobil', 'Watch': 'Hodinky', 'Audio': 'Slúchadlá',
+              'Tablet': 'Tablet', 'Laptop': 'Notebook', 'Console': 'Konzola', 'Other': 'Iné'
+            };
+            const targetCat = catMapping[rd.category] || rd.category;
+            
+            categorySelect.value = targetCat;
             categorySelect.dispatchEvent(new Event("change"));
             
             // 2. Set Model (Need short delay to let model list populate)
             setTimeout(() => {
               if (rd.model && modelSelect) {
+                console.log("📱 Setting model to:", rd.model);
                 // Try to find the matching option value
+                let found = false;
                 for (let opt of modelSelect.options) {
-                  if (opt.value === rd.model || opt.textContent.includes(rd.model)) {
+                  if (opt.value === rd.model || opt.textContent === rd.model || opt.textContent.includes(rd.model)) {
                     modelSelect.value = opt.value;
+                    found = true;
                     break;
                   }
                 }
+                
+                // If not found by exact match, try fuzzy
+                if (!found) {
+                  const modelLower = rd.model.toLowerCase();
+                  for (let opt of modelSelect.options) {
+                    if (opt.value.toLowerCase().includes(modelLower)) {
+                      modelSelect.value = opt.value;
+                      found = true;
+                      break;
+                    }
+                  }
+                }
+
                 modelSelect.dispatchEvent(new Event("change"));
                 
                 // 3. Set Storage, Battery, Condition (Another delay for storage list)
@@ -7795,12 +7823,12 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
                   }
                   
                   // Finally trigger price fetch
-                  fetchHeurekaPrice();
+                  setTimeout(fetchHeurekaPrice, 300);
                   
                   showToast(`✅ Načítaný audit: ${rd.model}`, { type: "success" });
-                }, 150);
+                }, 300);
               }
-            }, 100);
+            }, 300);
           }
           
           // Since we are in dashboard mode, we don't want to continue showing the modal
@@ -8559,8 +8587,8 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
   } else if (auditParam) {
     console.log("🔐 Loading Expert Report (Dashboard Mode) for ID:", auditParam);
     // DASHBOARD MODE: Pre-fill the main UI with audit data
-    // We do NOT hide the main page here anymore
-    setTimeout(() => handleOpenExpertReport(auditParam, { fillDashboard: true, showMain: false }), 50);
+    // Increase delay to ensure catalog is loaded and initialized
+    setTimeout(() => handleOpenExpertReport(auditParam, { fillDashboard: true, showMain: false }), 500);
   } else {
     // Check if first visit
     const hasVisited = localStorage.getItem("auditly_visited");
