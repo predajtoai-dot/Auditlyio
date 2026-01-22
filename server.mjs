@@ -2602,9 +2602,9 @@ function json(res, status, body) {
 }
 
 // 📧 EMAIL SENDING UTILITY
-async function sendAuditEmail(email, auditId, productName) {
+async function sendAuditEmail(email, auditId, productName, forcedBaseUrl = null) {
   const resendApiKey = process.env.RESEND_API_KEY;
-  const baseUrl = (process.env.BASE_URL || "https://auditlyio.sk").replace(/\/+$/, "");
+  const baseUrl = (forcedBaseUrl || process.env.BASE_URL || "https://auditlyio.sk").replace(/\/+$/, "");
   const publicLink = `${baseUrl}/?report=${auditId}`;
   const privateLink = `${baseUrl}/?audit=${auditId}`;
   const fromEmail = process.env.EMAIL_FROM || "Auditly.io <onboarding@resend.dev>";
@@ -2621,7 +2621,7 @@ async function sendAuditEmail(email, auditId, productName) {
       
       <div style="margin: 30px 0; padding: 20px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
         <h3 style="margin-top: 0; color: #1e293b; font-size: 16px;">🔐 Váš súkromný audit (pre Vás)</h3>
-        <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">Obsahuje kompletnú analýzu, checklist chýieb a cenovú stratégiu.</p>
+        <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">Obsahuje kompletnú analýzu, checklist chýb a cenovú stratégiu.</p>
         <a href="${privateLink}" style="display: inline-block; background-color: #8b5cf6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px;">Otvoriť súkromný audit</a>
       </div>
 
@@ -4585,7 +4585,17 @@ const server = http.createServer(async (req, res) => {
 
         // If email provided, send the link (Non-blocking)
         if (user_email) {
-          sendAuditEmail(user_email, data.id, report_data.productName || report_data.model || "Zariadenie")
+          const protocol = req.headers["x-forwarded-proto"] || "https";
+          let host = req.headers.host || "www.auditlyio.sk";
+          
+          // Ak doména neobsahuje www a nie je to localhost, pridáme ho pre istotu
+          if (!host.includes("www.") && !host.includes("localhost") && !host.includes("127.0.0.1") && !host.includes(".up.railway.app")) {
+            host = "www." + host;
+          }
+          
+          const currentBaseUrl = `${protocol}://${host}`;
+          
+          sendAuditEmail(user_email, data.id, report_data.productName || report_data.model || "Zariadenie", currentBaseUrl)
             .catch(mailErr => console.error("❌ [API Audits] Background email failure:", mailErr.message));
         }
 
