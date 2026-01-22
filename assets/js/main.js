@@ -7748,10 +7748,12 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         if (options.fillDashboard) {
           console.log("🏠 Filling dashboard with audit data:", rd);
           
-          // Safeguard: Wait for catalog to be loaded from DB if it's still empty
-          if (Object.keys(DB_CATALOG).length === 0) {
-            console.log("⏳ Catalog not ready yet, waiting for initialization...");
-            await new Promise(res => setTimeout(res, 800));
+          // Safeguard: Wait for catalog to be loaded and dropdown to be populated
+          let attempts = 0;
+          while ((Object.keys(DB_CATALOG).length === 0 || !categorySelect || categorySelect.options.length <= 1) && attempts < 10) {
+            console.log("⏳ Waiting for catalog initialization (attempt " + (attempts+1) + ")...");
+            await new Promise(res => setTimeout(res, 500));
+            attempts++;
           }
 
           // 1. Set Category (Handle mapping between DB/UI names)
@@ -7762,73 +7764,83 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
             };
             const targetCat = catMapping[rd.category] || rd.category;
             
+            console.log("📂 Setting category to:", targetCat);
             categorySelect.value = targetCat;
             categorySelect.dispatchEvent(new Event("change"));
             
             // 2. Set Model (Need short delay to let model list populate)
-            setTimeout(() => {
-              if (rd.model && modelSelect) {
-                console.log("📱 Setting model to:", rd.model);
-                // Try to find the matching option value
-                let found = false;
+            // Wait until modelSelect is populated after category change
+            let modelAttempts = 0;
+            while ((!modelSelect || modelSelect.options.length <= 1) && modelAttempts < 10) {
+              await new Promise(res => setTimeout(res, 200));
+              modelAttempts++;
+            }
+
+            if (rd.model && modelSelect) {
+              console.log("📱 Setting model to:", rd.model);
+              // Try to find the matching option value
+              let found = false;
+              for (let opt of modelSelect.options) {
+                if (opt.value === rd.model || opt.textContent === rd.model || opt.textContent.includes(rd.model)) {
+                  modelSelect.value = opt.value;
+                  found = true;
+                  break;
+                }
+              }
+              
+              // If not found by exact match, try fuzzy
+              if (!found) {
+                const modelLower = rd.model.toLowerCase();
                 for (let opt of modelSelect.options) {
-                  if (opt.value === rd.model || opt.textContent === rd.model || opt.textContent.includes(rd.model)) {
+                  if (opt.value.toLowerCase().includes(modelLower)) {
                     modelSelect.value = opt.value;
                     found = true;
                     break;
                   }
                 }
-                
-                // If not found by exact match, try fuzzy
-                if (!found) {
-                  const modelLower = rd.model.toLowerCase();
-                  for (let opt of modelSelect.options) {
-                    if (opt.value.toLowerCase().includes(modelLower)) {
-                      modelSelect.value = opt.value;
-                      found = true;
-                      break;
-                    }
-                  }
-                }
-
-                modelSelect.dispatchEvent(new Event("change"));
-                
-                // 3. Set Storage, Battery, Condition (Another delay for storage list)
-                setTimeout(() => {
-                  if (rd.storage && storageSelect) {
-                    storageSelect.value = rd.storage;
-                    storageSelect.dispatchEvent(new Event("change"));
-                  }
-                  
-                  // Set Radio Mode
-                  if (rd.mode) {
-                    const modeInput = document.querySelector(`input[name="auditMode"][value="${rd.mode}"]`);
-                    if (modeInput) {
-                      modeInput.checked = true;
-                      modeInput.dispatchEvent(new Event("change"));
-                    }
-                  }
-                  
-                  // Set Battery and Condition
-                  const batInput = rd.mode === "sell" ? qs("[data-battery-health-sell]") : qs("[data-battery-health]");
-                  if (batInput && rd.battery) {
-                    batInput.value = rd.battery;
-                    batInput.dispatchEvent(new Event("input"));
-                  }
-                  
-                  const condInput = qs("[data-device-condition]");
-                  if (condInput && rd.condition) {
-                    condInput.value = rd.condition;
-                    condInput.dispatchEvent(new Event("input"));
-                  }
-                  
-                  // Finally trigger price fetch
-                  setTimeout(fetchHeurekaPrice, 300);
-                  
-                  showToast(`✅ Načítaný audit: ${rd.model}`, { type: "success" });
-                }, 300);
               }
-            }, 300);
+
+              modelSelect.dispatchEvent(new Event("change"));
+              
+              // 3. Set Storage, Battery, Condition (Another delay for storage list)
+              let storageAttempts = 0;
+              while ((!storageSelect || storageSelect.options.length <= 1) && storageAttempts < 10) {
+                await new Promise(res => setTimeout(res, 200));
+                storageAttempts++;
+              }
+
+              if (rd.storage && storageSelect) {
+                storageSelect.value = rd.storage;
+                storageSelect.dispatchEvent(new Event("change"));
+              }
+              
+              // Set Radio Mode
+              if (rd.mode) {
+                const modeInput = document.querySelector(`input[name="auditMode"][value="${rd.mode}"]`);
+                if (modeInput) {
+                  modeInput.checked = true;
+                  modeInput.dispatchEvent(new Event("change"));
+                }
+              }
+              
+              // Set Battery and Condition
+              const batInput = rd.mode === "sell" ? qs("[data-battery-health-sell]") : qs("[data-battery-health]");
+              if (batInput && rd.battery) {
+                batInput.value = rd.battery;
+                batInput.dispatchEvent(new Event("input"));
+              }
+              
+              const condInput = qs("[data-device-condition]");
+              if (condInput && rd.condition) {
+                condInput.value = rd.condition;
+                condInput.dispatchEvent(new Event("input"));
+              }
+              
+              // Finally trigger price fetch
+              setTimeout(fetchHeurekaPrice, 500);
+              
+              showToast(`✅ Úspešne načítaný audit: ${rd.model}`, { type: "success" });
+            }
           }
           
           // Since we are in dashboard mode, we don't want to continue showing the modal
@@ -8132,13 +8144,19 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       }
     } catch (err) {
       console.error(err);
-      qs("#expertReportName").textContent = "Audit nedostupný";
-      expertLoader.innerHTML = `
-        <div style="padding:40px">
-          <p style="color:#ef4444; font-weight:900; font-size:18px">❌ CHYBA: ${err.message}</p>
-          <button onclick="document.getElementById('expertReportOverlay').hidden = true" style="margin-top:25px; padding:15px 30px; background:#f1f5f9; border:none; border-radius:15px; font-weight:800; cursor:pointer">ZAVRIEŤ</button>
-        </div>
-      `;
+      
+      // Feedback for user even if main modal is hidden
+      showToast(`❌ Chyba: ${err.message}`, { type: "error" });
+      
+      if (options.showMain) {
+        qs("#expertReportName").textContent = "Audit nedostupný";
+        expertLoader.innerHTML = `
+          <div style="padding:40px">
+            <p style="color:#ef4444; font-weight:900; font-size:18px">❌ CHYBA: ${err.message}</p>
+            <button onclick="document.getElementById('expertReportOverlay').hidden = true" style="margin-top:25px; padding:15px 30px; background:#f1f5f9; border:none; border-radius:15px; font-weight:800; cursor:pointer">ZAVRIEŤ</button>
+          </div>
+        `;
+      }
     }
   };
 
@@ -8587,8 +8605,13 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
   } else if (auditParam) {
     console.log("🔐 Loading Expert Report (Dashboard Mode) for ID:", auditParam);
     // DASHBOARD MODE: Pre-fill the main UI with audit data
+    const mainPage = qs('.page');
+    if (mainPage) {
+      mainPage.style.display = 'block';
+      mainPage.style.opacity = '1';
+    }
     // Increase delay to ensure catalog is loaded and initialized
-    setTimeout(() => handleOpenExpertReport(auditParam, { fillDashboard: true, showMain: false }), 500);
+    setTimeout(() => handleOpenExpertReport(auditParam, { fillDashboard: true, showMain: false }), 800);
   } else {
     // Check if first visit
     const hasVisited = localStorage.getItem("auditly_visited");
