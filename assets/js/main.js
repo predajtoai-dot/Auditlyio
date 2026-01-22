@@ -8454,6 +8454,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
   const closeWelcomeBtn = qs("#closeWelcomeBtn");
 
   if (reportParam) {
+    console.log("📑 Loading Public Report View for ID:", reportParam);
     // PUBLIC REPORT VIEW: Hide everything else for maximum professional look
     document.body.classList.add('is-public-report');
     const mainPage = qs('.page');
@@ -8466,11 +8467,12 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     const publicOverlay = qs("#publicAuditOverlay");
     if (publicOverlay) {
       publicOverlay.hidden = false;
-      publicOverlay.style.display = "block";
+      publicOverlay.style.display = "flex";
     }
     
     setTimeout(() => renderPublicAudit(reportParam), 50);
   } else if (auditParam) {
+    console.log("🔐 Loading Expert Report View for ID:", auditParam);
     // EXPERT REPORT VIEW (Internal/Shared): Also hide everything else
     document.body.classList.add('is-public-report');
     const mainPage = qs('.page');
@@ -8483,7 +8485,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     // Show overlay immediately
     if (expertOverlay) {
       expertOverlay.hidden = false;
-      expertOverlay.style.display = "block";
+      expertOverlay.style.display = "flex";
     }
     
     setTimeout(() => handleOpenExpertReport(auditParam), 50);

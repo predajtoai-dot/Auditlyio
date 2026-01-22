@@ -1219,13 +1219,13 @@
           <p style="color: #94a3b8; font-size: 13px; margin-bottom: 30px;">Vyberte typ zobrazenia reportu</p>
 
           <div style="display: flex; flex-direction: column; gap: 12px;">
-            <button class="btn-scanner btn-scanner--primary" onclick="window._currentOptionAuditId && handleOpenExpertReport(window._currentOptionAuditId)" style="height: 55px; font-size: 15px;">
+            <button class="btn-scanner btn-scanner--primary" onclick="if(window._currentOptionAuditId) window.location.href = '?audit=' + window._currentOptionAuditId;" style="height: 55px; font-size: 15px;">
               🚀 Celkový Expertný Report (72h)
             </button>
-            <button class="btn-scanner btn-scanner--secondary" onclick="window._currentOptionAuditId && renderPublicAudit(window._currentOptionAuditId)" style="height: 55px; font-size: 15px; background: rgba(16, 185, 129, 0.1); color: #10b981; border-color: rgba(16, 185, 129, 0.2);">
+            <button class="btn-scanner btn-scanner--secondary" onclick="if(window._currentOptionAuditId) window.location.href = '?report=' + window._currentOptionAuditId;" style="height: 55px; font-size: 15px; background: rgba(16, 185, 129, 0.1); color: #10b981; border-color: rgba(16, 185, 129, 0.2);">
               🌐 Verejný Certifikát (Bazoš)
             </button>
-            <button class="btn-scanner btn-scanner--secondary" onclick="window._currentOptionAuditId && handleOpenExpertReport(window._currentOptionAuditId)" style="height: 55px; font-size: 15px; opacity: 0.8;">
+            <button class="btn-scanner btn-scanner--secondary" onclick="if(window._currentOptionAuditId) window.location.href = '?audit=' + window._currentOptionAuditId;" style="height: 55px; font-size: 15px; opacity: 0.8;">
               🔐 Súkromný Audit
             </button>
           </div>
