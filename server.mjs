@@ -2620,14 +2620,14 @@ async function sendAuditEmail(email, auditId, productName, forcedBaseUrl = null)
       <p style="font-size: 16px; color: #475569;">Váš technický audit pre zariadenie <strong>${productName}</strong> bol úspešne vygenerovaný.</p>
       
       <div style="margin: 30px 0; padding: 20px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
-        <h3 style="margin-top: 0; color: #1e293b; font-size: 16px;">🔐 Váš súkromný audit (pre Vás)</h3>
-        <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">Obsahuje kompletnú analýzu, checklist chýb a cenovú stratégiu.</p>
-        <a href="${privateLink}" style="display: inline-block; background-color: #8b5cf6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px;">Otvoriť súkromný audit</a>
+        <h3 style="margin-top: 0; color: #1e293b; font-size: 16px;">🚀 Váš Celkový Expertný Report (pre Vás)</h3>
+        <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">Obsahuje kompletnú analýzu, checklist chýb a cenovú stratégiu. Platnosť 72 hodín.</p>
+        <a href="${privateLink}" style="display: inline-block; background-color: #8b5cf6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px;">Otvoriť celkový audit</a>
       </div>
 
       <div style="margin: 30px 0; padding: 20px; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0;">
-        <h3 style="margin-top: 0; color: #1e293b; font-size: 16px;">🌐 Váš verejný audit (do inzerátu)</h3>
-        <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">Tento odkaz môžete vložiť do popisu inzerátu na Bazoši. Zvyšuje dôveryhodnosť a cenu.</p>
+        <h3 style="margin-top: 0; color: #1e293b; font-size: 16px;">🌐 Váš Verejný Certifikát (do inzerátu)</h3>
+        <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">Tento odkaz môžete vložiť do popisu inzerátu na Bazoši. Zvyšuje dôveryhodnosť a cenu. Platnosť 30 dní.</p>
         <a href="${publicLink}" style="display: inline-block; background-color: #10b981; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px;">Otvoriť verejný report</a>
       </div>
 
@@ -2638,7 +2638,7 @@ async function sendAuditEmail(email, auditId, productName, forcedBaseUrl = null)
       </div>
       
       <p style="font-size: 12px; color: #94a3b8; text-align: center; margin-top: 30px;">
-        Odkazy sú platné 30 dní. © 2026 Auditly.io
+        Expertný report je platný 72 hodín, verejný certifikát 30 dní. © 2026 Auditly.io
       </p>
     </div>
   `;
@@ -2711,9 +2711,9 @@ async function sendAuditEmail(email, auditId, productName, forcedBaseUrl = null)
 
   try {
     await transporter.sendMail({
-      from: `"Auditly.io 🛡️" <${smtpUser}>`,
-      to: email,
-      subject: `Váš technický audit pre ${productName} je pripravený!`,
+    from: `"Auditly.io 🛡️" <${smtpUser}>`,
+    to: email,
+    subject: `Váš technický audit pre ${productName} je pripravený!`,
       html: emailHtml,
     });
     console.log(`✅ [SMTP] Audit links sent successfully to ${email}`);
@@ -4631,16 +4631,16 @@ const server = http.createServer(async (req, res) => {
         let product = null;
         if (audit.product_id) {
           const { data: prodData } = await supabase
-            .from('products')
-            .select('*')
-            .eq('id', audit.product_id)
-            .maybeSingle();
+          .from('products')
+          .select('*')
+          .eq('id', audit.product_id)
+          .maybeSingle();
           product = prodData;
         }
 
         // 3. Increment View Count (Non-blocking)
         supabase.from('audits')
-          .update({ view_count: (audit.view_count || 0) + 1 })
+            .update({ view_count: (audit.view_count || 0) + 1 })
           .eq('id', id)
           .then(() => {})
           .catch(e => console.warn("⚠️ View count update failed:", e.message));
@@ -4650,11 +4650,20 @@ const server = http.createServer(async (req, res) => {
 
         const createdAt = new Date(audit.created_at);
         const now = new Date();
-        const diffDays = Math.abs(now - createdAt) / (1000 * 60 * 60 * 24);
+        const diffHours = Math.abs(now - createdAt) / (1000 * 60 * 60);
+        const diffDays = diffHours / 24;
         
-        // Use 30 days for public reports, but we can check if it's an expert view if needed
-        if (diffDays > 30) {
-          return json(res, 410, { ok: false, error: "Tento audit už expiroval (platnosť 30 dní)." });
+        const viewType = url.searchParams.get("view"); // 'public' or 'private'
+        
+        if (viewType === 'public') {
+          if (diffDays > 30) {
+            return json(res, 410, { ok: false, error: "Tento verejný certifikát už expiroval (platnosť 30 dní)." });
+          }
+        } else {
+          // Default is private/full audit view (72h)
+          if (diffHours > 72) {
+            return json(res, 410, { ok: false, error: "Tento expertný report už expiroval (platnosť 72 hodín)." });
+          }
         }
 
         return json(res, 200, { ok: true, audit });

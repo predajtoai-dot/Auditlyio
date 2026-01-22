@@ -7493,7 +7493,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         allModels.push(hm);
       }
     });
-
+    
     modelSelect.innerHTML = `<option value="" disabled selected>Vyberte model</option>` + 
       allModels.map(m => `<option value="${m.name}">${m.name}</option>`).join('');
     
@@ -7713,7 +7713,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         
         let fetchedData;
         try {
-          const resp = await fetch(`${API_BASE}/api/audits/${forcedId}`, { signal: controller.signal });
+          const resp = await fetch(`${API_BASE}/api/audits/${forcedId}?view=private`, { signal: controller.signal });
           clearTimeout(timeoutId);
           
           if (!resp.ok) {
@@ -7723,10 +7723,10 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
           
           fetchedData = await resp.json();
           if (!fetchedData.ok) throw new Error(fetchedData.error || "Audit sa nepodarilo načítať.");
-          
+        
           r = fetchedData.audit.products; // Joined product data
           rd = fetchedData.audit.report_data || {};
-          auditId = forcedId;
+        auditId = forcedId;
           createdAt = fetchedData.audit.created_at;
         } catch (fErr) {
           clearTimeout(timeoutId);
@@ -7742,6 +7742,69 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
           const base = getFairPriceBasis(r.name, r.base_price_recommended, 0);
           const conditionPct = Number(rd.condition || 100);
           r.base_price_recommended = Math.round(base * (conditionPct / 100));
+        }
+
+        // 🏠 DASHBOARD FILL LOGIC (New Request)
+        if (options.fillDashboard) {
+          console.log("🏠 Filling dashboard with audit data:", rd);
+          
+          // 1. Set Category
+          if (rd.category && categorySelect) {
+            categorySelect.value = rd.category;
+            categorySelect.dispatchEvent(new Event("change"));
+            
+            // 2. Set Model (Need short delay to let model list populate)
+            setTimeout(() => {
+              if (rd.model && modelSelect) {
+                // Try to find the matching option value
+                for (let opt of modelSelect.options) {
+                  if (opt.value === rd.model || opt.textContent.includes(rd.model)) {
+                    modelSelect.value = opt.value;
+                    break;
+                  }
+                }
+                modelSelect.dispatchEvent(new Event("change"));
+                
+                // 3. Set Storage, Battery, Condition (Another delay for storage list)
+                setTimeout(() => {
+                  if (rd.storage && storageSelect) {
+                    storageSelect.value = rd.storage;
+                    storageSelect.dispatchEvent(new Event("change"));
+                  }
+                  
+                  // Set Radio Mode
+                  if (rd.mode) {
+                    const modeInput = document.querySelector(`input[name="auditMode"][value="${rd.mode}"]`);
+                    if (modeInput) {
+                      modeInput.checked = true;
+                      modeInput.dispatchEvent(new Event("change"));
+                    }
+                  }
+                  
+                  // Set Battery and Condition
+                  const batInput = rd.mode === "sell" ? qs("[data-battery-health-sell]") : qs("[data-battery-health]");
+                  if (batInput && rd.battery) {
+                    batInput.value = rd.battery;
+                    batInput.dispatchEvent(new Event("input"));
+                  }
+                  
+                  const condInput = qs("[data-device-condition]");
+                  if (condInput && rd.condition) {
+                    condInput.value = rd.condition;
+                    condInput.dispatchEvent(new Event("input"));
+                  }
+                  
+                  // Finally trigger price fetch
+                  fetchHeurekaPrice();
+                  
+                  showToast(`✅ Načítaný audit: ${rd.model}`, { type: "success" });
+                }, 150);
+              }
+            }, 100);
+          }
+          
+          // Since we are in dashboard mode, we don't want to continue showing the modal
+          return; 
         }
       } else {
         // ... (generate new audit logic) ...
@@ -7967,7 +8030,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       // ⏳ COUNTDOWN TIMER LOGIC
       if (createdAt) {
         const expiryDate = new Date(createdAt);
-        expiryDate.setHours(expiryDate.getHours() + 62);
+        expiryDate.setHours(expiryDate.getHours() + 72);
         
         const timerDiv = document.createElement("div");
         timerDiv.id = "auditTimer";
@@ -8080,7 +8143,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     }
 
     try {
-      const url = `${API_BASE}/api/audits/${reportId}`;
+      const url = `${API_BASE}/api/audits/${reportId}?view=public`;
       console.log("📡 [Public Audit] Fetching from:", url);
       const resp = await fetch(url);
       const data = await resp.json();
@@ -8494,23 +8557,10 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     
     setTimeout(() => renderPublicAudit(reportParam), 50);
   } else if (auditParam) {
-    console.log("🔐 Loading Expert Report View for ID:", auditParam);
-    // EXPERT REPORT VIEW (Internal/Shared): Also hide everything else
-    document.body.classList.add('is-public-report');
-    const mainPage = qs('.page');
-    if (mainPage) mainPage.style.display = 'none';
-
-    // Ensure public is hidden
-    const publicOverlay = qs("#publicAuditOverlay");
-    if (publicOverlay) publicOverlay.hidden = true;
-
-    // Show overlay immediately
-    if (expertOverlay) {
-      expertOverlay.hidden = false;
-      expertOverlay.style.display = "flex";
-    }
-    
-    setTimeout(() => handleOpenExpertReport(auditParam), 50);
+    console.log("🔐 Loading Expert Report (Dashboard Mode) for ID:", auditParam);
+    // DASHBOARD MODE: Pre-fill the main UI with audit data
+    // We do NOT hide the main page here anymore
+    setTimeout(() => handleOpenExpertReport(auditParam, { fillDashboard: true, showMain: false }), 50);
   } else {
     // Check if first visit
     const hasVisited = localStorage.getItem("auditly_visited");
@@ -9477,19 +9527,19 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
           return `
             <div class="history-item" style="flex-direction: column; align-items: stretch; gap: 12px; padding: 18px;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div style="text-align: left;">
+              <div style="text-align: left;">
                   <div style="font-weight: 800; font-size: 15px; color: #fff; letter-spacing: -0.3px;">${name}</div>
                   <div style="font-size: 11px; color: #94a3b8; margin-top: 4px; font-weight: 600;">
-                    📅 ${new Date(audit.created_at).toLocaleDateString('sk-SK')} • 🔋 ${battery} • 💎 ${condition}
-                  </div>
+                  📅 ${new Date(audit.created_at).toLocaleDateString('sk-SK')} • 🔋 ${battery} • 💎 ${condition}
                 </div>
+              </div>
                 <div style="font-weight: 900; color: #a78bfa; font-size: 16px;">${audit.final_price_recommendation || '---'} €</div>
               </div>
               
               <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-                <a href="?audit=${audit.id}" class="audit-mini-link" style="flex: 1; background: rgba(167, 139, 250, 0.15); color: #c4b5fd; border: 1px solid rgba(167, 139, 250, 0.2); text-decoration: none; padding: 8px 5px; border-radius: 8px; font-size: 10px; font-weight: 800; text-align: center; transition: all 0.2s;">🚀 CELKOVÝ</a>
-                <a href="?report=${audit.id}" class="audit-mini-link" style="flex: 1; background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); text-decoration: none; padding: 8px 5px; border-radius: 8px; font-size: 10px; font-weight: 800; text-align: center; transition: all 0.2s;">🌐 VEREJNÝ</a>
-                <a href="?audit=${audit.id}" class="audit-mini-link" style="flex: 1; background: rgba(255,255,255,0.05); color: #94a3b8; border: 1px solid rgba(255,255,255,0.1); text-decoration: none; padding: 8px 5px; border-radius: 8px; font-size: 10px; font-weight: 800; text-align: center; transition: all 0.2s;">🔐 SÚKROMNÝ</a>
+                <a href="?audit=${audit.id}" class="audit-mini-link" style="flex: 1; background: rgba(167, 139, 250, 0.15); color: #c4b5fd; border: 1px solid rgba(167, 139, 250, 0.2); text-decoration: none; padding: 8px 5px; border-radius: 8px; font-size: 10px; font-weight: 800; text-align: center; transition: all 0.2s;">🚀 CELKOVÝ (72h)</a>
+                <a href="?report=${audit.id}" class="audit-mini-link" style="flex: 1; background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); text-decoration: none; padding: 8px 5px; border-radius: 8px; font-size: 10px; font-weight: 800; text-align: center; transition: all 0.2s;">🌐 VEREJNÝ (30d)</a>
+                <a href="?audit=${audit.id}" class="audit-mini-link" style="flex: 1; background: rgba(255,255,255,0.05); color: #94a3b8; border: 1px solid rgba(255,255,255,0.1); text-decoration: none; padding: 8px 5px; border-radius: 8px; font-size: 10px; font-weight: 800; text-align: center; transition: all 0.2s;">🔐 SÚKROMNÝ (72h)</a>
               </div>
             </div>
           `;
@@ -9503,7 +9553,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
   // Update Navigation Buttons based on Auth State
   const updateAuthUI = (email) => {
-    document.querySelectorAll(".btnLogin").forEach(btn => {
+  document.querySelectorAll(".btnLogin").forEach(btn => {
       if (email) {
         btn.textContent = "Moje Audity";
         btn.dataset.authMode = "profile";
@@ -9590,7 +9640,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       showToast("🔗 Audit je priradený k vášmu e-mailu.", { type: "success" });
       openProfile();
     } else {
-      openAuth("login");
+        openAuth("login");
     }
   });
 
@@ -9783,7 +9833,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     const completePaymentFlow = (email = null) => {
       const emailOverlay = qs("#emailCollectionOverlay");
       if (emailOverlay) emailOverlay.style.display = "none";
-
+      
       isTestPaid = true;
       localStorage.setItem(STORAGE_KEY_TEST_PAID, "true");
       showToast("✅ Platba prijatá (Test Mode)", { type: "success" });
