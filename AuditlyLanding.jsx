@@ -490,7 +490,7 @@ export default function AuditlyLanding() {
         </main>
 
         <footer className="py-12 text-center text-slate-400 text-xs border-t border-slate-100">
-          <p>© 2026 Auditlyio. Všetky práva vyhradené. Súčasť ekosystému PredajTo.ai</p>
+          <p>© 2026 Auditlyio. Všetky práva vyhradené.</p>
         </footer>
       </div>
     </div>

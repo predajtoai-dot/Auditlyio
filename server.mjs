@@ -2408,7 +2408,7 @@ async function sendFeedbackEmail(feedback) {
           "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-          from: "PredajTo.ai <onboarding@resend.dev>", // Použi overenú doménu v Resend, ak máš
+          from: "Auditly.io <onboarding@resend.dev>", // Použi overenú doménu v Resend, ak máš
           to: [EMAIL_CONFIG.recipient],
           subject: subject,
           html: htmlBody,
@@ -2452,7 +2452,7 @@ async function sendBetaSignupEmail(email, productName = "") {
           "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-          from: "PredajTo.ai Beta <onboarding@resend.dev>",
+          from: "Auditly.io Beta <onboarding@resend.dev>",
           to: [EMAIL_CONFIG.recipient],
           subject: subject,
           html: htmlBody
@@ -2515,7 +2515,7 @@ async function sendAdGeneratedEmail(userEmail, adData, input, pricing) {
       ` : ""}
       
       <div style="margin-top: 20px; font-size: 11px; color: #9ca3af; text-align: center;">
-        Tento e-mail bol automaticky odoslaný po vygenerovaní inzerátu na PredajTo.ai
+        Tento e-mail bol automaticky odoslaný po vygenerovaní inzerátu na Auditly.io
       </div>
     </div>
   `;
@@ -2528,7 +2528,7 @@ async function sendAdGeneratedEmail(userEmail, adData, input, pricing) {
           "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-          from: "PredajTo.ai Generator <onboarding@resend.dev>",
+          from: "Auditly.io Generator <onboarding@resend.dev>",
           to: [EMAIL_CONFIG.recipient],
           subject: subject,
           html: htmlBody
@@ -2573,7 +2573,7 @@ async function sendReviewFeedbackEmail(feedbackData) {
           "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-          from: "PredajTo.ai Review <onboarding@resend.dev>",
+          from: "Auditly.io Review <onboarding@resend.dev>",
           to: [EMAIL_CONFIG.recipient],
           subject: subject,
           html: htmlBody
@@ -2604,8 +2604,9 @@ function json(res, status, body) {
 // 📧 EMAIL SENDING UTILITY
 async function sendAuditEmail(email, auditId, productName) {
   const resendApiKey = process.env.RESEND_API_KEY;
-  const baseUrl = process.env.BASE_URL || "https://auditlyio.sk";
-  const auditLink = `${baseUrl}/?report=${auditId}`;
+  const baseUrl = (process.env.BASE_URL || "https://auditlyio.sk").replace(/\/+$/, "");
+  const publicLink = `${baseUrl}/?report=${auditId}`;
+  const privateLink = `${baseUrl}/?audit=${auditId}`;
   const fromEmail = process.env.EMAIL_FROM || "Auditly.io <onboarding@resend.dev>";
 
   const emailHtml = `
@@ -2616,21 +2617,28 @@ async function sendAuditEmail(email, auditId, productName) {
       </div>
       <hr style="border: 0; border-top: 1px solid #f1f5f9; margin-bottom: 25px;">
       <p style="font-size: 16px; color: #475569;">Dobrý deň,</p>
-      <p style="font-size: 16px; color: #475569;">Váš technický audit pre zariadenie <strong>${productName}</strong> bol úspešne vygenerovaný a uložený pod vaším e-mailom.</p>
-      <div style="text-align: center; margin: 35px 0;">
-        <a href="${auditLink}" style="background-color: #8b5cf6; color: white; padding: 16px 32px; text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 16px; box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3);">Otvoriť kompletný audit</a>
+      <p style="font-size: 16px; color: #475569;">Váš technický audit pre zariadenie <strong>${productName}</strong> bol úspešne vygenerovaný.</p>
+      
+      <div style="margin: 30px 0; padding: 20px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
+        <h3 style="margin-top: 0; color: #1e293b; font-size: 16px;">🔐 Váš súkromný audit (pre Vás)</h3>
+        <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">Obsahuje kompletnú analýzu, checklist chýieb a cenovú stratégiu.</p>
+        <a href="${privateLink}" style="display: inline-block; background-color: #8b5cf6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px;">Otvoriť súkromný audit</a>
       </div>
-      <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
-        <p style="font-size: 13px; color: #64748b; margin: 0; line-height: 1.5;">
-          💡 <strong>Tip:</strong> K tomuto auditu sa môžete kedykoľvek vrátiť na stránke <a href="${baseUrl}" style="color: #8b5cf6;">auditlyio.sk</a> kliknutím na "Moje Audity" a zadaním vášho e-mailu.
+
+      <div style="margin: 30px 0; padding: 20px; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0;">
+        <h3 style="margin-top: 0; color: #1e293b; font-size: 16px;">🌐 Váš verejný audit (do inzerátu)</h3>
+        <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">Tento odkaz môžete vložiť do popisu inzerátu na Bazoši. Zvyšuje dôveryhodnosť a cenu.</p>
+        <a href="${publicLink}" style="display: inline-block; background-color: #10b981; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px;">Otvoriť verejný report</a>
+      </div>
+
+      <div style="background: #fffbeb; padding: 15px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #fde68a;">
+        <p style="font-size: 13px; color: #92400e; margin: 0; line-height: 1.5;">
+          💡 <strong>Tip:</strong> K svojim auditom sa môžete kedykoľvek vrátiť na stránke <a href="${baseUrl}" style="color: #8b5cf6;">auditlyio.sk</a> kliknutím na "Moje Audity" a zadaním vášho e-mailu.
         </p>
       </div>
-      <p style="font-size: 14px; color: #94a3b8; text-align: center;">
-        Tento odkaz je platný po dobu 30 dní.
-      </p>
-      <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 30px 0;">
-      <p style="font-size: 12px; color: #94a3b8; text-align: center;">
-        © 2026 Auditly.io - Expert na bazárovú elektroniku.
+      
+      <p style="font-size: 12px; color: #94a3b8; text-align: center; margin-top: 30px;">
+        Odkazy sú platné 30 dní. © 2026 Auditly.io
       </p>
     </div>
   `;
@@ -2638,7 +2646,7 @@ async function sendAuditEmail(email, auditId, productName) {
   // 1. TRY RESEND FIRST IF API KEY EXISTS
   if (resendApiKey) {
     try {
-      console.log(`📧 [Resend] Attempting to send audit link to ${email}`);
+      console.log(`📧 [Resend] Attempting to send audit links to ${email}`);
       const res = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
@@ -2653,7 +2661,7 @@ async function sendAuditEmail(email, auditId, productName) {
         }),
       });
       if (res.ok) {
-        console.log(`✅ [Resend] Audit link sent successfully to ${email}`);
+        console.log(`✅ [Resend] Audit links sent successfully to ${email}`);
         
         // Notify Admin via Resend too
         const adminEmail = process.env.ADMIN_EMAIL;
@@ -2665,10 +2673,10 @@ async function sendAuditEmail(email, auditId, productName) {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              from: "Auditly System <onboarding@resend.dev>",
+              from: fromEmail,
               to: adminEmail,
               subject: `🔔 Nový audit: ${productName}`,
-              html: `<h3>Nový audit bol vygenerovaný</h3><p><strong>Produkt:</strong> ${productName}</p><p><strong>Email:</strong> ${email}</p><p><a href="${auditLink}">${auditLink}</a></p>`,
+              html: `<h3>Nový audit bol vygenerovaný</h3><p><strong>Produkt:</strong> ${productName}</p><p><strong>Email:</strong> ${email}</p><p><strong>Private:</strong> <a href="${privateLink}">${privateLink}</a></p><p><strong>Public:</strong> <a href="${publicLink}">${publicLink}</a></p>`,
             }),
           });
         }
@@ -2708,7 +2716,7 @@ async function sendAuditEmail(email, auditId, productName) {
       subject: `Váš technický audit pre ${productName} je pripravený!`,
       html: emailHtml,
     });
-    console.log(`✅ [SMTP] Audit link sent successfully to ${email}`);
+    console.log(`✅ [SMTP] Audit links sent successfully to ${email}`);
   } catch (error) {
     console.error(`❌ [SMTP] Failed to send email to ${email}:`, error.message);
   }
