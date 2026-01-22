@@ -4609,6 +4609,8 @@ const server = http.createServer(async (req, res) => {
       const id = pathname.split("/").pop();
       if (!id || id === "audits") return json(res, 400, { ok: false, error: "Missing ID" });
       
+      console.log(`📡 [API Audits] Fetching audit ID: ${id}`);
+      
       try {
         if (!supabase) throw new Error("Database not connected");
 
@@ -4619,43 +4621,46 @@ const server = http.createServer(async (req, res) => {
           .eq('id', id)
           .maybeSingle();
 
-        if (auditErr) throw auditErr;
-        if (!audit) return json(res, 404, { ok: false, error: "Audit not found" });
+        if (auditErr) {
+          console.error("❌ [API Audits] DB Error:", auditErr.message);
+          throw auditErr;
+        }
+        if (!audit) return json(res, 404, { ok: false, error: "Audit report not found." });
 
-        // 2. Fetch associated Product Data separately to avoid JOIN relationship errors
-        const { data: product, error: prodErr } = await supabase
-          .from('products')
-          .select('*')
-          .eq('id', audit.product_id)
-          .maybeSingle();
-
-        if (prodErr) throw prodErr;
-
-        // 3. Increment View Count
-        try {
-          await supabase
-            .from('audits')
-            .update({ view_count: (audit.view_count || 0) + 1 })
-            .eq('id', id);
-          audit.view_count = (audit.view_count || 0) + 1; // Update local object for response
-        } catch (vErr) {
-          console.warn("⚠️ [API Audits] View count increment failed:", vErr.message);
+        // 2. Fetch associated Product Data separately
+        let product = null;
+        if (audit.product_id) {
+          const { data: prodData } = await supabase
+            .from('products')
+            .select('*')
+            .eq('id', audit.product_id)
+            .maybeSingle();
+          product = prodData;
         }
 
-        // Merge product into audit object for frontend compatibility
-        audit.products = product;
+        // 3. Increment View Count (Non-blocking)
+        supabase.from('audits')
+          .update({ view_count: (audit.view_count || 0) + 1 })
+          .eq('id', id)
+          .then(() => {})
+          .catch(e => console.warn("⚠️ View count update failed:", e.message));
+
+        // Merge data
+        audit.products = product || { name: "Neznáme zariadenie", category: "Other" };
 
         const createdAt = new Date(audit.created_at);
         const now = new Date();
         const diffDays = Math.abs(now - createdAt) / (1000 * 60 * 60 * 24);
         
+        // Use 30 days for public reports, but we can check if it's an expert view if needed
         if (diffDays > 30) {
-          return json(res, 410, { ok: false, error: "Tento odkaz na audit vypršal (platnosť 30 dní)." });
+          return json(res, 410, { ok: false, error: "Tento audit už expiroval (platnosť 30 dní)." });
         }
+
         return json(res, 200, { ok: true, audit });
       } catch (err) {
-        console.error("❌ [API Audits] Fetch error:", err.message);
-        return json(res, 500, { ok: false, error: err.message });
+        console.error("❌ [API Audits] Final error:", err.message);
+        return json(res, 500, { ok: false, error: "Nepodarilo sa načítať dáta auditu.", details: err.message });
       }
     }
 

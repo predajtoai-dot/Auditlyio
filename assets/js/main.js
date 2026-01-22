@@ -7705,14 +7705,33 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
       if (forcedId) {
         // LOAD EXISTING AUDIT
-        const resp = await fetch(`/api/audits/${forcedId}`);
-        const data = await resp.json();
-        if (!data.ok) throw new Error(data.error || "Audit sa nepodarilo načítať.");
+        console.log(`📡 Fetching existing audit: ${forcedId}`);
         
-        r = data.audit.products; // Joined product data
-        rd = data.audit.report_data || {};
-        auditId = forcedId;
-        createdAt = data.audit.created_at;
+        // Add a timeout to fetch
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+        
+        try {
+          const resp = await fetch(`${API_BASE}/api/audits/${forcedId}`, { signal: controller.signal });
+          clearTimeout(timeoutId);
+          
+          if (!resp.ok) {
+            const errData = await resp.json().catch(() => ({}));
+            throw new Error(errData.error || `Server vrátil chybu ${resp.status}`);
+          }
+          
+          const data = await resp.json();
+          if (!data.ok) throw new Error(data.error || "Audit sa nepodarilo načítať.");
+          
+          r = data.audit.products; // Joined product data
+          rd = data.audit.report_data || {};
+          auditId = forcedId;
+          createdAt = data.audit.created_at;
+        } catch (fErr) {
+          clearTimeout(timeoutId);
+          if (fErr.name === 'AbortError') throw new Error("Požiadavka na server vypršala. Skúste to prosím znova.");
+          throw fErr;
+        }
 
         // ⚖️ Final Price Recommendation: Use saved or calculate if 0
         if (data.audit.final_price_recommendation > 0) {
@@ -8418,6 +8437,8 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
   const urlParams = new URLSearchParams(window.location.search);
   const auditParam = urlParams.get('audit');
   const reportParam = urlParams.get('report');
+
+  console.log("🔍 Startup Params - audit:", auditParam, "report:", reportParam);
 
   const runOnboarding = () => {
     console.log("🚀 Spúšťam onboarding...");
@@ -9430,16 +9451,20 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
   const loadUserAudits = async (email) => {
     const listEl = qs("#historyList");
     const countEl = qs("#auditCount");
+    if (!listEl) return;
+    
     listEl.innerHTML = '<p style="text-align: center; color: #64748b; font-size: 13px; padding: 20px;">Načítavam vaše audity...</p>';
 
     try {
       const resp = await fetch(`${API_BASE}/api/audits-by-email?email=${encodeURIComponent(email)}`);
+      if (!resp.ok) throw new Error(`Chyba servera: ${resp.status}`);
+      
       const data = await resp.json();
+      if (!data.ok) throw new Error(data.error || "Chyba pri načítaní dát.");
 
-      if (!data.ok) throw new Error(data.error);
-
-      countEl.textContent = data.audits.length;
-      if (data.audits.length === 0) {
+      if (countEl) countEl.textContent = data.audits.length;
+      
+      if (!data.audits || data.audits.length === 0) {
         listEl.innerHTML = '<p style="text-align: center; color: #64748b; font-size: 13px; padding: 20px;">Zatiaľ nemáte žiadne audity priradené k tomuto e-mailu.</p>';
       } else {
         listEl.innerHTML = data.audits.map(audit => {
@@ -9462,6 +9487,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         }).join('');
       }
     } catch (err) {
+      console.error("❌ loadUserAudits error:", err);
       listEl.innerHTML = `<p style="text-align: center; color: #ef4444; font-size: 12px; padding: 20px;">Chyba pri načítaní: ${err.message}</p>`;
     }
   };
