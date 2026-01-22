@@ -9475,14 +9475,22 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
           const condition = rd.condition ? `${rd.condition}%` : '---';
           
           return `
-            <div class="history-item" onclick="openAuditOptions('${audit.id}', '${name}')">
-              <div style="text-align: left;">
-                <div style="font-weight: 700; font-size: 14px; color: #fff;">${name}</div>
-                <div style="font-size: 10px; color: #94a3b8; margin-top: 2px;">
-                  📅 ${new Date(audit.created_at).toLocaleDateString('sk-SK')} • 🔋 ${battery} • 💎 ${condition}
+            <div class="history-item" style="flex-direction: column; align-items: stretch; gap: 12px; padding: 18px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="text-align: left;">
+                  <div style="font-weight: 800; font-size: 15px; color: #fff; letter-spacing: -0.3px;">${name}</div>
+                  <div style="font-size: 11px; color: #94a3b8; margin-top: 4px; font-weight: 600;">
+                    📅 ${new Date(audit.created_at).toLocaleDateString('sk-SK')} • 🔋 ${battery} • 💎 ${condition}
+                  </div>
                 </div>
+                <div style="font-weight: 900; color: #a78bfa; font-size: 16px;">${audit.final_price_recommendation || '---'} €</div>
               </div>
-              <div style="font-weight: 800; color: #a78bfa;">${audit.final_price_recommendation || '---'} €</div>
+              
+              <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                <a href="?audit=${audit.id}" class="audit-mini-link" style="flex: 1; background: rgba(167, 139, 250, 0.15); color: #c4b5fd; border: 1px solid rgba(167, 139, 250, 0.2); text-decoration: none; padding: 8px 5px; border-radius: 8px; font-size: 10px; font-weight: 800; text-align: center; transition: all 0.2s;">🚀 CELKOVÝ</a>
+                <a href="?report=${audit.id}" class="audit-mini-link" style="flex: 1; background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); text-decoration: none; padding: 8px 5px; border-radius: 8px; font-size: 10px; font-weight: 800; text-align: center; transition: all 0.2s;">🌐 VEREJNÝ</a>
+                <a href="?audit=${audit.id}" class="audit-mini-link" style="flex: 1; background: rgba(255,255,255,0.05); color: #94a3b8; border: 1px solid rgba(255,255,255,0.1); text-decoration: none; padding: 8px 5px; border-radius: 8px; font-size: 10px; font-weight: 800; text-align: center; transition: all 0.2s;">🔐 SÚKROMNÝ</a>
+              </div>
             </div>
           `;
         }).join('');
