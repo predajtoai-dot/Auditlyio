@@ -56,7 +56,7 @@
             <button class="btnSettings" title="Nastavenia">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
             </button>
-            <button class="btnLogin">Prihlásiť sa</button>
+            <button class="btnLogin">Moje Audity</button>
             <button class="mobileMenuToggle" data-hamburger>
               <span></span><span></span><span></span>
             </button>
@@ -70,7 +70,7 @@
             <li><a href="#" id="openPricingModalMobile">Cenník</a></li>
             <li><a href="#contact">Kontakt</a></li>
             <li><hr></li>
-            <li><button class="btnLogin mobile">Prihlásiť sa</button></li>
+            <li><button class="btnLogin mobile">Moje Audity</button></li>
           </ul>
         </div>
       </header>
@@ -1135,6 +1135,22 @@
       </div>
     </div>
 
+    <!-- EMAIL COLLECTION MODAL (Post-Payment) -->
+    <div id="emailCollectionOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); z-index: 10001; align-items: center; justify-content: center; padding: 20px;">
+      <div class="expert-report-window" style="max-width: 450px !important; text-align: center; padding: 40px 30px;">
+        <div style="font-size: 50px; margin-bottom: 20px;">📧</div>
+        <h2 style="font-size: 24px; font-weight: 800; color: #ffffff; margin-bottom: 10px;">Kam vám pošleme audit?</h2>
+        <p style="color: #94a3b8; font-size: 14px; line-height: 1.6; margin-bottom: 25px;">
+          Zadajte svoj e-mail, aby ste k svojim reportom mali prístup kedykoľvek, aj po zatvorení prehliadača.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+          <input type="email" id="collectEmailInput" placeholder="vas@email.com" class="auth-input" style="text-align: center; font-size: 18px;">
+          <button id="btnSubmitEmailAudit" class="btn-scanner btn-scanner--primary" style="height: 55px; width: 100%; font-size: 16px;">Zobraziť môj audit</button>
+          <button id="btnSkipEmailAudit" style="background: transparent; border: none; color: #64748b; font-size: 13px; cursor: pointer; text-decoration: underline;">Pokračovať bez e-mailu</button>
+        </div>
+      </div>
+    </div>
+
     <!-- AUTH & PROFILE MODAL (Consolidated) -->
     <div id="authOverlay" style="display: none;">
       <div class="expert-report-window auth-window" style="max-width: 450px !important;">
@@ -1143,19 +1159,16 @@
         <!-- LOGIN VIEW -->
         <div id="loginView" style="padding: 40px 30px; text-align: center;">
           <div style="font-size: 40px; margin-bottom: 20px;">🛡️</div>
-          <h2 style="font-size: 26px; font-weight: 800; color: #ffffff; margin-bottom: 10px;">Prihlásenie</h2>
+          <h2 style="font-size: 26px; font-weight: 800; color: #ffffff; margin-bottom: 10px;">Moje Audity</h2>
           <p style="color: #94a3b8; font-size: 14px; line-height: 1.5; margin-bottom: 30px;">
-            Prihláste sa pre uloženie auditu a správu vašich inzerátov.
+            Zadajte svoj e-mail a my vám zobrazíme všetky vaše vygenerované reporty.
           </p>
 
           <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
-            <input type="email" id="authEmail" placeholder="E-mail" class="auth-input">
-            <input type="password" id="authPassword" placeholder="Heslo" class="auth-input">
-            <button id="btnSubmitLogin" class="btn-scanner btn-scanner--primary" style="height: 55px; font-size: 16px;">Prihlásiť sa</button>
-          </div>
-          
-          <div style="font-size: 13px; color: #94a3b8;">
-            Nemáte ešte účet? <a href="#" id="switchToRegister" style="color: #a78bfa; font-weight: 700; text-decoration: none;">Vytvoriť účet</a>
+            <input type="email" id="authEmail" placeholder="Váš e-mail" class="auth-input" style="text-align: center;">
+            <!-- Hidden password for compatibility with existing JS but we'll bypass it -->
+            <input type="password" id="authPassword" value="password123" hidden>
+            <button id="btnSubmitLogin" class="btn-scanner btn-scanner--primary" style="height: 55px; font-size: 16px;">Zobraziť moje audity</button>
           </div>
         </div>
 

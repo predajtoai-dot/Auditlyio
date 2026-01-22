@@ -7758,6 +7758,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
           const currentBattery = mode === "buy" ? qs("[data-battery-health]")?.value : qs("[data-battery-health-sell]")?.value;
           const currentCondition = qs("[data-device-condition]")?.value || "100";
           const currentStorage = storageSelect?.value || "";
+          const userEmail = localStorage.getItem("auditly_user_email");
 
           // Populate rd for rendering
           rd = { mode, battery: currentBattery, condition: currentCondition, storage: currentStorage };
@@ -7767,6 +7768,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               product_id: r.id,
+              user_email: userEmail,
               report_data: { 
                 model: r.name, 
                 specs: r.display_tech, 
@@ -9391,8 +9393,8 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
   };
 
   const openProfile = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return openAuth("login");
+    const userEmail = localStorage.getItem("auditly_user_email");
+    if (!userEmail) return openAuth("login");
 
     authOverlay.style.display = "flex";
     document.body.style.overflow = "hidden";
@@ -9400,36 +9402,33 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     registerView.style.display = "none";
     profileView.style.display = "block";
     
-    qs("#userDisplayEmail").textContent = user.email;
-    loadUserAudits(user.id);
+    qs("#userDisplayEmail").textContent = userEmail;
+    loadUserAudits(userEmail);
   };
 
-  const loadUserAudits = async (userId) => {
+  const loadUserAudits = async (email) => {
     const listEl = qs("#historyList");
     const countEl = qs("#auditCount");
-    listEl.innerHTML = '<p style="text-align: center; color: #64748b; font-size: 13px; padding: 20px;">Načítavam...</p>';
+    listEl.innerHTML = '<p style="text-align: center; color: #64748b; font-size: 13px; padding: 20px;">Načítavam vaše audity...</p>';
 
     try {
-      const { data, error } = await supabase
-        .from('audits')
-        .select('*')
-        .eq('user_id', userId)
-        .order('created_at', { ascending: false });
+      const resp = await fetch(`${API_BASE}/api/audits-by-email?email=${encodeURIComponent(email)}`);
+      const data = await resp.json();
 
-      if (error) throw error;
+      if (!data.ok) throw new Error(data.error);
 
-      countEl.textContent = data.length;
-      if (data.length === 0) {
-        listEl.innerHTML = '<p style="text-align: center; color: #64748b; font-size: 13px; padding: 20px;">Zatiaľ nemáte žiadne audity.</p>';
+      countEl.textContent = data.audits.length;
+      if (data.audits.length === 0) {
+        listEl.innerHTML = '<p style="text-align: center; color: #64748b; font-size: 13px; padding: 20px;">Zatiaľ nemáte žiadne audity priradené k tomuto e-mailu.</p>';
       } else {
-        listEl.innerHTML = data.map(audit => {
+        listEl.innerHTML = data.audits.map(audit => {
           const rd = audit.report_data || {};
-          const name = rd.productName || rd.model || 'Zariadenie';
+          const name = rd.productName || rd.model || (audit.products ? audit.products.name : 'Zariadenie');
           const battery = rd.battery ? `${rd.battery}%` : '---';
           const condition = rd.condition ? `${rd.condition}%` : '---';
           
           return `
-            <div class="history-item" onclick="renderPublicAudit('${audit.id}')">
+            <div class="history-item" onclick="handleOpenExpertReport('${audit.id}')">
               <div style="text-align: left;">
                 <div style="font-weight: 700; font-size: 14px; color: #fff;">${name}</div>
                 <div style="font-size: 10px; color: #94a3b8; margin-top: 2px;">
@@ -9442,18 +9441,18 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         }).join('');
       }
     } catch (err) {
-      listEl.innerHTML = `<p style="text-align: center; color: var(--red); font-size: 12px; padding: 20px;">Chyba: ${err.message}</p>`;
+      listEl.innerHTML = `<p style="text-align: center; color: #ef4444; font-size: 12px; padding: 20px;">Chyba pri načítaní: ${err.message}</p>`;
     }
   };
 
   // Update Navigation Buttons based on Auth State
-  const updateAuthUI = (user) => {
-  document.querySelectorAll(".btnLogin").forEach(btn => {
-      if (user) {
-        btn.textContent = "Môj Profil";
+  const updateAuthUI = (email) => {
+    document.querySelectorAll(".btnLogin").forEach(btn => {
+      if (email) {
+        btn.textContent = "Moje Audity";
         btn.dataset.authMode = "profile";
       } else {
-        btn.textContent = "Prihlásiť sa";
+        btn.textContent = "Moje Audity";
         btn.dataset.authMode = "login";
       }
     });
@@ -9480,59 +9479,32 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     closeAuthModal?.addEventListener("click", () => { authOverlay.style.display = "none"; document.body.style.overflow = ""; });
 
     btnSubmitLogin?.addEventListener("click", async () => {
-      const email = authEmailInput.value.trim();
-      const password = authPassInput.value.trim();
-      if (!email || !password) return showToast("❌ Zadajte e-mail a heslo.", { type: "error" });
+      const email = authEmailInput?.value?.trim();
+      if (!email || !email.includes("@")) return showToast("❌ Zadajte platný e-mail.", { type: "error" });
 
       btnSubmitLogin.disabled = true;
-      btnSubmitLogin.textContent = "Prihlasujem...";
+      btnSubmitLogin.textContent = "Hľadám audity...";
       
       try {
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-
-        showToast("✅ Vitajte späť!", { type: "success" });
-        updateAuthUI(data.user);
-        authOverlay.style.display = "none";
-        document.body.style.overflow = "";
-        
-        // Save current audit if exists
-        const auditId = expertOverlay?.dataset?.currentAuditId;
-        if (auditId) await saveAuditToAccount(data.user);
-        
+        localStorage.setItem("auditly_user_email", email);
+        showToast("✅ E-mail overený!", { type: "success" });
+        updateAuthUI(email);
+        openProfile(); // This will now use the stored email
       } catch (error) {
         showToast(`❌ ${error.message}`, { type: "error" });
       } finally {
         btnSubmitLogin.disabled = false;
-        btnSubmitLogin.textContent = "Prihlásiť sa";
+        btnSubmitLogin.textContent = "Zobraziť moje audity";
       }
     });
 
-    btnSubmitRegister?.addEventListener("click", async () => {
-      const email = regEmailInput.value.trim();
-      const password = regPassInput.value.trim();
-      if (!email || !password) return showToast("❌ Zadajte údaje.", { type: "error" });
-
-      btnSubmitRegister.disabled = true;
-      btnSubmitRegister.textContent = "Registrujem...";
-      
-      try {
-        const { data, error } = await supabase.auth.signUp({ email, password });
-        if (error) throw error;
-
-        showToast("✅ Registrácia úspešná!", { type: "success" });
-        if (data.user) openAuth("login");
-      } catch (error) {
-        showToast(`❌ ${error.message}`, { type: "error" });
-      } finally {
-        btnSubmitRegister.disabled = false;
-        btnSubmitRegister.textContent = "Zaregistrovať sa";
-      }
+    btnSubmitRegister?.addEventListener("click", () => {
+       // Register is now the same as login in this simplified flow
+       btnSubmitLogin?.click();
     });
 
     btnSignOut?.addEventListener("click", async () => {
-      await supabase.auth.signOut();
-      localStorage.removeItem("auditly_user");
+      localStorage.removeItem("auditly_user_email");
       updateAuthUI(null);
       authOverlay.style.display = "none";
       document.body.style.overflow = "";
@@ -9540,6 +9512,12 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     });
   };
   initAuthEvents();
+  
+  // Check for existing email session
+  const savedEmail = localStorage.getItem("auditly_user_email");
+  if (savedEmail) {
+    updateAuthUI(savedEmail);
+  }
 
   // Action Buttons (Save Audit)
   shareResultBtn?.addEventListener("click", (e) => {
@@ -9550,13 +9528,14 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       return;
     }
 
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (user) {
-        saveAuditToAccount(user);
+    const userEmail = localStorage.getItem("auditly_user_email");
+    if (userEmail) {
+      // Already has email, we can show share links or re-save
+      showToast("🔗 Audit je priradený k vášmu e-mailu.", { type: "success" });
+      openProfile();
     } else {
-        openAuth("login");
+      openAuth("login");
     }
-    });
   });
 
   async function saveAuditToAccount(user) {
@@ -9722,6 +9701,33 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       const confirmOverlay = qs("#paymentConfirmOverlay");
       if (confirmOverlay) confirmOverlay.style.display = "none";
       
+      const emailOverlay = qs("#emailCollectionOverlay");
+      if (emailOverlay) {
+        emailOverlay.style.display = "flex";
+      } else {
+        // Fallback if overlay not found
+        completePaymentFlow();
+      }
+    });
+
+    qs("#btnSubmitEmailAudit")?.addEventListener("click", () => {
+      const email = qs("#collectEmailInput")?.value.trim();
+      if (!email || !email.includes("@")) {
+        showToast("❌ Prosím, zadajte platný e-mail.", { type: "error" });
+        return;
+      }
+      localStorage.setItem("auditly_user_email", email);
+      completePaymentFlow(email);
+    });
+
+    qs("#btnSkipEmailAudit")?.addEventListener("click", () => {
+      completePaymentFlow();
+    });
+
+    const completePaymentFlow = (email = null) => {
+      const emailOverlay = qs("#emailCollectionOverlay");
+      if (emailOverlay) emailOverlay.style.display = "none";
+
       isTestPaid = true;
       localStorage.setItem(STORAGE_KEY_TEST_PAID, "true");
       showToast("✅ Platba prijatá (Test Mode)", { type: "success" });
@@ -9738,7 +9744,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         window._pendingAnalysis = false;
         generateBtn?.click(); // Re-trigger the click
       }
-    });
+    };
   };
 
   const renderOfflineReport = (savedData) => {

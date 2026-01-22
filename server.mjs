@@ -4584,6 +4584,27 @@ const server = http.createServer(async (req, res) => {
       }
     }
 
+    // 📩 FETCH AUDITS BY EMAIL
+    if (pathname === "/api/audits-by-email" && req.method === "GET") {
+      const email = url.searchParams.get("email");
+      if (!email) return json(res, 400, { ok: false, error: "Missing email" });
+
+      try {
+        if (!supabase) throw new Error("Database not connected");
+
+        const { data, error } = await supabase
+          .from('audits')
+          .select('*, products(name, model_name)')
+          .eq('user_email', email)
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        return json(res, 200, { ok: true, audits: data });
+      } catch (err) {
+        return json(res, 500, { ok: false, error: err.message });
+      }
+    }
+
     if (pathname === "/api/audit/report" && req.method === "GET") {
       const brand = String(url.searchParams.get("brand") || "").trim();
       const model = String(url.searchParams.get("model") || "").trim();

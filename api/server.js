@@ -84,7 +84,7 @@ export default async function handler(req, res) {
     if (pathname === "/api/audits" && req.method === "POST") {
       try {
         const body = await getBody(req);
-        const { report_data, risk_score, final_price_recommendation, product_id } = body;
+        const { report_data, risk_score, final_price_recommendation, product_id, user_email } = body;
 
         if (!supabase) throw new Error("Database not connected");
 
@@ -95,6 +95,7 @@ export default async function handler(req, res) {
             report_data,
             risk_score: risk_score || 0,
             final_price_recommendation: final_price_recommendation || 0,
+            user_email: user_email || null,
             status: 'completed'
           })
           .select('id')
@@ -135,6 +136,27 @@ export default async function handler(req, res) {
         }
 
         return res.status(200).json({ ok: true, audit: data });
+      } catch (err) {
+        return res.status(500).json({ ok: false, error: err.message });
+      }
+    }
+
+    // 📩 FETCH AUDITS BY EMAIL
+    if (pathname === "/api/audits-by-email" && req.method === "GET") {
+      const email = url.searchParams.get("email");
+      if (!email) return res.status(400).json({ ok: false, error: "Missing email" });
+
+      try {
+        if (!supabase) throw new Error("Database not connected");
+
+        const { data, error } = await supabase
+          .from('audits')
+          .select('*, products(name, model_name)')
+          .eq('user_email', email)
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        return res.status(200).json({ ok: true, audits: data });
       } catch (err) {
         return res.status(500).json({ ok: false, error: err.message });
       }
