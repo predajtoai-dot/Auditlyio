@@ -2606,7 +2606,8 @@ async function sendAuditEmail(email, auditId, productName, forcedBaseUrl = null)
   const resendApiKey = process.env.RESEND_API_KEY;
   const baseUrl = (forcedBaseUrl || process.env.BASE_URL || "https://auditlyio.sk").replace(/\/+$/, "");
   const publicLink = `${baseUrl}/?report=${auditId}`;
-  const privateLink = `${baseUrl}/?audit=${auditId}`;
+  const privateLink = `${baseUrl}/?expert=${auditId}`;
+  const dashboardLink = `${baseUrl}/?audit=${auditId}`;
   const fromEmail = process.env.EMAIL_FROM || "Auditly.io <onboarding@resend.dev>";
 
   const emailHtml = `
@@ -2621,14 +2622,20 @@ async function sendAuditEmail(email, auditId, productName, forcedBaseUrl = null)
       
       <div style="margin: 30px 0; padding: 20px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
         <h3 style="margin-top: 0; color: #1e293b; font-size: 16px;">🚀 Váš Celkový Expertný Report (pre Vás)</h3>
-        <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">Obsahuje kompletnú analýzu, checklist chýb a cenovú stratégiu. Platnosť 72 hodín.</p>
-        <a href="${privateLink}" style="display: inline-block; background-color: #8b5cf6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px;">Otvoriť celkový audit</a>
+        <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">Obsahuje kompletnú analýzu na hlavnej stránke dashboardu. Platnosť 72 hodín.</p>
+        <a href="${dashboardLink}" style="display: inline-block; background-color: #8b5cf6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px;">Otvoriť celkový audit</a>
       </div>
 
       <div style="margin: 30px 0; padding: 20px; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0;">
         <h3 style="margin-top: 0; color: #1e293b; font-size: 16px;">🌐 Váš Verejný Certifikát (do inzerátu)</h3>
-        <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">Tento odkaz môžete vložiť do popisu inzerátu na Bazoši. Zvyšuje dôveryhodnosť a cenu. Platnosť 30 dní.</p>
+        <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">Tento odkaz môžete vložiť do popisu inzerátu na Bazoši. Platnosť 30 dní.</p>
         <a href="${publicLink}" style="display: inline-block; background-color: #10b981; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px;">Otvoriť verejný report</a>
+      </div>
+
+      <div style="margin: 30px 0; padding: 20px; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0;">
+        <h3 style="margin-top: 0; color: #1e293b; font-size: 16px;">🔐 Váš Súkromný Report (Modal)</h3>
+        <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">Detailný report v modálnom okne. Platnosť 72 hodín.</p>
+        <a href="${privateLink}" style="display: inline-block; background-color: #64748b; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px;">Otvoriť súkromný report</a>
       </div>
 
       <div style="background: #fffbeb; padding: 15px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #fde68a;">
@@ -4654,12 +4661,12 @@ const server = http.createServer(async (req, res) => {
 
         if (viewType === 'public') {
           if (diffDays > 30) {
-            return json(res, 410, { ok: false, error: "Tento verejný certifikát už expiroval (platnosť 30 dní)." });
+            return json(res, 410, { ok: false, error: "Tento verejný certifikát už expiroval (30 dní)." });
           }
-        } else {
-          // Default is private/full audit view (72h)
+        } else if (viewType === 'expert' || viewType === 'private' || !viewType) {
+          // 72h limit for expert/private views
           if (diffHours > 72) {
-            return json(res, 410, { ok: false, error: "Tento expertný report už expiroval (platnosť 72 hodín)." });
+            return json(res, 410, { ok: false, error: "Tento expertný report už expiroval (72 hodín)." });
           }
         }
 

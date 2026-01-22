@@ -7713,7 +7713,8 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         
         let fetchedData;
         try {
-          const fetchUrl = `${API_BASE}/api/audits/${forcedId}?view=private`;
+          const viewType = options.fillDashboard ? 'private' : 'expert';
+          const fetchUrl = `${API_BASE}/api/audits/${forcedId}?view=${viewType}`;
           console.log(`📡 [handleOpenExpertReport] Fetching: ${fetchUrl}`);
           
           const resp = await fetch(fetchUrl, { signal: controller.signal });
@@ -7721,25 +7722,21 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
           
           if (!resp.ok) {
             const errData = await resp.json().catch(() => ({}));
-            console.error("❌ [handleOpenExpertReport] Server returned error:", resp.status, errData);
             throw new Error(errData.error || `Server vrátil chybu ${resp.status}`);
           }
           
           fetchedData = await resp.json();
           if (!fetchedData.ok || !fetchedData.audit) {
-            throw new Error(fetchedData.error || "Audit sa nepodarilo načítať alebo chýbajú dáta.");
+            throw new Error(fetchedData.error || "Audit sa nepodarilo načítať.");
           }
         
           r = fetchedData.audit.products || { name: "Zariadenie" }; 
           rd = fetchedData.audit.report_data || {};
           auditId = forcedId;
           createdAt = fetchedData.audit.created_at;
-          
-          console.log("✅ [handleOpenExpertReport] Data loaded successfully:", fetchedData.audit);
         } catch (fErr) {
           clearTimeout(timeoutId);
-          console.error("❌ [handleOpenExpertReport] Fetch error:", fErr);
-          if (fErr.name === 'AbortError') throw new Error("Požiadavka na server vypršala. Skúste to prosím znova.");
+          console.error("❌ [handleOpenExpertReport] Fetch failure:", fErr);
           throw fErr;
         }
 
@@ -8565,72 +8562,27 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
   // 🚀 STARTUP LOGIC
   const urlParams = new URLSearchParams(window.location.search);
   const auditParam = urlParams.get('audit');
+  const expertParam = urlParams.get('expert');
   const reportParam = urlParams.get('report');
 
-  console.log("🔍 Startup Params - audit:", auditParam, "report:", reportParam);
-
-  const runOnboarding = () => {
-    console.log("🚀 Spúšťam onboarding...");
-    const overlay = document.getElementById("welcomeOverlay");
-    if (overlay) {
-      overlay.style.display = "flex";
-      // Ensure all children are visible
-      const content = overlay.querySelector('.expert-report-window');
-      if (content) content.style.display = "block";
-      
-      document.body.style.overflow = "hidden";
-    } else {
-      console.warn("⚠️ welcomeOverlay nenájdený, spúšťam toasty.");
-      startOnboardingToasts();
-    }
-  };
-
-  const startOnboardingToasts = () => {
-    setTimeout(() => {
-      showToast("1️⃣ Začnite výberom kategórie a modelu zariadenia.", { type: "info", duration: 5000 });
-      setTimeout(() => {
-        showToast("📸 Alebo skúste AI skener pre inteligentný odhad stavu.", { type: "info", duration: 5000 });
-        setTimeout(() => {
-          showToast("🛡️ Získajte expertný report a férovú trhovú cenu.", { type: "success", duration: 5000 });
-          setTimeout(() => {
-            showToast("🔗 Nakoniec vygenerujte inzerát s unikátnym Live Reportom.", { type: "info", duration: 5000 });
-          }, 5500);
-        }, 5500);
-      }, 5500);
-    }, 1000);
-  };
-
-  const welcomeOverlay = qs("#welcomeOverlay");
-  const closeWelcomeBtn = qs("#closeWelcomeBtn");
+  console.log("🔍 Startup Params - audit:", auditParam, "expert:", expertParam, "report:", reportParam);
 
   if (reportParam) {
+    // ... public report logic ...
     console.log("📑 Loading Public Report View for ID:", reportParam);
-    // PUBLIC REPORT VIEW: Hide everything else for maximum professional look
     document.body.classList.add('is-public-report');
     const mainPage = qs('.page');
     if (mainPage) mainPage.style.display = 'none';
-    
-    // Ensure expert is hidden
     if (expertOverlay) expertOverlay.hidden = true;
-    
-    // Show overlay immediately
     const publicOverlay = qs("#publicAuditOverlay");
-    if (publicOverlay) {
-      publicOverlay.hidden = false;
-      publicOverlay.style.display = "flex";
-    }
-    
+    if (publicOverlay) { publicOverlay.hidden = false; publicOverlay.style.display = "flex"; }
     setTimeout(() => renderPublicAudit(reportParam), 50);
+  } else if (expertParam) {
+    console.log("🔐 Loading Expert Modal View for ID:", expertParam);
+    setTimeout(() => handleOpenExpertReport(expertParam, { showMain: true }), 50);
   } else if (auditParam) {
-    console.log("🔐 Loading Expert Report (Dashboard Mode) for ID:", auditParam);
-    // DASHBOARD MODE: Pre-fill the main UI with audit data
-    const mainPage = qs('.page');
-    if (mainPage) {
-      mainPage.style.display = 'block';
-      mainPage.style.opacity = '1';
-    }
-    // Increase delay to ensure catalog is loaded and initialized
-    setTimeout(() => handleOpenExpertReport(auditParam, { fillDashboard: true, showMain: false }), 800);
+    console.log("🏠 Loading Dashboard Fill View for ID:", auditParam);
+    setTimeout(() => handleOpenExpertReport(auditParam, { fillDashboard: true, showMain: false }), 500);
   } else {
     // Check if first visit
     const hasVisited = localStorage.getItem("auditly_visited");
@@ -9609,7 +9561,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
               <div style="display: flex; gap: 6px; flex-wrap: wrap;">
                 <a href="?audit=${audit.id}" class="audit-mini-link" style="flex: 1; background: rgba(167, 139, 250, 0.15); color: #c4b5fd; border: 1px solid rgba(167, 139, 250, 0.2); text-decoration: none; padding: 8px 5px; border-radius: 8px; font-size: 10px; font-weight: 800; text-align: center; transition: all 0.2s;">🚀 CELKOVÝ (72h)</a>
                 <a href="?report=${audit.id}" class="audit-mini-link" style="flex: 1; background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); text-decoration: none; padding: 8px 5px; border-radius: 8px; font-size: 10px; font-weight: 800; text-align: center; transition: all 0.2s;">🌐 VEREJNÝ (30d)</a>
-                <a href="?audit=${audit.id}" class="audit-mini-link" style="flex: 1; background: rgba(255,255,255,0.05); color: #94a3b8; border: 1px solid rgba(255,255,255,0.1); text-decoration: none; padding: 8px 5px; border-radius: 8px; font-size: 10px; font-weight: 800; text-align: center; transition: all 0.2s;">🔐 SÚKROMNÝ (72h)</a>
+                <a href="?expert=${audit.id}" class="audit-mini-link" style="flex: 1; background: rgba(255,255,255,0.05); color: #94a3b8; border: 1px solid rgba(255,255,255,0.1); text-decoration: none; padding: 8px 5px; border-radius: 8px; font-size: 10px; font-weight: 800; text-align: center; transition: all 0.2s;">🔐 SÚKROMNÝ (72h)</a>
               </div>
             </div>
           `;
