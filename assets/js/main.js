@@ -7711,6 +7711,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
         
+        let fetchedData;
         try {
           const resp = await fetch(`${API_BASE}/api/audits/${forcedId}`, { signal: controller.signal });
           clearTimeout(timeoutId);
@@ -7720,13 +7721,13 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
             throw new Error(errData.error || `Server vrátil chybu ${resp.status}`);
           }
           
-          const data = await resp.json();
-          if (!data.ok) throw new Error(data.error || "Audit sa nepodarilo načítať.");
+          fetchedData = await resp.json();
+          if (!fetchedData.ok) throw new Error(fetchedData.error || "Audit sa nepodarilo načítať.");
           
-          r = data.audit.products; // Joined product data
-          rd = data.audit.report_data || {};
+          r = fetchedData.audit.products; // Joined product data
+          rd = fetchedData.audit.report_data || {};
           auditId = forcedId;
-          createdAt = data.audit.created_at;
+          createdAt = fetchedData.audit.created_at;
         } catch (fErr) {
           clearTimeout(timeoutId);
           if (fErr.name === 'AbortError') throw new Error("Požiadavka na server vypršala. Skúste to prosím znova.");
@@ -7734,8 +7735,8 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         }
 
         // ⚖️ Final Price Recommendation: Use saved or calculate if 0
-        if (data.audit.final_price_recommendation > 0) {
-          r.base_price_recommended = data.audit.final_price_recommendation;
+        if (fetchedData && fetchedData.audit.final_price_recommendation > 0) {
+          r.base_price_recommended = fetchedData.audit.final_price_recommendation;
         } else {
           // If recommendation is 0, we take the base price and apply penalties manually
           const base = getFairPriceBasis(r.name, r.base_price_recommended, 0);
