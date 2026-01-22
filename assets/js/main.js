@@ -7692,6 +7692,9 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       if (shareLinkPrivate) shareLinkPrivate.style.display = "none";
       if (shareLinkPublic) shareLinkPublic.style.display = "none";
       
+      // Close auth modal if open
+      if (authOverlay) authOverlay.style.display = "none";
+      
       // Clear old countdown
       const existingTimer = qs("#auditTimer");
       if (existingTimer) existingTimer.remove();
@@ -8040,6 +8043,9 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     // Prepare UI
     publicOverlay.hidden = false;
     publicOverlay.style.display = "flex";
+    
+    // Close auth modal if open
+    if (authOverlay) authOverlay.style.display = "none";
     
     // Only lock body scroll if NOT in full-page standalone mode
     if (!document.body.classList.contains('is-public-report')) {
@@ -9401,10 +9407,23 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     loginView.style.display = "none";
     registerView.style.display = "none";
     profileView.style.display = "block";
+    qs("#auditOptionsView").style.display = "none";
     
     qs("#userDisplayEmail").textContent = userEmail;
     loadUserAudits(userEmail);
   };
+
+  window.openAuditOptions = (auditId, auditName) => {
+    window._currentOptionAuditId = auditId;
+    profileView.style.display = "none";
+    qs("#auditOptionsView").style.display = "block";
+    qs("#optionsAuditName").textContent = auditName;
+  };
+
+  qs("#backToHistory")?.addEventListener("click", () => {
+    qs("#auditOptionsView").style.display = "none";
+    profileView.style.display = "block";
+  });
 
   const loadUserAudits = async (email) => {
     const listEl = qs("#historyList");
@@ -9428,7 +9447,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
           const condition = rd.condition ? `${rd.condition}%` : '---';
           
           return `
-            <div class="history-item" onclick="handleOpenExpertReport('${audit.id}')">
+            <div class="history-item" onclick="openAuditOptions('${audit.id}', '${name}')">
               <div style="text-align: left;">
                 <div style="font-weight: 700; font-size: 14px; color: #fff;">${name}</div>
                 <div style="font-size: 10px; color: #94a3b8; margin-top: 2px;">
