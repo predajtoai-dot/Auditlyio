@@ -102,6 +102,12 @@ export default async function handler(req, res) {
           .single();
 
         if (error) throw error;
+
+        // If email provided, send the link (Non-blocking)
+        if (user_email) {
+          console.log(`📧 [API] Email collection requested for ${user_email}`);
+        }
+
         return res.status(200).json({ ok: true, id: data.id });
       } catch (err) {
         return res.status(500).json({ ok: false, error: err.message });
@@ -116,26 +122,35 @@ export default async function handler(req, res) {
       try {
         if (!supabase) throw new Error("Database not connected");
 
-        const { data, error } = await supabase
+        // 1. Fetch Audit
+        const { data: audit, error: auditErr } = await supabase
           .from('audits')
-          .select('*, products(*)')
+          .select('*')
           .eq('id', id)
-          .single();
+          .maybeSingle();
 
-        if (error) throw error;
-        if (!data) return res.status(404).json({ ok: false, error: "Audit not found" });
+        if (auditErr) throw auditErr;
+        if (!audit) return res.status(404).json({ ok: false, error: "Audit not found" });
 
-        // 🕒 CHECK EXPIRATION (3 DAYS LIMIT)
-        const createdAt = new Date(data.created_at);
-        const now = new Date();
-        const diffTime = Math.abs(now - createdAt);
-        const diffDays = diffTime / (1000 * 60 * 60 * 24);
+        // 2. Fetch Product (Separate to avoid relationship cache issues)
+        const { data: product } = await supabase
+          .from('products')
+          .select('*')
+          .eq('id', audit.product_id)
+          .maybeSingle();
         
-        if (diffDays > 3) {
-          return res.status(410).json({ ok: false, error: "Tento odkaz na audit vypršal (platnosť 3 dni)." });
+        audit.products = product;
+
+        // 🕒 CHECK EXPIRATION (30 DAYS LIMIT)
+        const createdAt = new Date(audit.created_at);
+        const now = new Date();
+        const diffDays = Math.abs(now - createdAt) / (1000 * 60 * 60 * 24);
+        
+        if (diffDays > 30) {
+          return res.status(410).json({ ok: false, error: "Tento odkaz na audit vypršal (platnosť 30 dní)." });
         }
 
-        return res.status(200).json({ ok: true, audit: data });
+        return res.status(200).json({ ok: true, audit: audit });
       } catch (err) {
         return res.status(500).json({ ok: false, error: err.message });
       }
@@ -158,18 +173,25 @@ export default async function handler(req, res) {
 
         if (auditsErr) throw auditsErr;
 
-        // Fetch product names for each audit to avoid relationship cache issues
-        const auditsWithProducts = await Promise.all((audits || []).map(async (audit) => {
-          const { data: product } = await supabase
-            .from('products')
-            .select('name, model_name')
-            .eq('id', audit.product_id)
-            .maybeSingle();
-          
-          return {
-            ...audit,
-            products: product || { name: 'Neznáme zariadenie' }
-          };
+        if (!audits || audits.length === 0) {
+          return res.status(200).json({ ok: true, audits: [] });
+        }
+
+        // Fetch all product IDs needed
+        const productIds = Array.from(new Set(audits.map(a => a.product_id)));
+        const { data: products } = await supabase
+          .from('products')
+          .select('id, name, model_name')
+          .in('id', productIds);
+
+        const productsMap = (products || []).reduce((acc, p) => {
+          acc[p.id] = p;
+          return acc;
+        }, {});
+
+        const auditsWithProducts = audits.map(audit => ({
+          ...audit,
+          products: productsMap[audit.product_id] || { name: 'Neznáme zariadenie' }
         }));
 
         return res.status(200).json({ ok: true, audits: auditsWithProducts });

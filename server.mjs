@@ -2603,14 +2603,93 @@ function json(res, status, body) {
 
 // 📧 EMAIL SENDING UTILITY
 async function sendAuditEmail(email, auditId, productName) {
-  // Use environment variables for SMTP config
+  const resendApiKey = process.env.RESEND_API_KEY;
+  const baseUrl = process.env.BASE_URL || "https://auditlyio.sk";
+  const auditLink = `${baseUrl}/?report=${auditId}`;
+  const fromEmail = process.env.EMAIL_FROM || "Auditly.io <onboarding@resend.dev>";
+
+  const emailHtml = `
+    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h1 style="color: #1e293b; margin: 0;">Auditly.io</h1>
+        <p style="color: #94a3b8; font-size: 14px;">Váš expertný auditný systém</p>
+      </div>
+      <hr style="border: 0; border-top: 1px solid #f1f5f9; margin-bottom: 25px;">
+      <p style="font-size: 16px; color: #475569;">Dobrý deň,</p>
+      <p style="font-size: 16px; color: #475569;">Váš technický audit pre zariadenie <strong>${productName}</strong> bol úspešne vygenerovaný a uložený pod vaším e-mailom.</p>
+      <div style="text-align: center; margin: 35px 0;">
+        <a href="${auditLink}" style="background-color: #8b5cf6; color: white; padding: 16px 32px; text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 16px; box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3);">Otvoriť kompletný audit</a>
+      </div>
+      <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
+        <p style="font-size: 13px; color: #64748b; margin: 0; line-height: 1.5;">
+          💡 <strong>Tip:</strong> K tomuto auditu sa môžete kedykoľvek vrátiť na stránke <a href="${baseUrl}" style="color: #8b5cf6;">auditlyio.sk</a> kliknutím na "Moje Audity" a zadaním vášho e-mailu.
+        </p>
+      </div>
+      <p style="font-size: 14px; color: #94a3b8; text-align: center;">
+        Tento odkaz je platný po dobu 30 dní.
+      </p>
+      <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 30px 0;">
+      <p style="font-size: 12px; color: #94a3b8; text-align: center;">
+        © 2026 Auditly.io - Expert na bazárovú elektroniku.
+      </p>
+    </div>
+  `;
+
+  // 1. TRY RESEND FIRST IF API KEY EXISTS
+  if (resendApiKey) {
+    try {
+      console.log(`📧 [Resend] Attempting to send audit link to ${email}`);
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${resendApiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: fromEmail,
+          to: email,
+          subject: `Váš technický audit pre ${productName} je pripravený!`,
+          html: emailHtml,
+        }),
+      });
+      if (res.ok) {
+        console.log(`✅ [Resend] Audit link sent successfully to ${email}`);
+        
+        // Notify Admin via Resend too
+        const adminEmail = process.env.ADMIN_EMAIL;
+        if (adminEmail && adminEmail !== email) {
+          await fetch("https://api.resend.com/emails", {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${resendApiKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              from: "Auditly System <onboarding@resend.dev>",
+              to: adminEmail,
+              subject: `🔔 Nový audit: ${productName}`,
+              html: `<h3>Nový audit bol vygenerovaný</h3><p><strong>Produkt:</strong> ${productName}</p><p><strong>Email:</strong> ${email}</p><p><a href="${auditLink}">${auditLink}</a></p>`,
+            }),
+          });
+        }
+        return;
+      } else {
+        const err = await res.json();
+        console.warn("⚠️ [Resend] Failed, falling back to SMTP:", err);
+      }
+    } catch (e) {
+      console.error("❌ [Resend] Error, falling back to SMTP:", e.message);
+    }
+  }
+
+  // 2. FALLBACK TO SMTP (NODEMAILER)
   const smtpHost = process.env.SMTP_HOST || "smtp.gmail.com";
-  const smtpPort = parseInt(process.env.SMTP_PORT || "465");
+  const smtpPort = parseInt(process.env.SMTP_PORT || "587");
   const smtpUser = process.env.SMTP_USER;
   const smtpPass = process.env.SMTP_PASS;
 
   if (!smtpUser || !smtpPass) {
-    console.warn("⚠️ [Email] SMTP credentials missing. Email not sent.");
+    console.warn("⚠️ [Email] SMTP credentials missing and Resend failed. Email not sent.");
     return;
   }
 
@@ -2618,59 +2697,20 @@ async function sendAuditEmail(email, auditId, productName) {
     host: smtpHost,
     port: smtpPort,
     secure: smtpPort === 465,
-    auth: {
-      user: smtpUser,
-      pass: smtpPass,
-    },
+    auth: { user: smtpUser, pass: smtpPass },
+    tls: { rejectUnauthorized: false }
   });
 
-  const auditLink = `${process.env.BASE_URL || "https://auditlyio.sk"}/?report=${auditId}`;
-  
-  const mailOptions = {
-    from: `"Auditly.io 🛡️" <${smtpUser}>`,
-    to: email,
-    subject: `Váš technický audit pre ${productName} je pripravený!`,
-    html: `
-      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;">
-        <h2 style="color: #1e293b; text-align: center;">🛡️ Auditly.io - Technický Audit</h2>
-        <p style="font-size: 16px; color: #475569;">Dobrý deň,</p>
-        <p style="font-size: 16px; color: #475569;">Váš technický audit pre zariadenie <strong>${productName}</strong> bol úspešne vygenerovaný a uložený.</p>
-        <div style="text-align: center; margin: 30px 0;">
-          <a href="${auditLink}" style="background-color: #8b5cf6; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">Otvoriť kompletný audit</a>
-        </div>
-        <p style="font-size: 14px; color: #94a3b8; text-align: center;">
-          Tento odkaz je platný po dobu 30 dní. Odporúčame si ho uložiť alebo pridať do vášho inzerátu.
-        </p>
-        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 30px 0;">
-        <p style="font-size: 12px; color: #94a3b8; text-align: center;">
-          © 2026 Auditly.io - Váš expertný auditný systém pre bazárovú elektroniku.
-        </p>
-      </div>
-    `,
-  };
-
-  await transporter.sendMail(mailOptions);
-  console.log(`✅ [Email] Audit link sent to ${email}`);
-
-  // 🔔 Notify Admin
-  const adminEmail = process.env.ADMIN_EMAIL || smtpUser;
-  if (adminEmail) {
-    try {
-      await transporter.sendMail({
-        from: `"Auditly.io System 🤖" <${smtpUser}>`,
-        to: adminEmail,
-        subject: `🔔 Nový audit: ${productName}`,
-        html: `
-          <h3>Nový audit bol vygenerovaný</h3>
-          <p><strong>Produkt:</strong> ${productName}</p>
-          <p><strong>Email používateľa:</strong> ${email}</p>
-          <p><strong>Link na audit:</strong> <a href="${auditLink}">${auditLink}</a></p>
-        `
-      });
-      console.log(`🔔 [Admin Notify] Alert sent to ${adminEmail}`);
-    } catch (adminErr) {
-      console.error("❌ [Admin Notify] Failed to send admin alert:", adminErr.message);
-    }
+  try {
+    await transporter.sendMail({
+      from: `"Auditly.io 🛡️" <${smtpUser}>`,
+      to: email,
+      subject: `Váš technický audit pre ${productName} je pripravený!`,
+      html: emailHtml,
+    });
+    console.log(`✅ [SMTP] Audit link sent successfully to ${email}`);
+  } catch (error) {
+    console.error(`❌ [SMTP] Failed to send email to ${email}:`, error.message);
   }
 }
 
@@ -4535,14 +4575,10 @@ const server = http.createServer(async (req, res) => {
 
         if (error) throw error;
 
-        // If email provided, send the link
+        // If email provided, send the link (Non-blocking)
         if (user_email) {
-          try {
-            await sendAuditEmail(user_email, data.id, report_data.productName || "Zariadenie");
-          } catch (mailErr) {
-            console.error("❌ [API Audits] Failed to send email:", mailErr.message);
-            // Don't fail the whole request if email fails
-          }
+          sendAuditEmail(user_email, data.id, report_data.productName || report_data.model || "Zariadenie")
+            .catch(mailErr => console.error("❌ [API Audits] Background email failure:", mailErr.message));
         }
 
         return json(res, 200, { ok: true, id: data.id });
@@ -4622,18 +4658,25 @@ const server = http.createServer(async (req, res) => {
 
         if (auditsErr) throw auditsErr;
 
-        // Fetch product names for each audit to avoid relationship cache issues
-        const auditsWithProducts = await Promise.all((audits || []).map(async (audit) => {
-          const { data: product } = await supabase
-            .from('products')
-            .select('name, model_name')
-            .eq('id', audit.product_id)
-            .maybeSingle();
-          
-          return {
-            ...audit,
-            products: product || { name: 'Neznáme zariadenie' }
-          };
+        if (!audits || audits.length === 0) {
+          return json(res, 200, { ok: true, audits: [] });
+        }
+
+        // Optimized product lookup
+        const productIds = Array.from(new Set(audits.map(a => a.product_id)));
+        const { data: products } = await supabase
+          .from('products')
+          .select('id, name, model_name')
+          .in('id', productIds);
+
+        const productsMap = (products || []).reduce((acc, p) => {
+          acc[p.id] = p;
+          return acc;
+        }, {});
+
+        const auditsWithProducts = audits.map(audit => ({
+          ...audit,
+          products: productsMap[audit.product_id] || { name: 'Neznáme zariadenie' }
         }));
 
         return json(res, 200, { ok: true, audits: auditsWithProducts });
