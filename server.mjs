@@ -2651,6 +2651,27 @@ async function sendAuditEmail(email, auditId, productName) {
 
   await transporter.sendMail(mailOptions);
   console.log(`✅ [Email] Audit link sent to ${email}`);
+
+  // 🔔 Notify Admin
+  const adminEmail = process.env.ADMIN_EMAIL || smtpUser;
+  if (adminEmail) {
+    try {
+      await transporter.sendMail({
+        from: `"Auditly.io System 🤖" <${smtpUser}>`,
+        to: adminEmail,
+        subject: `🔔 Nový audit: ${productName}`,
+        html: `
+          <h3>Nový audit bol vygenerovaný</h3>
+          <p><strong>Produkt:</strong> ${productName}</p>
+          <p><strong>Email používateľa:</strong> ${email}</p>
+          <p><strong>Link na audit:</strong> <a href="${auditLink}">${auditLink}</a></p>
+        `
+      });
+      console.log(`🔔 [Admin Notify] Alert sent to ${adminEmail}`);
+    } catch (adminErr) {
+      console.error("❌ [Admin Notify] Failed to send admin alert:", adminErr.message);
+    }
+  }
 }
 
 // 🔐 AUTH UTILITIES
@@ -4592,15 +4613,32 @@ const server = http.createServer(async (req, res) => {
       try {
         if (!supabase) throw new Error("Database not connected");
 
-        const { data, error } = await supabase
+        // Fetch audits
+        const { data: audits, error: auditsErr } = await supabase
           .from('audits')
-          .select('*, products(name, model_name)')
+          .select('*')
           .eq('user_email', email)
           .order('created_at', { ascending: false });
 
-        if (error) throw error;
-        return json(res, 200, { ok: true, audits: data });
+        if (auditsErr) throw auditsErr;
+
+        // Fetch product names for each audit to avoid relationship cache issues
+        const auditsWithProducts = await Promise.all((audits || []).map(async (audit) => {
+          const { data: product } = await supabase
+            .from('products')
+            .select('name, model_name')
+            .eq('id', audit.product_id)
+            .maybeSingle();
+          
+          return {
+            ...audit,
+            products: product || { name: 'Neznáme zariadenie' }
+          };
+        }));
+
+        return json(res, 200, { ok: true, audits: auditsWithProducts });
       } catch (err) {
+        console.error("❌ [API Audits] Fetch by email error:", err.message);
         return json(res, 500, { ok: false, error: err.message });
       }
     }

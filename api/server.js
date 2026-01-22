@@ -149,15 +149,32 @@ export default async function handler(req, res) {
       try {
         if (!supabase) throw new Error("Database not connected");
 
-        const { data, error } = await supabase
+        // Fetch audits
+        const { data: audits, error: auditsErr } = await supabase
           .from('audits')
-          .select('*, products(name, model_name)')
+          .select('*')
           .eq('user_email', email)
           .order('created_at', { ascending: false });
 
-        if (error) throw error;
-        return res.status(200).json({ ok: true, audits: data });
+        if (auditsErr) throw auditsErr;
+
+        // Fetch product names for each audit to avoid relationship cache issues
+        const auditsWithProducts = await Promise.all((audits || []).map(async (audit) => {
+          const { data: product } = await supabase
+            .from('products')
+            .select('name, model_name')
+            .eq('id', audit.product_id)
+            .maybeSingle();
+          
+          return {
+            ...audit,
+            products: product || { name: 'Neznáme zariadenie' }
+          };
+        }));
+
+        return res.status(200).json({ ok: true, audits: auditsWithProducts });
       } catch (err) {
+        console.error("❌ [API Audits] Fetch by email error:", err.message);
         return res.status(500).json({ ok: false, error: err.message });
       }
     }
