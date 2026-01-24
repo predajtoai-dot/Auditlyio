@@ -45,6 +45,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const API_BASE = API_HOSTS[0];
 
+  // 💳 STRIPE CALLBACK HANDLER
+  const handleStripeCallback = () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('session') === 'success') {
+      console.log("💰 Stripe payment success detected!");
+      
+      // 1. Unlock access
+      isTestPaid = true;
+      localStorage.setItem(STORAGE_KEY_TEST_PAID, "true");
+      
+      // 2. Restore pending actions from before redirect
+      const pendingAnalysis = localStorage.getItem("auditly_pending_analysis");
+      const pendingReport = localStorage.getItem("auditly_pending_report");
+      
+      if (pendingAnalysis === "true") {
+        window._pendingAnalysis = true;
+        localStorage.removeItem("auditly_pending_analysis");
+      }
+      
+      if (pendingReport) {
+        window._pendingReport = JSON.parse(pendingReport);
+        localStorage.removeItem("auditly_pending_report");
+      }
+      
+      showToast("✅ Platba bola úspešná! Odomykám váš audit...", { type: "success", duration: 5000 });
+      
+      // 3. Clean URL
+      const url = new URL(window.location.href);
+      url.searchParams.delete('session');
+      window.history.replaceState({}, '', url.toString());
+    }
+  };
+
   /**
    * 📱 DEVICE CATALOG: Technical specifications for expert audits
    */
@@ -10051,6 +10084,18 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       pricingOverlay.addEventListener("click", (e) => { if (e.target === pricingOverlay) closePricingModal(); });
     }
 
+    // 💳 STRIPE REDIRECT INTERCEPTOR
+    qs("#stripePayBtn")?.addEventListener("click", () => {
+      // Save pending actions to localStorage so they survive the redirect
+      if (window._pendingAnalysis) {
+        localStorage.setItem("auditly_pending_analysis", "true");
+      }
+      if (window._pendingReport) {
+        localStorage.setItem("auditly_pending_report", JSON.stringify(window._pendingReport));
+      }
+      console.log("💾 Saved pending actions before Stripe redirect");
+    });
+
     // 💳 TEST PAYMENT FLOW (Now direct Stripe redirect)
     // Removed old JS redirect to maintain Stripe href behavior in index.html
 
@@ -10230,6 +10275,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
   checkOfflineReport();
 
   const runInit = async () => {
+    handleStripeCallback();
     initUrevents();
     if (supabase) {
       const { data: { user } } = await supabase.auth.getUser();
