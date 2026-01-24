@@ -183,10 +183,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const STORAGE_KEY_TEST_PAID = "auditly_test_paid";
 
   let isTestPaid = localStorage.getItem(STORAGE_KEY_TEST_PAID) === "true";
+  let isAutoFilling = false;
   
   // 🔐 LOCK MECHANISM: Prevents accidental parameter changes after payment
   const handleLockCheck = (onConfirm, onCancel) => {
-    if (isTestPaid) {
+    if (isTestPaid && !isAutoFilling) {
       const discard = confirm("⚠️ Pozor! Zmenou kategórie, modelu alebo kapacity zahodíte svoj aktuálny zaplatený report. Chcete pokračovať?");
       if (!discard) {
         if (onCancel) onCancel();
@@ -7755,6 +7756,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         // 🏠 DASHBOARD FILL LOGIC (New Request)
         if (options.fillDashboard) {
           console.log("🏠 [Dashboard Mode] STARTING FILL PROCESS", rd);
+          isAutoFilling = true; // Bypasses confirm dialogs
           
           if (auditId && expertOverlay) {
             expertOverlay.dataset.currentAuditId = auditId;
@@ -7777,6 +7779,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
           }
 
           if (Object.keys(DB_CATALOG).length === 0) {
+            isAutoFilling = false;
             throw new Error("Katalóg modelov sa nepodarilo načítať včas. Skúste prosím obnoviť stránku.");
           }
 
@@ -7884,6 +7887,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
             console.warn("⚠️ [Dashboard Mode] Could not determine category for model:", rd.model);
           }
           
+          isAutoFilling = false;
           return; 
         }
       } else {
