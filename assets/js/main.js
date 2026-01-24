@@ -7232,7 +7232,8 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
     const shareBase = isLocal ? productionDomain : window.location.origin;
     
-    const shareUrl = `${shareBase}/?audit=${auditId}`; // Private link uses ?audit
+    // Súkromný odkaz by mal smerovať na expertný report (modal)
+    const shareUrl = `${shareBase}/?expert=${auditId}`; 
     
     const onDone = () => {
       const shareBtn = qs("#expertShareLinkPrivate");
@@ -7755,6 +7756,18 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         if (options.fillDashboard) {
           console.log("🏠 [Dashboard Mode] STARTING FILL PROCESS", rd);
           
+          if (auditId && expertOverlay) {
+            expertOverlay.dataset.currentAuditId = auditId;
+          }
+
+          // Set as paid so it fetches and shows results
+          isTestPaid = true;
+          localStorage.setItem(STORAGE_KEY_TEST_PAID, "true");
+          
+          // Hide overlay on the right column
+          const rightOverlay = qs("[data-report-overlay]");
+          if (rightOverlay) rightOverlay.classList.add("is-hidden");
+
           // Safeguard: Wait for catalog to be loaded and dropdown to be populated
           let attempts = 0;
           while ((Object.keys(DB_CATALOG).length === 0 || !categorySelect || categorySelect.options.length <= 1) && attempts < 15) {
@@ -7859,7 +7872,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
                 
                 // Finally trigger price fetch
                 console.log("🚀 [Dashboard Mode] Triggering final price fetch...");
-                setTimeout(fetchHeurekaPrice, 1000);
+                setTimeout(fetchHeurekaPrice, 500);
                 
                 showToast(`✅ Audit načítaný: ${rd.model}`, { type: "success" });
               } else {
@@ -8580,17 +8593,38 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
   // Helper to reset view state
   const resetViewState = () => {
+    console.log("🔄 Resetting view state to dashboard...");
     document.body.classList.remove('is-public-report');
     document.body.style.overflow = "";
+    
     const mainP = qs('.page');
     if (mainP) {
       mainP.style.display = 'block';
       mainP.style.opacity = '1';
     }
+    
+    // Reset overlays
     const pubOver = qs("#publicAuditOverlay");
-    if (pubOver) pubOver.hidden = true;
+    if (pubOver) {
+      pubOver.hidden = true;
+      pubOver.style.display = "none";
+    }
+    
     const expOver = qs("#expertReportOverlay");
-    if (expOver) expOver.hidden = true;
+    if (expOver) {
+      expOver.hidden = true;
+      expOver.style.display = "none";
+    }
+
+    const rOverlay = qs("[data-report-overlay]");
+    if (rOverlay) {
+      // If we have a paid report, hide the overlay. Otherwise show it.
+      if (isTestPaid) {
+        rOverlay.classList.add("is-hidden");
+      } else {
+        rOverlay.classList.remove("is-hidden");
+      }
+    }
   };
 
   if (reportParam) {
