@@ -7657,6 +7657,39 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
   const expertContent = qs("#expertReportContent");
   const expertLoader = qs("#expertReportLoader");
 
+  const startDashboardTimer = (createdAt) => {
+    if (!createdAt) return;
+    const expiryDate = new Date(createdAt);
+    expiryDate.setHours(expiryDate.getHours() + 72);
+    
+    // Remove old timer if exists
+    const oldTimer = qs("#dashboardTimer");
+    if (oldTimer) oldTimer.remove();
+    
+    const timerDiv = document.createElement("div");
+    timerDiv.id = "dashboardTimer";
+    timerDiv.style = "margin-top: 15px; padding: 8px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border-radius: 8px; font-size: 11px; font-weight: 800; border: 1px solid rgba(239, 68, 68, 0.2); text-align: center;";
+    
+    const update = () => {
+      const now = new Date();
+      const diff = expiryDate - now;
+      if (diff <= 0) {
+        timerDiv.innerHTML = "⏳ PLATNOSŤ AUDITU VYPRŠALA";
+        timerDiv.style.background = "rgba(239, 68, 68, 0.2)";
+        return;
+      }
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const mins = Math.floor((diff / (1000 * 60)) % 60);
+      timerDiv.innerHTML = `⏳ TENTO AUDIT EXPIROVAL O: ${hours}h ${mins}m`;
+    };
+    
+    update();
+    setInterval(update, 60000);
+    
+    const verdictBox = qs(".verdictBox");
+    if (verdictBox) verdictBox.after(timerDiv);
+  };
+
   const handleOpenExpertReport = async (forcedId = null, options = { showMain: true }) => {
     let rawModel = productNameHidden?.value?.trim();
     if (!rawModel && !forcedId) {
@@ -7689,6 +7722,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
     if (options.showMain) {
       expertOverlay.hidden = false;
+      expertOverlay.style.display = "flex";
       expertContent.hidden = true;
       expertLoader.hidden = false;
       if (shareLinkPrivate) shareLinkPrivate.style.display = "none";
@@ -7876,6 +7910,9 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
                 // Finally trigger price fetch
                 console.log("🚀 [Dashboard Mode] Triggering final price fetch...");
                 setTimeout(fetchHeurekaPrice, 500);
+                
+                // ⏳ Start Dashboard Timer
+                if (createdAt) startDashboardTimer(createdAt);
                 
                 showToast(`✅ Audit načítaný: ${rd.model}`, { type: "success" });
               } else {
@@ -8743,7 +8780,10 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     if (e.target === risksOverlay) risksOverlay.hidden = true;
   });
 
-  openExpertBtns.forEach(btn => btn.addEventListener("click", () => handleOpenExpertReport()));
+  openExpertBtns.forEach(btn => btn.addEventListener("click", () => {
+    const existingId = expertOverlay.dataset.currentAuditId;
+    handleOpenExpertReport(existingId || null);
+  }));
   closeExpertBtn?.addEventListener("click", () => {
     if (document.body.classList.contains('is-public-report')) {
       window.location.href = window.location.origin;
