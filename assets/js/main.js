@@ -2487,35 +2487,7 @@ const fallbackCopyToClipboard = (text) => {
     }
   });
 
-  generateBtn?.addEventListener("click", async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    e.stopImmediatePropagation();
-    
-    if (generateBtn.disabled) return;
-
-    // ⚠️ VALIDATION: Category and Model must be selected
-    const currentCat = categorySelect?.value || qs(".catItem.is-active")?.dataset.catType;
-    const currentModel = modelSelect?.value;
-
-    if (!currentCat || !currentModel) {
-      showToast("⚠️ Prosím, vyberte kategóriu a model zariadenia.", { type: "error" });
-      // Shake the inputs for visual feedback
-      const wrapper = qs(".model-selection-wrapper");
-      if (wrapper) {
-        wrapper.style.animation = "shake 0.5s ease";
-        setTimeout(() => wrapper.style.animation = "", 500);
-      }
-      return;
-    }
-
-    // 💳 PAYMENT CHECK (TEST MODE) - Vždy vyžadovať pre testovacie účely
-    if (!isTestPaid) {
-      openPricingModal();
-      window._pendingAnalysis = true; // Flag to resume this specific analysis
-      return;
-    }
-    
+  // 🆕 Reset audit session when starting new or changing model
   const resetAuditSession = () => {
     if (!expertOverlay) return;
     
