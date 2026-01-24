@@ -8361,6 +8361,55 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       if (nameEl) nameEl.textContent = p.name;
       if (idEl) idEl.textContent = `ID Reportu: #AUD-${reportId.substring(0, 6).toUpperCase()}`;
 
+      // ⏳ PUBLIC 30-DAY COUNTDOWN
+      const publicCreated = audit.created_at;
+      if (publicCreated) {
+        const expiryDate = new Date(publicCreated);
+        expiryDate.setDate(expiryDate.getDate() + 30);
+        
+        // Ensure we only have one timer
+        const oldPublicTimer = qs("#publicAuditTimer");
+        if (oldPublicTimer) oldPublicTimer.remove();
+
+        const timerDiv = document.createElement("div");
+        timerDiv.id = "publicAuditTimer";
+        timerDiv.style = "font-size: 11px; color: #94a3b8; font-weight: 700; background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 99px; border: 1px solid rgba(255,255,255,0.1); display: inline-flex; align-items: center; gap: 6px;";
+        
+        const updatePublicTimer = () => {
+          const now = new Date();
+          const diff = expiryDate - now;
+          if (diff <= 0) {
+            timerDiv.innerHTML = "⏳ Certifikát expiroval";
+            return;
+          }
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          
+          if (days > 0) {
+            timerDiv.innerHTML = `⏳ Platnosť: ${days}d ${hours}h`;
+          } else {
+            timerDiv.innerHTML = `⏳ Platnosť: ${hours}h zostáva`;
+          }
+        };
+        
+        updatePublicTimer();
+        setInterval(updatePublicTimer, 3600000); // Update every hour for public
+        
+        // Add after ID element
+        const headerSub = qs(".expert-title-group div", publicOverlay);
+        if (headerSub) {
+          // Find if we have a container for badges
+          let badgeContainer = qs(".public-badge-container");
+          if (!badgeContainer) {
+            badgeContainer = document.createElement("div");
+            badgeContainer.className = "public-badge-container";
+            badgeContainer.style = "display: flex; gap: 10px; align-items: center; margin-top: 8px;";
+            idEl.after(badgeContainer);
+          }
+          badgeContainer.appendChild(timerDiv);
+        }
+      }
+
       // 💾 Save for Offline
       saveAuditOffline({ audit: audit, publicMode: true });
 
@@ -10002,14 +10051,8 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       pricingOverlay.addEventListener("click", (e) => { if (e.target === pricingOverlay) closePricingModal(); });
     }
 
-    // 💳 TEST PAYMENT FLOW
-    document.querySelectorAll(".btn-buy-test").forEach(btn => {
-      btn.addEventListener("click", () => {
-        closePricingModal();
-        const confirmOverlay = qs("#paymentConfirmOverlay");
-        if (confirmOverlay) confirmOverlay.style.display = "flex";
-      });
-    });
+    // 💳 TEST PAYMENT FLOW (Now direct Stripe redirect)
+    // Removed old JS redirect to maintain Stripe href behavior in index.html
 
     // ⚖️ INPUT LIMITS ENFORCEMENT
     const enforceLimits = (selector, min, max, name) => {
