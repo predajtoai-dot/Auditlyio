@@ -118,7 +118,8 @@ export default async function handler(req, res) {
     if (pathname.startsWith("/api/audits/") && req.method === "GET") {
       const id = pathname.split("/").pop();
       if (!id || id === "audits") return res.status(400).json({ ok: false, error: "Missing ID" });
-      
+      const viewType = url.searchParams.get("view"); 
+
       try {
         if (!supabase) throw new Error("Database not connected");
 
@@ -141,13 +142,24 @@ export default async function handler(req, res) {
         
         audit.products = product;
 
-        // 🕒 CHECK EXPIRATION (30 DAYS LIMIT)
+        // 🕒 CHECK EXPIRATION
         const createdAt = new Date(audit.created_at);
         const now = new Date();
-        const diffDays = Math.abs(now - createdAt) / (1000 * 60 * 60 * 24);
+        const diffMs = now - createdAt;
+        const diffHours = diffMs / (1000 * 60 * 60);
+        const diffDays = diffHours / 24;
         
-        if (diffDays > 30) {
-          return res.status(410).json({ ok: false, error: "Tento odkaz na audit vypršal (platnosť 30 dní)." });
+        console.log(`🕒 [API Audits] ID: ${id}, View: ${viewType || 'private'}, Age: ${diffHours.toFixed(1)}h`);
+
+        if (viewType === 'public') {
+          if (diffDays > 30) {
+            return res.status(410).json({ ok: false, error: "Tento verejný certifikát už expiroval (30 dní)." });
+          }
+        } else if (viewType === 'expert' || viewType === 'private' || !viewType) {
+          // 72h limit for expert/private views
+          if (diffHours > 72) {
+            return res.status(410).json({ ok: false, error: "Tento expertný report už expiroval (72 hodín)." });
+          }
         }
 
         return res.status(200).json({ ok: true, audit: audit });

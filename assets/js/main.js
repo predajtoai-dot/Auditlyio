@@ -7737,6 +7737,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         } catch (fErr) {
           clearTimeout(timeoutId);
           console.error("❌ [handleOpenExpertReport] Fetch failure:", fErr);
+          showToast(`❌ Chyba: ${fErr.message}`, { type: "error", duration: 7000 });
           throw fErr;
         }
 
@@ -7766,14 +7767,27 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
             throw new Error("Katalóg modelov sa nepodarilo načítať včas. Skúste prosím obnoviť stránku.");
           }
 
-          // 1. Set Category (Handle mapping between DB/UI names)
-          if (rd.category && categorySelect) {
+          // 1. Determine UI Category (Fuzzy match because DB category might mismatch UI re-categorization)
+          let targetCat = null;
+          if (rd.model) {
+            const modelLower = rd.model.toLowerCase();
+            for (const catName in DB_CATALOG) {
+              if (DB_CATALOG[catName].some(m => m.name.toLowerCase() === modelLower || m.name.toLowerCase().includes(modelLower))) {
+                targetCat = catName;
+                break;
+              }
+            }
+          }
+          
+          if (!targetCat && rd.category) {
             const catMapping = {
               'Mobile': 'Mobil', 'Watch': 'Hodinky', 'Audio': 'Slúchadlá',
               'Tablet': 'Tablet', 'Laptop': 'Notebook', 'Console': 'Konzola', 'Other': 'Iné'
             };
-            const targetCat = catMapping[rd.category] || rd.category;
-            
+            targetCat = catMapping[rd.category] || rd.category;
+          }
+
+          if (targetCat && categorySelect) {
             console.log("📂 [Dashboard Mode] Setting category to:", targetCat);
             categorySelect.value = targetCat;
             categorySelect.dispatchEvent(new Event("change"));
@@ -7791,73 +7805,70 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
               // Try to find the matching option value
               let found = false;
               for (let opt of modelSelect.options) {
-                if (opt.value === rd.model || opt.textContent === rd.model || opt.textContent.includes(rd.model)) {
+                if (opt.value === rd.model || opt.textContent === rd.model || opt.textContent.toLowerCase().includes(rd.model.toLowerCase())) {
                   modelSelect.value = opt.value;
                   found = true;
                   break;
                 }
               }
               
-              // If not found by exact match, try fuzzy
-              if (!found) {
-                const modelLower = rd.model.toLowerCase();
-                for (let opt of modelSelect.options) {
-                  if (opt.value.toLowerCase().includes(modelLower)) {
-                    modelSelect.value = opt.value;
-                    found = true;
-                    break;
-                  }
-                }
-              }
-
               if (found) {
                 console.log("✅ [Dashboard Mode] Model found and set!");
                 modelSelect.dispatchEvent(new Event("change"));
+                
+                // 3. Set Storage, Battery, Condition (Another delay for storage list)
+                let storageAttempts = 0;
+                while ((!storageSelect || storageSelect.options.length <= 1) && storageAttempts < 15) {
+                  console.log("⏳ [Dashboard Mode] Waiting for storage list to populate...");
+                  await new Promise(res => setTimeout(res, 200));
+                  storageAttempts++;
+                }
+
+                if (rd.storage && storageSelect) {
+                  // Some storages might have "GB" suffix in dropdown but not in DB
+                  for (let opt of storageSelect.options) {
+                    if (opt.value === rd.storage || opt.value.includes(rd.storage) || rd.storage.includes(opt.value)) {
+                      storageSelect.value = opt.value;
+                      break;
+                    }
+                  }
+                  storageSelect.dispatchEvent(new Event("change"));
+                }
+                
+                // Set Radio Mode
+                if (rd.mode) {
+                  const modeInput = document.querySelector(`input[name="auditMode"][value="${rd.mode}"]`);
+                  if (modeInput) {
+                    modeInput.checked = true;
+                    modeInput.dispatchEvent(new Event("change"));
+                  }
+                }
+                
+                // Set Battery and Condition
+                const batInput = rd.mode === "sell" ? qs("[data-battery-health-sell]") : qs("[data-battery-health]");
+                if (batInput && rd.battery) {
+                  batInput.value = rd.battery;
+                  batInput.dispatchEvent(new Event("input"));
+                }
+                
+                const condInput = qs("[data-device-condition]");
+                if (condInput && rd.condition) {
+                  condInput.value = rd.condition;
+                  condInput.dispatchEvent(new Event("input"));
+                }
+                
+                // Finally trigger price fetch
+                console.log("🚀 [Dashboard Mode] Triggering final price fetch...");
+                setTimeout(fetchHeurekaPrice, 1000);
+                
+                showToast(`✅ Audit načítaný: ${rd.model}`, { type: "success" });
               } else {
                 console.warn("⚠️ [Dashboard Mode] Model NOT found in dropdown:", rd.model);
+                showToast(`⚠️ Model ${rd.model} nie je v katalógu, vyplňte ho ručne.`, { type: "info" });
               }
-              
-              // 3. Set Storage, Battery, Condition (Another delay for storage list)
-              let storageAttempts = 0;
-              while ((!storageSelect || storageSelect.options.length <= 1) && storageAttempts < 15) {
-                console.log("⏳ [Dashboard Mode] Waiting for storage list to populate...");
-                await new Promise(res => setTimeout(res, 200));
-                storageAttempts++;
-              }
-
-              if (rd.storage && storageSelect) {
-                storageSelect.value = rd.storage;
-                storageSelect.dispatchEvent(new Event("change"));
-              }
-              
-              // Set Radio Mode
-              if (rd.mode) {
-                const modeInput = document.querySelector(`input[name="auditMode"][value="${rd.mode}"]`);
-                if (modeInput) {
-                  modeInput.checked = true;
-                  modeInput.dispatchEvent(new Event("change"));
-                }
-              }
-              
-              // Set Battery and Condition
-              const batInput = rd.mode === "sell" ? qs("[data-battery-health-sell]") : qs("[data-battery-health]");
-              if (batInput && rd.battery) {
-                batInput.value = rd.battery;
-                batInput.dispatchEvent(new Event("input"));
-              }
-              
-              const condInput = qs("[data-device-condition]");
-              if (condInput && rd.condition) {
-                condInput.value = rd.condition;
-                condInput.dispatchEvent(new Event("input"));
-              }
-              
-              // Finally trigger price fetch
-              console.log("🚀 [Dashboard Mode] Triggering final price fetch...");
-              setTimeout(fetchHeurekaPrice, 800);
-              
-              showToast(`✅ Úspešne načítaný audit: ${rd.model}`, { type: "success" });
             }
+          } else {
+            console.warn("⚠️ [Dashboard Mode] Could not determine category for model:", rd.model);
           }
           
           return; 
@@ -8567,23 +8578,40 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
   console.log("🔍 Startup Params - audit:", auditParam, "expert:", expertParam, "report:", reportParam);
 
+  // Helper to reset view state
+  const resetViewState = () => {
+    document.body.classList.remove('is-public-report');
+    document.body.style.overflow = "";
+    const mainP = qs('.page');
+    if (mainP) {
+      mainP.style.display = 'block';
+      mainP.style.opacity = '1';
+    }
+    const pubOver = qs("#publicAuditOverlay");
+    if (pubOver) pubOver.hidden = true;
+    const expOver = qs("#expertReportOverlay");
+    if (expOver) expOver.hidden = true;
+  };
+
   if (reportParam) {
-    // ... public report logic ...
     console.log("📑 Loading Public Report View for ID:", reportParam);
     document.body.classList.add('is-public-report');
-    const mainPage = qs('.page');
-    if (mainPage) mainPage.style.display = 'none';
+    const mainP = qs('.page');
+    if (mainP) mainP.style.display = 'none';
     if (expertOverlay) expertOverlay.hidden = true;
-    const publicOverlay = qs("#publicAuditOverlay");
-    if (publicOverlay) { publicOverlay.hidden = false; publicOverlay.style.display = "flex"; }
+    const pubOver = qs("#publicAuditOverlay");
+    if (pubOver) { pubOver.hidden = false; pubOver.style.display = "flex"; }
     setTimeout(() => renderPublicAudit(reportParam), 50);
   } else if (expertParam) {
     console.log("🔐 Loading Expert Modal View for ID:", expertParam);
+    resetViewState();
     setTimeout(() => handleOpenExpertReport(expertParam, { showMain: true }), 50);
   } else if (auditParam) {
     console.log("🏠 Loading Dashboard Fill View for ID:", auditParam);
-    setTimeout(() => handleOpenExpertReport(auditParam, { fillDashboard: true, showMain: false }), 500);
+    resetViewState();
+    setTimeout(() => handleOpenExpertReport(auditParam, { fillDashboard: true, showMain: false }), 800);
   } else {
+    resetViewState();
     // Check if first visit
     const hasVisited = localStorage.getItem("auditly_visited");
     if (!hasVisited && welcomeOverlay) {
