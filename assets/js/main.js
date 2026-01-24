@@ -10086,6 +10086,9 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
     // 💳 STRIPE REDIRECT INTERCEPTOR
     qs("#stripePayBtn")?.addEventListener("click", () => {
+      // 💾 Save current selection so it can be restored after redirect
+      saveAppState();
+
       // Save pending actions to localStorage so they survive the redirect
       if (window._pendingAnalysis) {
         localStorage.setItem("auditly_pending_analysis", "true");
@@ -10277,6 +10280,24 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
   const runInit = async () => {
     handleStripeCallback();
     initUrevents();
+
+    // 💳 RESUME PENDING ACTIONS (After Stripe Redirect)
+    if (window._pendingAnalysis) {
+      console.log("🚀 Resuming pending analysis after payment...");
+      window._pendingAnalysis = false;
+      setTimeout(() => {
+        const generateBtn = qs("[data-generate]");
+        if (generateBtn) generateBtn.click();
+      }, 500);
+    } else if (window._pendingReport) {
+      console.log("🚀 Opening pending expert report after payment...");
+      const { forcedId, options } = window._pendingReport;
+      window._pendingReport = null;
+      setTimeout(() => {
+        handleOpenExpertReport(forcedId, options);
+      }, 500);
+    }
+
     if (supabase) {
       const { data: { user } } = await supabase.auth.getUser();
       updateAuthUI(user);
@@ -10304,10 +10325,14 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       if (loader) loader.hidden = true;
     }
   };
-  runInit();
-
   initAIScanner();
-  loadAppState();
+  
+  // 🏁 MAIN INITIALIZATION SEQUENCE
+  const startApp = async () => {
+    await loadAppState(); // 1. Restore what user was doing
+    await runInit();      // 2. Handle Stripe callback and UI init
+  };
+  startApp();
 
   // 🛡️ ACCIDENTAL RELOAD PROTECTION
   window.addEventListener("beforeunload", (e) => {
