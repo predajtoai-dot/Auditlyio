@@ -4695,11 +4695,11 @@ const server = http.createServer(async (req, res) => {
       try {
         if (!supabase) throw new Error("Database not connected");
 
-        // Fetch audits
+        // Fetch audits (Case-insensitive)
         const { data: audits, error: auditsErr } = await supabase
           .from('audits')
           .select('*')
-          .eq('user_email', email)
+          .ilike('user_email', email)
           .order('created_at', { ascending: false });
 
         if (auditsErr) throw auditsErr;
@@ -4728,6 +4728,44 @@ const server = http.createServer(async (req, res) => {
         return json(res, 200, { ok: true, audits: auditsWithProducts });
       } catch (err) {
         console.error("❌ [API Audits] Fetch by email error:", err.message);
+        return json(res, 500, { ok: false, error: err.message });
+      }
+    }
+
+    // 🔗 CLAIM AUDIT (Update email for an existing audit)
+    if (pathname.startsWith("/api/audits/") && req.method === "PATCH") {
+      const id = pathname.split("/").pop();
+      if (!id || id === "audits") return json(res, 400, { ok: false, error: "Chýba ID auditu." });
+
+      try {
+        const body = await readBody(req);
+        const { email } = body;
+        if (!email) return json(res, 400, { ok: false, error: "Missing email" });
+        if (!supabase) throw new Error("Database not connected");
+
+        const { data, error } = await supabase
+          .from('audits')
+          .update({ user_email: email })
+          .eq('id', id)
+          .select()
+          .single();
+
+        if (error) throw error;
+        
+        // Optionally send email notification
+        const protocol = req.headers["x-forwarded-proto"] || "https";
+        let host = req.headers.host || "www.auditlyio.sk";
+        if (!host.includes("www.") && !host.includes("localhost") && !host.includes("127.0.0.1") && !host.includes(".up.railway.app")) {
+          host = "www." + host;
+        }
+        const currentBaseUrl = `${protocol}://${host}`;
+
+        sendAuditEmail(email, id, data.report_data?.productName || "Zariadenie", currentBaseUrl)
+          .catch(err => console.warn("⚠️ [API Audits] Claim email failed:", err.message));
+
+        return json(res, 200, { ok: true, message: "Audit priradený k e-mailu." });
+      } catch (err) {
+        console.error("❌ [API Audits] Patch error:", err.message);
         return json(res, 500, { ok: false, error: err.message });
       }
     }

@@ -918,6 +918,9 @@ document.addEventListener("DOMContentLoaded", () => {
       handleLockCheck(() => {
       const catType = btn.dataset.catType; // E.g. "Mobil", "Konzola"...
 
+      // 🔧 Reset session when category button is clicked
+      resetAuditSession();
+
       // Update UI: Toggle active state
       categoryButtons.forEach(b => b.classList.remove("is-active"));
       btn.classList.add("is-active");
@@ -959,6 +962,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const mode = e.target.value;
       console.log(`🔄 Mode switched to: ${mode}`);
       
+      // 🔧 Reset session when mode changes
+      resetAuditSession();
+
       if (generateBtn) {
           generateBtn.textContent = "SPUSTIŤ ANALÝZU RIZÍK";
       }
@@ -2510,6 +2516,59 @@ const fallbackCopyToClipboard = (text) => {
       return;
     }
     
+  const resetAuditSession = () => {
+    if (!expertOverlay) return;
+    
+    // Clear the current audit ID
+    expertOverlay.dataset.currentAuditId = "";
+    console.log("🧹 Audit session reset: currentAuditId cleared");
+
+    // Remove old timer from UI
+    const existingTimer = qs("#dashboardTimer") || qs("#auditTimer");
+    if (existingTimer) {
+      existingTimer.remove();
+      console.log("🧹 Old timer removed from UI");
+    }
+
+    // Hide public direct button (only relevant for current audit)
+    const directPreviewBtn = qs("[data-preview-public-direct]");
+    if (directPreviewBtn) {
+      directPreviewBtn.style.display = "none";
+    }
+  };
+
+  generateBtn?.addEventListener("click", async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    
+    if (generateBtn.disabled) return;
+
+    // ⚠️ VALIDATION: Category and Model must be selected
+    const currentCat = categorySelect?.value || qs(".catItem.is-active")?.dataset.catType;
+    const currentModel = modelSelect?.value;
+
+    if (!currentCat || !currentModel) {
+      showToast("⚠️ Prosím, vyberte kategóriu a model zariadenia.", { type: "error" });
+      // Shake the inputs for visual feedback
+      const wrapper = qs(".model-selection-wrapper");
+      if (wrapper) {
+        wrapper.style.animation = "shake 0.5s ease";
+        setTimeout(() => wrapper.style.animation = "", 500);
+      }
+      return;
+    }
+
+    // 💳 PAYMENT CHECK (TEST MODE) - Vždy vyžadovať pre testovacie účely
+    if (!isTestPaid) {
+      openPricingModal();
+      window._pendingAnalysis = true; // Flag to resume this specific analysis
+      return;
+    }
+    
+    // 🔧 FIX: Reset session to ensure NEW audit link and NEW 72h countdown
+    resetAuditSession();
+
     // 🆕 AUDITLYIO: Loading Overlay Logic
     const overlay = qs("[data-report-overlay]");
     const overlayIcon = qs(".reportOverlay__icon", overlay);
@@ -7445,6 +7504,9 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     if (!categorySelect || !modelSelect) return;
     const category = categorySelect.value;
 
+    // 🔧 Reset session when category changes to ensure fresh audit
+    resetAuditSession();
+
     console.log(`📂 Category Change Triggered: ${category}`);
 
     // Sync back to icons
@@ -7516,6 +7578,9 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     const category = categorySelect.value || qs(".catItem.is-active")?.dataset.catType;
     const modelName = modelSelect.value;
     if (!modelName) return;
+
+    // 🔧 Reset session when model changes to ensure fresh audit on next analyze
+    resetAuditSession();
 
     console.log(`📱 Model selected: ${modelName} in category: ${category}`);
 
@@ -7657,34 +7722,55 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
   const expertContent = qs("#expertReportContent");
   const expertLoader = qs("#expertReportLoader");
 
-  const startDashboardTimer = (createdAt) => {
+  const startDashboardTimer = (createdAt, auditId = "") => {
     if (!createdAt) return;
     const expiryDate = new Date(createdAt);
     expiryDate.setHours(expiryDate.getHours() + 72);
     
-    // Remove old timer if exists
-    const oldTimer = qs("#dashboardTimer");
+    // 🔧 FIX: Ensure we only have ONE timer at a time
+    const oldTimer = qs("#dashboardTimer") || qs("#auditTimer");
     if (oldTimer) oldTimer.remove();
     
     const timerDiv = document.createElement("div");
     timerDiv.id = "dashboardTimer";
-    timerDiv.style = "margin-top: 15px; padding: 8px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border-radius: 8px; font-size: 11px; font-weight: 800; border: 1px solid rgba(239, 68, 68, 0.2); text-align: center;";
+    timerDiv.style = "margin-top: 25px; padding: 18px; background: rgba(167, 139, 250, 0.1); border-radius: 16px; border: 1px solid rgba(167, 139, 250, 0.2); text-align: center; animation: fadeIn 0.5s ease;";
     
     const update = () => {
       const now = new Date();
       const diff = expiryDate - now;
+
       if (diff <= 0) {
-        timerDiv.innerHTML = "⏳ PLATNOSŤ AUDITU VYPRŠALA";
-        timerDiv.style.background = "rgba(239, 68, 68, 0.2)";
+        timerDiv.innerHTML = `<div style="color: #ef4444; font-weight: 800; font-size: 13px;">⚠️ Tento audit expiroval</div>`;
         return;
       }
-      const hours = Math.floor(diff / (1000 * 60 * 60));
-      const mins = Math.floor((diff / (1000 * 60)) % 60);
-      timerDiv.innerHTML = `⏳ TENTO AUDIT EXPIROVAL O: ${hours}h ${mins}m`;
+
+      const h = Math.floor(diff / (1000 * 60 * 60));
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+      timerDiv.innerHTML = `
+        <div style="font-size: 10px; font-weight: 800; color: #a78bfa; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;">
+          ⏳ Platnosť expertného auditu
+        </div>
+        <div style="display: flex; justify-content: center; gap: 15px; align-items: center;">
+          <div style="text-align: center;"><div style="font-size: 18px; font-weight: 900; color: #fff;">${h}h</div><div style="font-size: 8px; color: #94a3b8; font-weight: 700;">HOD</div></div>
+          <div style="font-size: 18px; font-weight: 900; color: #a78bfa; opacity: 0.5;">:</div>
+          <div style="text-align: center;"><div style="font-size: 18px; font-weight: 900; color: #fff;">${m}m</div><div style="font-size: 8px; color: #94a3b8; font-weight: 700;">MIN</div></div>
+          <div style="font-size: 18px; font-weight: 900; color: #a78bfa; opacity: 0.5;">:</div>
+          <div style="text-align: center;"><div style="font-size: 18px; font-weight: 900; color: #fff;">${s}s</div><div style="font-size: 8px; color: #94a3b8; font-weight: 700;">SEK</div></div>
+        </div>
+        ${auditId ? `<div style="font-size: 9px; color: #94a3b8; margin-top: 10px; font-weight: 600;">ID: #AUD-${auditId.substring(0, 8).toUpperCase()}</div>` : ''}
+      `;
     };
     
     update();
-    setInterval(update, 60000);
+    const interval = setInterval(() => {
+      if (!document.getElementById("dashboardTimer")) {
+        clearInterval(interval);
+        return;
+      }
+      update();
+    }, 1000);
     
     const verdictBox = qs(".verdictBox");
     if (verdictBox) verdictBox.after(timerDiv);
@@ -7966,6 +8052,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
           const currentCondition = qs("[data-device-condition]")?.value || "100";
           const currentStorage = storageSelect?.value || "";
           const userEmail = localStorage.getItem("auditly_user_email");
+          console.log("💾 [handleOpenExpertReport] Saving audit with email:", userEmail);
 
           // Populate rd for rendering
           rd = { mode, battery: currentBattery, condition: currentCondition, storage: currentStorage };
@@ -7975,7 +8062,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               product_id: r.id,
-              user_email: userEmail,
+              user_email: userEmail || null,
               report_data: { 
                 model: r.name, 
                 specs: r.display_tech, 
@@ -7995,6 +8082,11 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
             auditId = saveData.id;
             expertOverlay.dataset.currentAuditId = auditId;
             console.log("✅ Audit saved successfully with ID:", auditId);
+            
+            // 🔄 If user is logged in, refresh history list
+            if (userEmail) {
+              loadUserAudits(userEmail);
+            }
           }
         } catch (e) { console.warn("Failed to save audit history", e); }
       }
@@ -8004,6 +8096,10 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         if (shareLinkPrivate) shareLinkPrivate.style.display = "block";
         if (shareLinkPublic) shareLinkPublic.style.display = "block";
         saveAppState(); // 💾 Save state when audit is created
+      }
+
+      if (auditId && createdAt) {
+        startDashboardTimer(createdAt, auditId);
       }
 
       qs("#expertReportName").textContent = r.name;
@@ -8771,7 +8867,9 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     qs("#risksReportLoader").hidden = false;
     qs("#risksReportContent").hidden = true;
     
-    await handleOpenExpertReport(null, { showMain: false });
+    // 🔧 FIX: Only save if we don't have an ID yet
+    const existingId = expertOverlay.dataset.currentAuditId;
+    await handleOpenExpertReport(existingId || null, { showMain: false });
   };
 
   openRisksBtn?.addEventListener("click", handleOpenRisksReport);
@@ -9723,6 +9821,18 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         localStorage.setItem("auditly_user_email", email);
         showToast("✅ E-mail overený!", { type: "success" });
         updateAuthUI(email);
+
+        // 🔗 FIX: Claim current audit if it exists
+        const currentAuditId = expertOverlay?.dataset?.currentAuditId;
+        if (currentAuditId) {
+          console.log(`🔗 Linking audit ${currentAuditId} to ${email}`);
+          await fetch(`${API_BASE}/api/audits/${currentAuditId}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email })
+          }).catch(err => console.warn("Failed to claim audit:", err));
+        }
+
         openProfile(); // This will now use the stored email
       } catch (error) {
         showToast(`❌ ${error.message}`, { type: "error" });
@@ -9754,9 +9864,20 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
   }
 
   // Action Buttons (Save Audit)
-  shareResultBtn?.addEventListener("click", (e) => {
+  shareResultBtn?.addEventListener("click", async (e) => {
     e.preventDefault();
-    const auditId = expertOverlay?.dataset?.currentAuditId;
+    
+    let auditId = expertOverlay?.dataset?.currentAuditId;
+    
+    // 🔧 FIX: If auditId is missing, it means analysis was run but expert report wasn't opened.
+    // We trigger a background save now.
+    if (!auditId) {
+      console.log("💾 No audit ID found, saving in background...");
+      showToast("💾 Ukladám váš audit...", { type: "info" });
+      await handleOpenExpertReport(null, { showMain: false });
+      auditId = expertOverlay?.dataset?.currentAuditId;
+    }
+
     if (!auditId) {
       showToast("❌ Najprv spustite analýzu rizík.", { type: "error" });
       return;
@@ -9764,8 +9885,17 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
     const userEmail = localStorage.getItem("auditly_user_email");
     if (userEmail) {
-      // Already has email, we can show share links or re-save
-      showToast("🔗 Audit je priradený k vášmu e-mailu.", { type: "success" });
+      // 🔄 If already has email, ensure the audit is linked to it (in case it was saved before login)
+      try {
+        await fetch(`${API_BASE}/api/audits/${auditId}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: userEmail })
+        });
+        showToast("🔗 Audit je priradený k vášmu e-mailu.", { type: "success" });
+      } catch (err) {
+        console.warn("Failed to link audit to email:", err);
+      }
       openProfile();
     } else {
         openAuth("login");
