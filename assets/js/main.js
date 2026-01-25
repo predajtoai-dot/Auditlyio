@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 🔑 CONSTANTS
   const STORAGE_KEY_TEST_PAID = "auditly_test_paid";
+  const STRIPE_PUBLISHABLE_KEY = "pk_live_51St6TEHRyyAnFDKcGUdMvnPpgRAOp3ApmNHF5TOottPZyqngZ2bvN3IwigV41AXZW66c3chivgPHLKp5G5hSICoe00mXt5Zma3";
   const FREE_EDITS_LIMIT = 3;
   const STORAGE_KEY_EDITS = "predajto_edit_count";
   const STORAGE_KEY_PREMIUM = "predajto_premium";
@@ -7838,7 +7839,8 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         let fetchedData;
         try {
           const viewType = options.fillDashboard ? 'private' : 'expert';
-          const fetchUrl = `${API_BASE}/api/audits/${forcedId}?view=${viewType}`;
+          const userEmail = options.emailOverride || localStorage.getItem("auditly_user_email") || "";
+          const fetchUrl = `${API_BASE}/api/audits/${forcedId}?view=${viewType}&email=${encodeURIComponent(userEmail)}`;
           console.log(`📡 [handleOpenExpertReport] Fetching: ${fetchUrl}`);
           
           const resp = await fetch(fetchUrl, { signal: controller.signal });
@@ -7846,6 +7848,17 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
           
           if (!resp.ok) {
             const errData = await resp.json().catch(() => ({}));
+            
+            // 🛡️ HANDLE SECURITY LOCK
+            if (resp.status === 403 && errData.locked) {
+              const email = prompt(`🔒 Tento audit je chránený. Zadajte e-mail majiteľa pre odomknutie ${errData.product_name || ""}:`);
+              if (email) {
+                // Retry with provided email
+                return handleOpenExpertReport(forcedId, { ...options, emailOverride: email });
+              }
+              throw new Error("Audit zostal uzamknutý.");
+            }
+            
             throw new Error(errData.error || `Server vrátil chybu ${resp.status}`);
           }
           
@@ -10157,19 +10170,6 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     enforceLimits("[data-battery-health-sell]", 40, 100, "zdravie batérie");
     enforceLimits("[data-device-condition]", 40, 100, "vizuálny stav");
 
-    qs("#btnConfirmFree")?.addEventListener("click", () => {
-      const confirmOverlay = qs("#paymentConfirmOverlay");
-      if (confirmOverlay) confirmOverlay.style.display = "none";
-      
-      const emailOverlay = qs("#emailCollectionOverlay");
-      if (emailOverlay) {
-        emailOverlay.style.display = "flex";
-      } else {
-        // Fallback if overlay not found
-        completePaymentFlow();
-      }
-    });
-
     qs("#btnSubmitEmailAudit")?.addEventListener("click", () => {
       const email = qs("#collectEmailInput")?.value.trim();
       if (!email || !email.includes("@")) {
@@ -10190,7 +10190,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       
       isTestPaid = true;
       localStorage.setItem(STORAGE_KEY_TEST_PAID, "true");
-      showToast("✅ Platba prijatá (Test Mode)", { type: "success" });
+      showToast("✅ Platba prijatá", { type: "success" });
 
       // Resume pending report if any
       if (window._pendingReport) {
@@ -10350,7 +10350,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     savePrevValue(modelSelect);
     savePrevValue(storageSelect);
 
-    console.log("💳 Platobný stav (Test Mode):", isTestPaid ? "ZAPLATENÉ" : "NEZAPLATENÉ");
+    console.log("💳 Platobný stav:", isTestPaid ? "ZAPLATENÉ" : "NEZAPLATENÉ");
 
     // 🛡️ ENSURE OVERLAY IS VISIBLE
     const overlay = qs("[data-report-overlay]");

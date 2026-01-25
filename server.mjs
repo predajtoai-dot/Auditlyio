@@ -4698,8 +4698,23 @@ const server = http.createServer(async (req, res) => {
         const diffDays = diffHours / 24;
         
         const viewType = url.searchParams.get("view"); 
+        const authEmail = url.searchParams.get("email");
 
         console.log(`🕒 [API Audits] ID: ${id}, View: ${viewType || 'private'}, Age: ${diffHours.toFixed(1)}h`);
+
+        // 🛡️ SECURITY LOCK: If audit has an owner, require email for non-public views
+        const isPublic = viewType === 'public';
+        if (!isPublic && audit.user_email) {
+          if (!authEmail || authEmail.toLowerCase().trim() !== audit.user_email.toLowerCase().trim()) {
+            // Return locked status but include basic product info for the "lock screen"
+            return json(res, 403, { 
+              ok: false, 
+              locked: true, 
+              error: "Tento audit je súkromný a chránený e-mailom majiteľa.",
+              product_name: product.name 
+            });
+          }
+        }
 
         if (viewType === 'public') {
           if (diffDays > 30) {
