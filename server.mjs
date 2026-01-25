@@ -4344,10 +4344,44 @@ function getFairPriceBasis(modelName, rawPrice) {
   if (nameLower.includes("airpods 2")) return Math.min(price, 50);
   if (nameLower.includes("airpods 1")) return Math.min(price, 25);
 
-  // Sanity check for any other used phone/electronic
-  if (price > 1300 && !nameLower.includes("17") && !nameLower.includes("16")) return 800;
+  // 💻 MacBooks (Safety Overrides)
+  if (nameLower.includes("macbook pro 14 (m4")) return 1650;
+  if (nameLower.includes("macbook air 13 (m3")) return 1050;
+  if (nameLower.includes("macbook pro 14 (m3")) return 1350;
+  if (nameLower.includes("macbook air 13 (m2")) return 850;
+  if (nameLower.includes("macbook pro 14 (m1 pro")) return 1100;
+  if (nameLower.includes("macbook air (m1")) return 550;
 
-  return price;
+  // 📱 iPads (Safety Overrides)
+  if (nameLower.includes("ipad pro 13 (m4")) return 1050;
+  if (nameLower.includes("ipad pro 11 (m4")) return 850;
+  if (nameLower.includes("ipad pro 12.9 (m2")) return 750;
+  if (nameLower.includes("ipad pro 11 (m2")) return 620;
+  if (nameLower.includes("ipad air (m2")) return 520;
+  if (nameLower.includes("ipad air (m1")) return 380;
+  if (nameLower.includes("ipad mini 7")) return 480;
+  if (nameLower.includes("ipad mini 6")) return 320;
+  if (nameLower.includes("ipad 10")) return 290;
+  if (nameLower.includes("ipad 9")) return 210;
+
+  // 💻 Other Laptops & Tablets (Generic Fallbacks)
+  if (nameLower.includes("razer blade 16")) { if (price < 1400) price = 1400; }
+  else if (nameLower.includes("razer blade 14")) { if (price < 1100) price = 1100; }
+  else if (nameLower.includes("razer blade 15")) { if (price < 900) price = 900; }
+  else if (nameLower.includes("razer blade 17")) { if (price < 1000) price = 1000; }
+  else if (nameLower.includes("razer")) { if (price < 800) price = 800; }
+
+  if (nameLower.includes("notebook") || nameLower.includes("laptop") || nameLower.includes("legion") || nameLower.includes("zenbook") || nameLower.includes("xps")) {
+    if (price < 350) price = 350;
+  }
+  if (nameLower.includes("tablet") || nameLower.includes("tab") || nameLower.includes("surface") || nameLower.includes("pad")) {
+    if (price < 180) price = 180;
+  }
+
+  // 2. Priority: Valid database price (if not overridden above)
+  if (price > 50 && price < 2500) return price;
+
+  return price > 50 ? price : 100;
 }
 
 const server = http.createServer(async (req, res) => {

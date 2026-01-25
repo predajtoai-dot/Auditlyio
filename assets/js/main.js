@@ -210,6 +210,40 @@ document.addEventListener("DOMContentLoaded", () => {
     if (nameLower.includes("iphone 11 pro")) return 190;
     if (nameLower.includes("iphone 11")) return 160;
 
+    // 💻 MacBooks
+    if (nameLower.includes("macbook pro 14 (m4")) return 1650;
+    if (nameLower.includes("macbook air 13 (m3")) return 1050;
+    if (nameLower.includes("macbook pro 14 (m3")) return 1350;
+    if (nameLower.includes("macbook air 13 (m2")) return 850;
+    if (nameLower.includes("macbook pro 14 (m1 pro")) return 1100;
+    if (nameLower.includes("macbook air (m1")) return 550;
+
+    // 📱 iPads
+    if (nameLower.includes("ipad pro 13 (m4")) return 1050;
+    if (nameLower.includes("ipad pro 11 (m4")) return 850;
+    if (nameLower.includes("ipad pro 12.9 (m2")) return 750;
+    if (nameLower.includes("ipad pro 11 (m2")) return 620;
+    if (nameLower.includes("ipad air (m2")) return 520;
+    if (nameLower.includes("ipad air (m1")) return 380;
+    if (nameLower.includes("ipad mini 7")) return 480;
+    if (nameLower.includes("ipad mini 6")) return 320;
+    if (nameLower.includes("ipad 10")) return 290;
+    if (nameLower.includes("ipad 9")) return 210;
+
+    // 💻 Other Laptops & Tablets (Generic Fallbacks)
+    if (nameLower.includes("razer blade 16")) { if (finalPrice < 1400) finalPrice = 1400; }
+    else if (nameLower.includes("razer blade 14")) { if (finalPrice < 1100) finalPrice = 1100; }
+    else if (nameLower.includes("razer blade 15")) { if (finalPrice < 900) finalPrice = 900; }
+    else if (nameLower.includes("razer blade 17")) { if (finalPrice < 1000) finalPrice = 1000; }
+    else if (nameLower.includes("razer")) { if (finalPrice < 800) finalPrice = 800; }
+
+    if (nameLower.includes("notebook") || nameLower.includes("laptop") || nameLower.includes("legion") || nameLower.includes("zenbook") || nameLower.includes("xps")) {
+      if (finalPrice < 350) finalPrice = 350;
+    }
+    if (nameLower.includes("tablet") || nameLower.includes("tab") || nameLower.includes("surface") || nameLower.includes("pad")) {
+      if (finalPrice < 180) finalPrice = 180;
+    }
+
     // 🎧 Audio
     if (nameLower.includes("airpods pro 2")) return 170;
     if (nameLower.includes("airpods pro")) return 120;
@@ -229,14 +263,47 @@ document.addEventListener("DOMContentLoaded", () => {
     if (nameLower.includes("nintendo switch")) return 160;
     
     // 2. Priority: Valid database price (if not overridden above)
-    if (finalPrice > 0 && finalPrice < 1500) return finalPrice;
+    if (finalPrice > 50 && finalPrice < 2500) return finalPrice;
 
     // 3. Fallback: Heureka price (if reasonable)
-    if (heurekaPrice > 0 && heurekaPrice < 1500) return heurekaPrice;
-    if (window.heurekaData?.priceAvg > 0 && window.heurekaData?.priceAvg < 1500) return window.heurekaData.priceAvg;
+    if (heurekaPrice > 50 && heurekaPrice < 2500) return heurekaPrice;
+    if (window.heurekaData?.priceAvg > 50 && window.heurekaData?.priceAvg < 2500) return window.heurekaData.priceAvg;
 
     // 4. Ultimate fallback (absolute minimum for any electronic device we audit)
     return 100; 
+  };
+
+  // ⚖️ DYNAMIC PENALTY ENGINE: Applies percentages based on wear & tear
+  const calculateFinalFairPrice = (basePrice, params) => {
+    let price = Number(basePrice || 0);
+    const { batteryVal = 100, conditionPct = 100, hasBox = true, hasCharger = true, hasReceipt = true, hasWarranty = false, mode = "buy" } = params;
+
+    // 1. Battery Penalty (%)
+    let batteryPenaltyPct = 0;
+    const bVal = Number(batteryVal);
+    if (bVal < 100) {
+      if (bVal >= 95) batteryPenaltyPct = 0;
+      else if (bVal >= 90) batteryPenaltyPct = 0.05;
+      else if (bVal >= 85) batteryPenaltyPct = 0.10;
+      else if (bVal >= 80) batteryPenaltyPct = 0.15;
+      else batteryPenaltyPct = 0.25;
+    }
+    price = price * (1 - batteryPenaltyPct);
+
+    // 2. Accessories Penalty (%)
+    if (!hasBox) price = price * 0.98;
+    if (!hasCharger) price = price * 0.97;
+    if (!hasReceipt) price = price * 0.96;
+
+    // 3. Condition Penalty (%)
+    if (mode === "sell" || conditionPct < 100) {
+      price = price * (Number(conditionPct) / 100);
+    }
+
+    // 4. Warranty Bonus (%)
+    if (hasWarranty) price = price * 1.05;
+
+    return Math.round(price);
   };
 
   // 🔐 LOCK MECHANISM: Prevents accidental parameter changes after payment
@@ -1307,38 +1374,25 @@ const fallbackCopyToClipboard = (text) => {
           specList.innerHTML = html;
         }
 
-        // ⚖️ CALCULATE FAIR PRICE ADJUSTMENTS
-        let fairPriceAvg = data.priceAvg;
-        
-        // 1. Granular Battery Penalty
-        let batteryPenalty = 0;
-        if (batteryVal < 100) {
-          if (batteryVal >= 95) batteryPenalty = 0;
-          else if (batteryVal >= 90) batteryPenalty = 25;
-          else if (batteryVal >= 85) batteryPenalty = 50;
-          else if (batteryVal >= 80) batteryPenalty = 80;
-          else batteryPenalty = 120;
-        }
-        fairPriceAvg -= batteryPenalty;
-
-        // 2. Accessories Penalty (If missing)
+        // ⚖️ CALCULATE FAIR PRICE ADJUSTMENTS (Percentage-based for realism)
+        const currentMode = document.querySelector('input[name="auditMode"]:checked')?.value || "buy";
         const hasBox = qs("[data-acc='box']")?.checked;
         const hasCharger = qs("[data-acc='charger']")?.checked;
         const hasReceipt = qs("[data-acc='receipt']")?.checked;
+        const conditionInput = qs("[data-device-condition]");
+        const conditionPct = Number(conditionInput?.value) || 100;
+
+        let fairPriceAvg = calculateFinalFairPrice(data.priceAvg, {
+          batteryVal,
+          conditionPct,
+          hasBox,
+          hasCharger,
+          hasReceipt,
+          hasWarranty,
+          mode: currentMode
+        });
         
-        if (!hasBox) fairPriceAvg -= 20;
-        if (!hasCharger) fairPriceAvg -= 15;
-        if (!hasReceipt) fairPriceAvg -= 30;
-
-        // 3. Condition Penalty (ONLY for Sell Mode or if condition input is visible)
-        if (currentMode === "sell") {
-          const conditionInput = qs("[data-device-condition]");
-          const conditionPct = Number(conditionInput?.value) || 100;
-          fairPriceAvg = Math.round(fairPriceAvg * (conditionPct / 100));
-          console.log(`⚖️ Live Sync: Condition (${conditionPct}%) applied. New fair price: ${fairPriceAvg}€`);
-        }
-
-        if (hasWarranty) fairPriceAvg += 30;
+        console.log(`⚖️ Live Sync: Fair price calculated: ${fairPriceAvg}€`);
 
         const bars = document.querySelectorAll('.priceChart__bar');
         const labels = document.querySelectorAll('.priceChart__bar span');
@@ -7825,10 +7879,13 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         if (fetchedData && fetchedData.audit.final_price_recommendation > 0) {
           r.base_price_recommended = fetchedData.audit.final_price_recommendation;
         } else {
-          // If recommendation is 0, we take the base price and apply penalties manually
+          // If recommendation is 0, apply penalties manually using our engine
           const base = getFairPriceBasis(r.name, r.base_price_recommended, 0);
-          const conditionPct = Number(rd.condition || 100);
-          r.base_price_recommended = Math.round(base * (conditionPct / 100));
+          r.base_price_recommended = calculateFinalFairPrice(base, {
+            batteryVal: rd.battery || 100,
+            conditionPct: rd.condition || 100,
+            mode: rd.mode || "buy"
+          });
         }
 
         // 🏠 DASHBOARD FILL LOGIC (New Request)
@@ -7994,10 +8051,30 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
         // ⚖️ Use Central Pricing Engine for Main Report (passing Heureka price if we have it)
         const currentHeurekaPrice = window.heurekaData?.priceAvg || 0;
-        r.base_price_recommended = getFairPriceBasis(rawModel, r.base_price_recommended, currentHeurekaPrice);
+        let baseFairPrice = getFairPriceBasis(rawModel, r.base_price_recommended, currentHeurekaPrice);
+
+        // ⚖️ Apply dynamic penalties before saving/displaying
+        const currentMode = document.querySelector('input[name="auditMode"]:checked')?.value || "buy";
+        const currentBattery = currentMode === "buy" ? qs("[data-battery-health]")?.value : qs("[data-battery-health-sell]")?.value;
+        const currentCondition = qs("[data-device-condition]")?.value || "100";
+        const currentStorage = storageSelect?.value || "";
+        const hasBox = qs("[data-acc='box']")?.checked;
+        const hasCharger = qs("[data-acc='charger']")?.checked;
+        const hasReceipt = qs("[data-acc='receipt']")?.checked;
+        const hasWarranty = currentMode === "buy" ? qs("[data-has-warranty]")?.checked : qs("[data-has-warranty-sell]")?.checked;
+
+        r.base_price_recommended = calculateFinalFairPrice(baseFairPrice, {
+          batteryVal: currentBattery,
+          conditionPct: currentCondition,
+          hasBox,
+          hasCharger,
+          hasReceipt,
+          hasWarranty,
+          mode: currentMode
+        });
 
         expertOverlay.dataset.productId = r.id; // Store for later save
-        console.log("📦 Data received from DB:", r);
+        console.log("📦 Data received from DB (Base Price Adjusted):", r.base_price_recommended);
         createdAt = new Date().toISOString();
         
         // 💾 Save for Offline
@@ -8005,15 +8082,11 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
         // Save audit to history and get unique ID
         try {
-          const mode = document.querySelector('input[name="auditMode"]:checked')?.value || "buy";
-          const currentBattery = mode === "buy" ? qs("[data-battery-health]")?.value : qs("[data-battery-health-sell]")?.value;
-          const currentCondition = qs("[data-device-condition]")?.value || "100";
-          const currentStorage = storageSelect?.value || "";
           const userEmail = localStorage.getItem("auditly_user_email");
           console.log("💾 [handleOpenExpertReport] Saving audit with email:", userEmail);
 
           // Populate rd for rendering
-          rd = { mode, battery: currentBattery, condition: currentCondition, storage: currentStorage };
+          rd = { mode: currentMode, battery: currentBattery, condition: currentCondition, storage: currentStorage };
 
           const saveResp = await fetch(`${API_BASE}/api/audits`, {
             method: "POST",
@@ -8025,7 +8098,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
                 model: r.name, 
                 specs: r.display_tech, 
                 category: r.category,
-                mode: mode,
+                mode: currentMode,
                 battery: currentBattery || "100",
                 condition: currentCondition,
                 storage: currentStorage,
@@ -8061,6 +8134,10 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       }
 
       qs("#expertReportName").textContent = r.name;
+      const catHeader = qs("#expertReportCategoryHeader");
+      if (catHeader) {
+        catHeader.textContent = `Trend za posledný rok • ${r.category || 'Elektronika'}`;
+      }
       
       // ⚖️ The price is already calculated via getFairPriceBasis above
       let displayPrice = r.base_price_recommended || 0;
