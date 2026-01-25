@@ -3,6 +3,31 @@ document.addEventListener("DOMContentLoaded", () => {
   const qs = (sel, root = document) => root.querySelector(sel);
   const sleep = (ms) => new Promise((r) => window.setTimeout(r, ms));
 
+  // 🖼️ UI ELEMENTS (Global)
+  const welcomeOverlay = qs("#welcomeOverlay");
+  const closeWelcomeBtn = qs("#closeWelcomeBtn");
+  const authOverlay = qs("#authOverlay");
+
+  const runOnboarding = () => {
+    if (welcomeOverlay) {
+      welcomeOverlay.style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+  };
+
+  const startOnboardingToasts = async () => {
+    await sleep(2000);
+    showToast("💡 Tip: Skúste 📸 AI skener pre rýchle nacenenie!", { type: "info", duration: 5000 });
+    await sleep(6000);
+    showToast("🔍 Potrebujete porovnať? Kliknite na 🤔 Porovnať v menu.", { type: "info", duration: 5000 });
+  };
+
+  // 🔑 CONSTANTS
+  const STORAGE_KEY_TEST_PAID = "auditly_test_paid";
+  const FREE_EDITS_LIMIT = 3;
+  const STORAGE_KEY_EDITS = "predajto_edit_count";
+  const STORAGE_KEY_PREMIUM = "predajto_premium";
+
   // 🔗 SUPABASE INITIALIZATION
   const supabaseUrl = "https://dbbhvaokhdrgawohappo.supabase.co";
   const supabaseKey = "sb_publishable_myBjYbRfS0G9VWj-a5mvaA_kPizADYd"; // Use anon/public key for client
@@ -54,19 +79,24 @@ document.addEventListener("DOMContentLoaded", () => {
       // 1. Unlock access
       isTestPaid = true;
       localStorage.setItem(STORAGE_KEY_TEST_PAID, "true");
+      console.log("✅ isTestPaid set to true and saved to localStorage");
       
       // 2. Restore pending actions from before redirect
       const pendingAnalysis = localStorage.getItem("auditly_pending_analysis");
       const pendingReport = localStorage.getItem("auditly_pending_report");
       
+      console.log("🔍 Checking for pending actions:", { pendingAnalysis, hasPendingReport: !!pendingReport });
+      
       if (pendingAnalysis === "true") {
         window._pendingAnalysis = true;
         localStorage.removeItem("auditly_pending_analysis");
+        console.log("🎯 window._pendingAnalysis activated");
       }
       
       if (pendingReport) {
         window._pendingReport = JSON.parse(pendingReport);
         localStorage.removeItem("auditly_pending_report");
+        console.log("🎯 window._pendingReport activated:", window._pendingReport);
       }
       
       showToast("✅ Platba bola úspešná! Odomykám váš audit...", { type: "success", duration: 5000 });
@@ -75,6 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const url = new URL(window.location.href);
       url.searchParams.delete('session');
       window.history.replaceState({}, '', url.toString());
+      console.log("🧹 URL cleaned (session=success removed)");
     }
   };
 
@@ -208,12 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return 100; 
   };
 
-  // Edit counter constants (used in multiple places)
-  const FREE_EDITS_LIMIT = 3;
-  const STORAGE_KEY_EDITS = "predajto_edit_count";
-  const STORAGE_KEY_PREMIUM = "predajto_premium";
-  const STORAGE_KEY_TEST_PAID = "auditly_test_paid";
-
+  // 🔐 LOCK MECHANISM: Prevents accidental parameter changes after payment
   let isTestPaid = localStorage.getItem(STORAGE_KEY_TEST_PAID) === "true";
   let isAutoFilling = false;
   
@@ -2521,6 +2547,10 @@ const fallbackCopyToClipboard = (text) => {
 
   // 🆕 Reset audit session when starting new or changing model
   const resetAuditSession = () => {
+    if (isAutoFilling) {
+      console.log("🛡️ Skipping audit session reset during auto-fill/restore");
+      return;
+    }
     if (!expertOverlay) return;
     
     // Clear the current audit ID
@@ -5426,7 +5456,7 @@ const fallbackCopyToClipboard = (text) => {
     updateHeurekaLinks();
 
     try {
-      if (!uploadedImageDataUrl) {
+      if (!uploadedImageDataUrl && !isTestPaid) {
         showToast("Najprv pridajte fotku produktu (klik na +).", { type: "error" });
         return;
       }
@@ -7421,8 +7451,6 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     if (currentVal) categorySelect.value = currentVal;
   };
 
-  loadDatabaseCatalog();
-
   // 🔐 LOCK HELPERS: Save previous values to revert if cancel
   const savePrevValue = (el) => { el.dataset.prevValue = el.value; };
   const revertValue = (el) => { el.value = el.dataset.prevValue || ""; };
@@ -8779,10 +8807,6 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     startOnboardingToasts();
   });
 
-  qs("#startTourBtn")?.addEventListener("click", () => {
-    runOnboarding();
-  });
-
   // Smooth Scroll for Navigation Links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -8909,6 +8933,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       }
 
       console.log("📂 Restoring app state...", state);
+      isAutoFilling = true; // 🛡️ Prevent lock check during restore
 
       if (state.mode) {
         const modeInput = document.querySelector(`input[name="auditMode"][value="${state.mode}"]`);
@@ -8957,7 +8982,12 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         // Trigger price fetch to show the card
         fetchHeurekaPrice();
       }
-    } catch (e) { console.warn("Failed to load app state", e); }
+      
+      isAutoFilling = false; // 🛡️ Restore lock mechanism
+    } catch (e) { 
+      console.warn("Failed to load app state", e); 
+      isAutoFilling = false; 
+    }
   };
 
   // ⚖️ COMPARISON SYSTEM LOGIC
@@ -9625,7 +9655,6 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
   // ==========================================================================
   // 🔐 SUPABASE AUTH & PROFILE LOGIC
   // ==========================================================================
-  const authOverlay = qs("#authOverlay");
   const loginView = qs("#loginView");
   const registerView = qs("#registerView");
   const profileView = qs("#profileView");
@@ -10010,8 +10039,11 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     }
 
     // 💳 STRIPE REDIRECT INTERCEPTOR
-    qs("#stripePayBtn")?.addEventListener("click", (e) => {
-      // 💾 Save current selection so it can be restored after redirect
+    qs("#stripePayBtn")?.addEventListener("click", async (e) => {
+      e.preventDefault(); // Pause to ensure state is saved
+      const href = e.currentTarget.href;
+      
+      console.log("💾 Saving state before Stripe redirect...");
       saveAppState();
 
       // Ensure pending actions are in localStorage
@@ -10022,11 +10054,11 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         localStorage.setItem("auditly_pending_report", JSON.stringify(window._pendingReport));
       }
       
-      console.log("💾 State saved. Redirecting to Stripe...");
+      console.log("✅ State saved. Redirecting now...");
       
-      // We don't preventDefault here because we want the browser to follow the href
-      // but the small delay of execution here is usually enough for localStorage.
-      // If the user reports issues, we'll switch to manual redirect.
+      // Small delay to ensure DB/storage operations finish if any
+      await new Promise(r => setTimeout(r, 150));
+      window.location.href = href;
     });
 
     // 💳 TEST PAYMENT FLOW (Now direct Stripe redirect)
@@ -10208,7 +10240,6 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
   checkOfflineReport();
 
   const runInit = async () => {
-    handleStripeCallback();
     initUrevents();
 
     // 💳 RESUME PENDING ACTIONS (After Stripe Redirect)
@@ -10269,8 +10300,10 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
   
   // 🏁 MAIN INITIALIZATION SEQUENCE
   const startApp = async () => {
-    await loadAppState(); // 1. Restore what user was doing
-    await runInit();      // 2. Handle Stripe callback and UI init
+    handleStripeCallback();      // 1. Detect payment first
+    await loadDatabaseCatalog(); // 2. Load products from DB
+    await loadAppState();        // 3. Restore what user was doing (needs DB_CATALOG)
+    await runInit();             // 4. UI init and trigger pending actions
   };
   startApp();
 
