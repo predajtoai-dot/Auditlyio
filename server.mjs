@@ -4309,74 +4309,82 @@ function getFairPriceBasis(modelName, rawPrice) {
   const nameLower = modelName.toLowerCase();
   let price = Number(rawPrice || 0);
 
-  // 1. Safety Overrides: Hard caps for common models
-  if (nameLower.includes("iphone 17 pro max")) return Math.min(price, 1150);
-  if (nameLower.includes("iphone 17 pro")) return Math.min(price, 1050);
-  if (nameLower.includes("iphone 17")) return Math.min(price, 920);
+  // 1. Model-Specific Floors (Hard minimums for known models)
+  if (nameLower.includes("iphone 17 pro max")) price = Math.max(price, 1150);
+  else if (nameLower.includes("iphone 17 pro")) price = Math.max(price, 1050);
+  else if (nameLower.includes("iphone 17")) price = Math.max(price, 920);
 
-  if (nameLower.includes("iphone 16 pro max")) return Math.min(price, 1020);
-  if (nameLower.includes("iphone 16 pro")) return Math.min(price, 890);
-  if (nameLower.includes("iphone 16")) return Math.min(price, 690);
+  else if (nameLower.includes("iphone 16 pro max")) price = Math.max(price, 1050);
+  else if (nameLower.includes("iphone 16 pro")) price = Math.max(price, 920);
+  else if (nameLower.includes("iphone 16")) price = Math.max(price, 720);
 
-  if (nameLower.includes("iphone 15 pro max")) return Math.min(price, 650);
-  if (nameLower.includes("iphone 15 pro")) return Math.min(price, 580);
-  if (nameLower.includes("iphone 15 plus")) return Math.min(price, 480);
-  if (nameLower.includes("iphone 15")) return Math.min(price, 440);
+  else if (nameLower.includes("iphone 15 pro max")) price = Math.max(price, 850);
+  else if (nameLower.includes("iphone 15 pro")) price = Math.max(price, 720);
+  else if (nameLower.includes("iphone 15 plus")) price = Math.max(price, 580);
+  else if (nameLower.includes("iphone 15")) price = Math.max(price, 520);
 
-  if (nameLower.includes("iphone 14 pro max")) return Math.min(price, 480);
-  if (nameLower.includes("iphone 14 pro")) return Math.min(price, 400);
-  if (nameLower.includes("iphone 14 plus")) return Math.min(price, 350);
-  if (nameLower.includes("iphone 14")) return Math.min(price, 320);
+  else if (nameLower.includes("iphone 14 pro max")) price = Math.max(price, 650);
+  else if (nameLower.includes("iphone 14 pro")) price = Math.max(price, 550);
+  else if (nameLower.includes("iphone 14 plus")) price = Math.max(price, 450);
+  else if (nameLower.includes("iphone 14")) price = Math.max(price, 420);
 
-  if (nameLower.includes("iphone 13 pro max")) return Math.min(price, 390);
-  if (nameLower.includes("iphone 13 pro")) return Math.min(price, 350);
-  if (nameLower.includes("iphone 13 mini")) return Math.min(price, 240);
-  if (nameLower.includes("iphone 13")) return Math.min(price, 290);
+  else if (nameLower.includes("iphone 13 pro max")) price = Math.max(price, 520);
+  else if (nameLower.includes("iphone 13 pro")) price = Math.max(price, 480);
+  else if (nameLower.includes("iphone 13 mini")) price = Math.max(price, 320);
+  else if (nameLower.includes("iphone 13")) price = Math.max(price, 380);
 
-  if (nameLower.includes("iphone 12 pro max")) return Math.min(price, 290);
-  if (nameLower.includes("iphone 12 pro")) return Math.min(price, 260);
-  if (nameLower.includes("iphone 12 mini")) return Math.min(price, 170);
-  if (nameLower.includes("iphone 12")) return Math.min(price, 210);
+  else if (nameLower.includes("iphone 12 pro max")) price = Math.max(price, 380);
+  else if (nameLower.includes("iphone 12 pro")) price = Math.max(price, 340);
+  else if (nameLower.includes("iphone 12 mini")) price = Math.max(price, 240);
+  else if (nameLower.includes("iphone 12")) price = Math.max(price, 290);
+  else if (nameLower.includes("iphone 11 pro max")) price = Math.max(price, 280);
+  else if (nameLower.includes("iphone 11 pro")) price = Math.max(price, 240);
+  else if (nameLower.includes("iphone 11")) price = Math.max(price, 190);
 
-  if (nameLower.includes("airpods pro 2")) return Math.min(price, 170);
-  if (nameLower.includes("airpods pro")) return Math.min(price, 120);
-  if (nameLower.includes("airpods 3")) return Math.min(price, 90);
-  if (nameLower.includes("airpods 2")) return Math.min(price, 50);
-  if (nameLower.includes("airpods 1")) return Math.min(price, 25);
+  // 💻 MacBooks (Floors)
+  if (nameLower.includes("macbook pro 16 (m3 pro)")) price = Math.max(price, 1850);
+  else if (nameLower.includes("macbook pro 14 (m4")) price = Math.max(price, 1750);
+  else if (nameLower.includes("macbook air 13 (m3")) price = Math.max(price, 1100);
+  else if (nameLower.includes("macbook pro 14 (m3")) price = Math.max(price, 1400);
+  else if (nameLower.includes("macbook air 13 (m2")) price = Math.max(price, 900);
+  else if (nameLower.includes("macbook pro 14 (m1 pro")) price = Math.max(price, 1150);
+  else if (nameLower.includes("macbook air (m1")) price = Math.max(price, 580);
 
-  // 💻 MacBooks (Safety Overrides)
-  if (nameLower.includes("macbook pro 14 (m4")) return 1650;
-  if (nameLower.includes("macbook air 13 (m3")) return 1050;
-  if (nameLower.includes("macbook pro 14 (m3")) return 1350;
-  if (nameLower.includes("macbook air 13 (m2")) return 850;
-  if (nameLower.includes("macbook pro 14 (m1 pro")) return 1100;
-  if (nameLower.includes("macbook air (m1")) return 550;
+  // 📱 iPads (Floors)
+  if (nameLower.includes("ipad pro 13 (m4")) price = Math.max(price, 1100);
+  else if (nameLower.includes("ipad pro 11 (m4")) price = Math.max(price, 900);
+  else if (nameLower.includes("ipad pro 12.9 (m2")) price = Math.max(price, 800);
+  else if (nameLower.includes("ipad pro 11 (m2")) price = Math.max(price, 650);
+  else if (nameLower.includes("ipad air (m2")) price = Math.max(price, 550);
+  else if (nameLower.includes("ipad air (m1")) price = Math.max(price, 420);
+  else if (nameLower.includes("ipad mini 7")) price = Math.max(price, 500);
+  else if (nameLower.includes("ipad mini 6")) price = Math.max(price, 350);
+  else if (nameLower.includes("ipad 10")) price = Math.max(price, 320);
+  else if (nameLower.includes("ipad 9")) price = Math.max(price, 240);
 
-  // 📱 iPads (Safety Overrides)
-  if (nameLower.includes("ipad pro 13 (m4")) return 1050;
-  if (nameLower.includes("ipad pro 11 (m4")) return 850;
-  if (nameLower.includes("ipad pro 12.9 (m2")) return 750;
-  if (nameLower.includes("ipad pro 11 (m2")) return 620;
-  if (nameLower.includes("ipad air (m2")) return 520;
-  if (nameLower.includes("ipad air (m1")) return 380;
-  if (nameLower.includes("ipad mini 7")) return 480;
-  if (nameLower.includes("ipad mini 6")) return 320;
-  if (nameLower.includes("ipad 10")) return 290;
-  if (nameLower.includes("ipad 9")) return 210;
-
-  // 💻 Other Laptops & Tablets (Generic Fallbacks)
-  if (nameLower.includes("razer blade 16")) { if (price < 1400) price = 1400; }
-  else if (nameLower.includes("razer blade 14")) { if (price < 1100) price = 1100; }
-  else if (nameLower.includes("razer blade 15")) { if (price < 900) price = 900; }
-  else if (nameLower.includes("razer blade 17")) { if (price < 1000) price = 1000; }
-  else if (nameLower.includes("razer")) { if (price < 800) price = 800; }
-
-  if (nameLower.includes("notebook") || nameLower.includes("laptop") || nameLower.includes("legion") || nameLower.includes("zenbook") || nameLower.includes("xps")) {
-    if (price < 350) price = 350;
+  // 💻 Other Laptops (Brand Floors)
+  if (nameLower.includes("razer blade 16")) price = Math.max(price, 1500);
+  else if (nameLower.includes("razer blade 14")) price = Math.max(price, 1200);
+  else if (nameLower.includes("razer blade 15")) price = Math.max(price, 1000);
+  else if (nameLower.includes("razer blade 17")) price = Math.max(price, 1100);
+  else if (nameLower.includes("razer") || nameLower.includes("rog") || nameLower.includes("alienware") || nameLower.includes("msi") || nameLower.includes("omen")) {
+    price = Math.max(price, 850);
   }
+  else if (nameLower.includes("notebook") || nameLower.includes("laptop") || nameLower.includes("legion") || nameLower.includes("zenbook") || nameLower.includes("xps")) {
+    price = Math.max(price, 400);
+  }
+
   if (nameLower.includes("tablet") || nameLower.includes("tab") || nameLower.includes("surface") || nameLower.includes("pad")) {
-    if (price < 180) price = 180;
+    price = Math.max(price, 180);
   }
+
+  // 🎧 Audio
+  if (nameLower.includes("airpods pro 2")) price = Math.max(price, 170);
+  else if (nameLower.includes("airpods pro")) price = Math.max(price, 120);
+  else if (nameLower.includes("airpods 3")) price = Math.max(price, 90);
+  else if (nameLower.includes("airpods 2")) price = Math.max(price, 50);
+  else if (nameLower.includes("airpods 1")) price = Math.max(price, 25);
+  else if (nameLower.includes("magic mouse")) price = Math.max(price, 55);
 
   // 2. Priority: Valid database price (if not overridden above)
   if (price > 50 && price < 2500) return price;
@@ -6041,10 +6049,14 @@ async function startMarketUpdateJob() {
           const match = stdout.match(/DATA_EXIT: priceFrom=([\d.]+) avgPrice=([\d.]+) source=(\w+) date="([^"]+)"/);
           
           if (match) {
-            const priceFrom = parseFloat(match[1]);
-            const priceAvg = parseFloat(match[2]);
+            let priceFrom = parseFloat(match[1]);
+            let priceAvg = parseFloat(match[2]);
             const source = match[3];
             const freshnessDate = match[4];
+
+            // ⚖️ APPLY SAFETY CAPS before saving to DB (Sync with main API)
+            priceAvg = getFairPriceBasis(item.model, priceAvg);
+            priceFrom = Math.min(priceFrom, priceAvg * 0.95);
 
             await supabase
               .from('market_prices')

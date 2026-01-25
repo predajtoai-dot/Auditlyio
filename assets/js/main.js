@@ -175,102 +175,98 @@ document.addEventListener("DOMContentLoaded", () => {
   // ⚖️ CENTRAL PRICING ENGINE: Ensures consistent fair prices across all components
   const getFairPriceBasis = (modelName, dbPrice = 0, heurekaPrice = 0) => {
     const nameLower = modelName.toLowerCase();
-    let finalPrice = Number(dbPrice || 0);
+    let price = Number(dbPrice || 0);
+    if (price < 50) price = Number(heurekaPrice || 0);
+    if (price < 50 && window.heurekaData?.priceAvg > 50) price = window.heurekaData.priceAvg;
 
-    // 1. Safety Overrides: Hard caps for common older models to avoid Heureka "new/refurbished" pricing
-    // These take priority over DB if the DB price is suspiciously high or if we want to enforce a specific price
-    if (nameLower.includes("iphone 17 pro max")) return 1150;
-    if (nameLower.includes("iphone 17 pro")) return 1050;
-    if (nameLower.includes("iphone 17")) return 920;
+    // 1. Model-Specific Floors (Hard minimums for known models)
+    if (nameLower.includes("iphone 17 pro max")) price = Math.max(price, 1150);
+    else if (nameLower.includes("iphone 17 pro")) price = Math.max(price, 1050);
+    else if (nameLower.includes("iphone 17")) price = Math.max(price, 920);
 
-    if (nameLower.includes("iphone 16 pro max")) return 1020;
-    if (nameLower.includes("iphone 16 pro")) return 890;
-    if (nameLower.includes("iphone 16")) return 690;
+    else if (nameLower.includes("iphone 16 pro max")) price = Math.max(price, 1050);
+    else if (nameLower.includes("iphone 16 pro")) price = Math.max(price, 920);
+    else if (nameLower.includes("iphone 16")) price = Math.max(price, 720);
 
-    if (nameLower.includes("iphone 15 pro max")) return 650;
-    if (nameLower.includes("iphone 15 pro")) return 580;
-    if (nameLower.includes("iphone 15 plus")) return 480;
-    if (nameLower.includes("iphone 15")) return 440;
+    else if (nameLower.includes("iphone 15 pro max")) price = Math.max(price, 850);
+    else if (nameLower.includes("iphone 15 pro")) price = Math.max(price, 720);
+    else if (nameLower.includes("iphone 15 plus")) price = Math.max(price, 580);
+    else if (nameLower.includes("iphone 15")) price = Math.max(price, 520);
 
-    if (nameLower.includes("iphone 14 pro max")) return 480;
-    if (nameLower.includes("iphone 14 pro")) return 400;
-    if (nameLower.includes("iphone 14 plus")) return 350;
-    if (nameLower.includes("iphone 14")) return 320;
+    else if (nameLower.includes("iphone 14 pro max")) price = Math.max(price, 650);
+    else if (nameLower.includes("iphone 14 pro")) price = Math.max(price, 550);
+    else if (nameLower.includes("iphone 14 plus")) price = Math.max(price, 450);
+    else if (nameLower.includes("iphone 14")) price = Math.max(price, 420);
 
-    if (nameLower.includes("iphone 13 pro max")) return 390;
-    if (nameLower.includes("iphone 13 pro")) return 350;
-    if (nameLower.includes("iphone 13 mini")) return 240;
-    if (nameLower.includes("iphone 13")) return 290;
+    else if (nameLower.includes("iphone 13 pro max")) price = Math.max(price, 520);
+    else if (nameLower.includes("iphone 13 pro")) price = Math.max(price, 480);
+    else if (nameLower.includes("iphone 13 mini")) price = Math.max(price, 320);
+    else if (nameLower.includes("iphone 13")) price = Math.max(price, 380);
 
-    if (nameLower.includes("iphone 12 pro max")) return 290;
-    if (nameLower.includes("iphone 12 pro")) return 260;
-    if (nameLower.includes("iphone 12 mini")) return 170;
-    if (nameLower.includes("iphone 12")) return 210;
-    if (nameLower.includes("iphone 11 pro max")) return 220;
-    if (nameLower.includes("iphone 11 pro")) return 190;
-    if (nameLower.includes("iphone 11")) return 160;
+    else if (nameLower.includes("iphone 12 pro max")) price = Math.max(price, 380);
+    else if (nameLower.includes("iphone 12 pro")) price = Math.max(price, 340);
+    else if (nameLower.includes("iphone 12 mini")) price = Math.max(price, 240);
+    else if (nameLower.includes("iphone 12")) price = Math.max(price, 290);
+    else if (nameLower.includes("iphone 11 pro max")) price = Math.max(price, 280);
+    else if (nameLower.includes("iphone 11 pro")) price = Math.max(price, 240);
+    else if (nameLower.includes("iphone 11")) price = Math.max(price, 190);
 
-    // 💻 MacBooks
-    if (nameLower.includes("macbook pro 14 (m4")) return 1650;
-    if (nameLower.includes("macbook air 13 (m3")) return 1050;
-    if (nameLower.includes("macbook pro 14 (m3")) return 1350;
-    if (nameLower.includes("macbook air 13 (m2")) return 850;
-    if (nameLower.includes("macbook pro 14 (m1 pro")) return 1100;
-    if (nameLower.includes("macbook air (m1")) return 550;
+    // 💻 MacBooks (Floors)
+    if (nameLower.includes("macbook pro 16 (m3 pro)")) price = Math.max(price, 1850);
+    else if (nameLower.includes("macbook pro 14 (m4")) price = Math.max(price, 1750);
+    else if (nameLower.includes("macbook air 13 (m3")) price = Math.max(price, 1100);
+    else if (nameLower.includes("macbook pro 14 (m3")) price = Math.max(price, 1400);
+    else if (nameLower.includes("macbook air 13 (m2")) price = Math.max(price, 900);
+    else if (nameLower.includes("macbook pro 14 (m1 pro")) price = Math.max(price, 1150);
+    else if (nameLower.includes("macbook air (m1")) price = Math.max(price, 580);
 
-    // 📱 iPads
-    if (nameLower.includes("ipad pro 13 (m4")) return 1050;
-    if (nameLower.includes("ipad pro 11 (m4")) return 850;
-    if (nameLower.includes("ipad pro 12.9 (m2")) return 750;
-    if (nameLower.includes("ipad pro 11 (m2")) return 620;
-    if (nameLower.includes("ipad air (m2")) return 520;
-    if (nameLower.includes("ipad air (m1")) return 380;
-    if (nameLower.includes("ipad mini 7")) return 480;
-    if (nameLower.includes("ipad mini 6")) return 320;
-    if (nameLower.includes("ipad 10")) return 290;
-    if (nameLower.includes("ipad 9")) return 210;
+    // 📱 iPads (Floors)
+    if (nameLower.includes("ipad pro 13 (m4")) price = Math.max(price, 1100);
+    else if (nameLower.includes("ipad pro 11 (m4")) price = Math.max(price, 900);
+    else if (nameLower.includes("ipad pro 12.9 (m2")) price = Math.max(price, 800);
+    else if (nameLower.includes("ipad pro 11 (m2")) price = Math.max(price, 650);
+    else if (nameLower.includes("ipad air (m2")) price = Math.max(price, 550);
+    else if (nameLower.includes("ipad air (m1")) price = Math.max(price, 420);
+    else if (nameLower.includes("ipad mini 7")) price = Math.max(price, 500);
+    else if (nameLower.includes("ipad mini 6")) price = Math.max(price, 350);
+    else if (nameLower.includes("ipad 10")) price = Math.max(price, 320);
+    else if (nameLower.includes("ipad 9")) price = Math.max(price, 240);
 
-    // 💻 Other Laptops & Tablets (Generic Fallbacks)
-    if (nameLower.includes("razer blade 16")) { if (finalPrice < 1400) finalPrice = 1400; }
-    else if (nameLower.includes("razer blade 14")) { if (finalPrice < 1100) finalPrice = 1100; }
-    else if (nameLower.includes("razer blade 15")) { if (finalPrice < 900) finalPrice = 900; }
-    else if (nameLower.includes("razer blade 17")) { if (finalPrice < 1000) finalPrice = 1000; }
-    else if (nameLower.includes("razer")) { if (finalPrice < 800) finalPrice = 800; }
-
-    if (nameLower.includes("notebook") || nameLower.includes("laptop") || nameLower.includes("legion") || nameLower.includes("zenbook") || nameLower.includes("xps")) {
-      if (finalPrice < 350) finalPrice = 350;
+    // 💻 Other Laptops (Brand Floors)
+    if (nameLower.includes("razer blade 16")) price = Math.max(price, 1500);
+    else if (nameLower.includes("razer blade 14")) price = Math.max(price, 1200);
+    else if (nameLower.includes("razer blade 15")) price = Math.max(price, 1000);
+    else if (nameLower.includes("razer blade 17")) price = Math.max(price, 1100);
+    else if (nameLower.includes("razer") || nameLower.includes("rog") || nameLower.includes("alienware") || nameLower.includes("msi") || nameLower.includes("omen")) {
+      price = Math.max(price, 850);
     }
+    else if (nameLower.includes("notebook") || nameLower.includes("laptop") || nameLower.includes("legion") || nameLower.includes("zenbook") || nameLower.includes("xps")) {
+      price = Math.max(price, 400);
+    }
+
     if (nameLower.includes("tablet") || nameLower.includes("tab") || nameLower.includes("surface") || nameLower.includes("pad")) {
-      if (finalPrice < 180) finalPrice = 180;
+      price = Math.max(price, 180);
     }
 
     // 🎧 Audio
-    if (nameLower.includes("airpods pro 2")) return 170;
-    if (nameLower.includes("airpods pro")) return 120;
-    if (nameLower.includes("airpods max")) return 320;
-    if (nameLower.includes("airpods 3")) return 90;
-    if (nameLower.includes("airpods 2")) return 50;
-    if (nameLower.includes("airpods 1")) return 25;
-    if (nameLower.includes("airpods")) return 80;
+    if (nameLower.includes("airpods pro 2")) price = Math.max(price, 170);
+    else if (nameLower.includes("airpods pro")) price = Math.max(price, 120);
+    else if (nameLower.includes("airpods max")) price = Math.max(price, 320);
+    else if (nameLower.includes("airpods 3")) price = Math.max(price, 90);
+    else if (nameLower.includes("airpods 2")) price = Math.max(price, 50);
 
     // 🎮 Consoles
-    if (nameLower.includes("ps5 slim") || nameLower.includes("playstation 5 slim")) return 380;
-    if (nameLower.includes("ps5 pro") || nameLower.includes("playstation 5 pro")) return 650;
-    if (nameLower.includes("ps5") || nameLower.includes("playstation 5")) return 340;
-    if (nameLower.includes("xbox series x")) return 320;
-    if (nameLower.includes("xbox series s")) return 180;
-    if (nameLower.includes("nintendo switch oled")) return 220;
-    if (nameLower.includes("nintendo switch")) return 160;
-    
-    // 2. Priority: Valid database price (if not overridden above)
-    if (finalPrice > 50 && finalPrice < 2500) return finalPrice;
+    if (nameLower.includes("ps5 slim") || nameLower.includes("playstation 5 slim")) price = Math.max(price, 380);
+    else if (nameLower.includes("ps5 pro") || nameLower.includes("playstation 5 pro")) price = Math.max(price, 650);
+    else if (nameLower.includes("ps5") || nameLower.includes("playstation 5")) price = Math.max(price, 340);
+    else if (nameLower.includes("xbox series x")) price = Math.max(price, 320);
+    else if (nameLower.includes("xbox series s")) price = Math.max(price, 180);
+    else if (nameLower.includes("nintendo switch oled")) price = Math.max(price, 220);
+    else if (nameLower.includes("nintendo switch")) price = Math.max(price, 160);
 
-    // 3. Fallback: Heureka price (if reasonable)
-    if (heurekaPrice > 50 && heurekaPrice < 2500) return heurekaPrice;
-    if (window.heurekaData?.priceAvg > 50 && window.heurekaData?.priceAvg < 2500) return window.heurekaData.priceAvg;
-
-    // 4. Ultimate fallback (absolute minimum for any electronic device we audit)
-    return 100; 
+    // Final Sanity Check
+    if (price > 2500) price = 2500;
+    return price > 50 ? price : 100;
   };
 
   // ⚖️ DYNAMIC PENALTY ENGINE: Applies percentages based on wear & tear
@@ -1338,11 +1334,6 @@ const fallbackCopyToClipboard = (text) => {
         const specList = qs('.specList');
         if (specList) {
           const deviceSpecs = findDeviceInCatalog(model);
-          const currentMode = document.querySelector('input[name="auditMode"]:checked')?.value || "buy";
-          const batteryInput = currentMode === "sell" ? qs("[data-battery-health-sell]") : qs("[data-battery-health]");
-          const batteryVal = batteryInput?.value || "100";
-          const warrantyInput = currentMode === "sell" ? qs("[data-has-warranty-sell]") : qs("[data-has-warranty]");
-          const hasWarranty = warrantyInput?.checked;
 
           let html = `<div class="specItem"><span>Model</span> <strong>${model}</strong></div>`;
           
@@ -1372,25 +1363,24 @@ const fallbackCopyToClipboard = (text) => {
           }
 
           specList.innerHTML = html;
-        }
+      }
 
-        // ⚖️ CALCULATE FAIR PRICE ADJUSTMENTS (Percentage-based for realism)
-        const currentMode = document.querySelector('input[name="auditMode"]:checked')?.value || "buy";
-        const hasBox = qs("[data-acc='box']")?.checked;
-        const hasCharger = qs("[data-acc='charger']")?.checked;
-        const hasReceipt = qs("[data-acc='receipt']")?.checked;
-        const conditionInput = qs("[data-device-condition]");
-        const conditionPct = Number(conditionInput?.value) || 100;
+      // ⚖️ CALCULATE FAIR PRICE ADJUSTMENTS (Percentage-based for realism)
+      const hasBox = qs("[data-acc='box']")?.checked;
+      const hasCharger = qs("[data-acc='charger']")?.checked;
+      const hasReceipt = qs("[data-acc='receipt']")?.checked;
+      const conditionInput = qs("[data-device-condition]");
+      const conditionPct = Number(conditionInput?.value) || 100;
 
-        let fairPriceAvg = calculateFinalFairPrice(data.priceAvg, {
-          batteryVal,
-          conditionPct,
-          hasBox,
-          hasCharger,
-          hasReceipt,
-          hasWarranty,
-          mode: currentMode
-        });
+      let fairPriceAvg = calculateFinalFairPrice(data.priceAvg, {
+        batteryVal,
+        conditionPct,
+        hasBox,
+        hasCharger,
+        hasReceipt,
+        hasWarranty,
+        mode: currentMode
+      });
         
         console.log(`⚖️ Live Sync: Fair price calculated: ${fairPriceAvg}€`);
 
@@ -7835,7 +7825,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     }
 
     try {
-      let r, rd = {}, auditId, createdAt;
+      let r, rd = {}, auditId, createdAt, baseFairPrice = 0;
 
       if (forcedId) {
         // LOAD EXISTING AUDIT
@@ -7875,13 +7865,15 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
           throw fErr;
         }
 
+        // ⚖️ Base Price for TOP stav (headline in Master Report)
+        baseFairPrice = getFairPriceBasis(r.name, r.base_price_recommended, 0);
+
         // ⚖️ Final Price Recommendation: Use saved or calculate if 0
         if (fetchedData && fetchedData.audit.final_price_recommendation > 0) {
-          r.base_price_recommended = fetchedData.audit.final_price_recommendation;
+          // We have a saved recommendation, but headline always shows TOP stav
         } else {
           // If recommendation is 0, apply penalties manually using our engine
-          const base = getFairPriceBasis(r.name, r.base_price_recommended, 0);
-          r.base_price_recommended = calculateFinalFairPrice(base, {
+          r.base_price_recommended = calculateFinalFairPrice(baseFairPrice, {
             batteryVal: rd.battery || 100,
             conditionPct: rd.condition || 100,
             mode: rd.mode || "buy"
@@ -8051,7 +8043,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
         // ⚖️ Use Central Pricing Engine for Main Report (passing Heureka price if we have it)
         const currentHeurekaPrice = window.heurekaData?.priceAvg || 0;
-        let baseFairPrice = getFairPriceBasis(rawModel, r.base_price_recommended, currentHeurekaPrice);
+        baseFairPrice = getFairPriceBasis(rawModel, r.base_price_recommended, currentHeurekaPrice);
 
         // ⚖️ Apply dynamic penalties before saving/displaying
         const currentMode = document.querySelector('input[name="auditMode"]:checked')?.value || "buy";
@@ -8139,9 +8131,12 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         catHeader.textContent = `Trend za posledný rok • ${r.category || 'Elektronika'}`;
       }
       
-      // ⚖️ The price is already calculated via getFairPriceBasis above
-      let displayPrice = r.base_price_recommended || 0;
-      qs("#expertRecommendedPrice").textContent = `${Number(displayPrice).toFixed(0)} €`;
+      // ⚖️ TOP PRICE: For the Master Report modal, we always show the TOP condition price as headline
+      // and allow the user to subtract penalties in the calculator section.
+      let topFairPrice = baseFairPrice;
+      window._baseFairPrice = topFairPrice; 
+      
+      qs("#expertRecommendedPrice").textContent = `${Math.round(topFairPrice)} €`;
       
       // Build Specs HTML (Minimal style for visual area)
       const mode = rd?.mode || document.querySelector('input[name="auditMode"]:checked')?.value || "buy";
@@ -8207,7 +8202,6 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       qs("#expertReportCalculator").innerHTML = calcHtml;
 
       // ⚖️ Interactive Pricing Logic for Calculator
-      window._baseFairPrice = displayPrice;
       const calcItems = document.querySelectorAll("#expertReportCalculator .expert-check-item");
       calcItems.forEach(item => {
         const drop = parseInt(item.dataset.priceDrop || 0);

@@ -145,37 +145,85 @@ async function scrapeMarketPrice(productName) {
 
 function useFallback(lowerSearch, date) {
   console.log(`⚠️ POUŽITÝ FALLBACK (Overené dáta)`);
-  let baseF = 450;
+  let baseF = 100; // Absolute floor for unknown electronics
   
-  if (lowerSearch.includes('17 pro max')) baseF = 1150;
-  else if (lowerSearch.includes('17 pro')) baseF = 1050;
-  else if (lowerSearch.includes('17')) baseF = 850;
-  else if (lowerSearch.includes('16 pro max')) baseF = 1050;
-  else if (lowerSearch.includes('16 pro')) baseF = 920;
-  else if (lowerSearch.includes('16')) baseF = 720;
-  else if (lowerSearch.includes('15 pro max')) baseF = 950;
-  else if (lowerSearch.includes('15 pro')) baseF = 820;
-  else if (lowerSearch.includes('15')) baseF = 620;
-  else if (lowerSearch.includes('14 pro max')) baseF = 750;
-  else if (lowerSearch.includes('14 pro')) baseF = 650;
-  else if (lowerSearch.includes('14')) baseF = 520;
-  else if (lowerSearch.includes('13 pro max')) baseF = 580;
-  else if (lowerSearch.includes('13 pro')) baseF = 520;
-  else if (lowerSearch.includes('13')) baseF = 420;
+  const isIphone = lowerSearch.includes('iphone');
+  const isMacbook = lowerSearch.includes('macbook');
+  const isIpad = lowerSearch.includes('ipad');
+  const isWatch = lowerSearch.includes('watch') || lowerSearch.includes('hodinky');
+  const isAirpods = lowerSearch.includes('airpods');
+  const isLaptop = lowerSearch.includes('laptop') || lowerSearch.includes('notebook') || lowerSearch.includes('rog') || lowerSearch.includes('legion') || lowerSearch.includes('blade') || lowerSearch.includes('alienware') || lowerSearch.includes('msi') || lowerSearch.includes('omen');
+
+  if (isIphone) {
+    if (lowerSearch.includes('17 pro max')) baseF = 1150;
+    else if (lowerSearch.includes('17 pro')) baseF = 1050;
+    else if (lowerSearch.includes('17')) baseF = 850;
+    else if (lowerSearch.includes('16 pro max')) baseF = 1050;
+    else if (lowerSearch.includes('16 pro')) baseF = 920;
+    else if (lowerSearch.includes('16')) baseF = 720;
+    else if (lowerSearch.includes('15 pro max')) baseF = 950;
+    else if (lowerSearch.includes('15 pro')) baseF = 820;
+    else if (lowerSearch.includes('15')) baseF = 620;
+    else if (lowerSearch.includes('14 pro max')) baseF = 750;
+    else if (lowerSearch.includes('14 pro')) baseF = 650;
+    else if (lowerSearch.includes('14')) baseF = 520;
+    else if (lowerSearch.includes('13 pro max')) baseF = 580;
+    else if (lowerSearch.includes('13 pro')) baseF = 520;
+    else if (lowerSearch.includes('13')) baseF = 420;
+    else if (lowerSearch.includes('12 pro max')) baseF = 320;
+    else if (lowerSearch.includes('12 pro')) baseF = 280;
+    else if (lowerSearch.includes('12')) baseF = 230;
+    else if (lowerSearch.includes('11 pro max')) baseF = 250;
+    else if (lowerSearch.includes('11 pro')) baseF = 210;
+    else if (lowerSearch.includes('11')) baseF = 180;
+    else baseF = 350;
+  } else if (isMacbook) {
+    if (lowerSearch.includes('pro 16') && lowerSearch.includes('m3')) baseF = 1850;
+    else if (lowerSearch.includes('pro 14') && lowerSearch.includes('m4')) baseF = 1750;
+    else if (lowerSearch.includes('pro 14') && lowerSearch.includes('m3')) baseF = 1400;
+    else if (lowerSearch.includes('pro 14') && lowerSearch.includes('m1 pro')) baseF = 1150;
+    else if (lowerSearch.includes('air 13') && lowerSearch.includes('m3')) baseF = 1100;
+    else if (lowerSearch.includes('air 13') && lowerSearch.includes('m2')) baseF = 900;
+    else if (lowerSearch.includes('air') && lowerSearch.includes('m1')) baseF = 580;
+    else baseF = 700;
+  } else if (isLaptop) {
+    if (lowerSearch.includes('rog ally')) baseF = 420;
+    else if (lowerSearch.includes('rog') || lowerSearch.includes('alienware') || lowerSearch.includes('msi') || lowerSearch.includes('omen')) baseF = 850;
+    else if (lowerSearch.includes('blade')) baseF = 1200;
+    else baseF = 400;
+  } else if (isIpad) {
+    if (lowerSearch.includes('pro 13') && lowerSearch.includes('m4')) baseF = 1100;
+    else if (lowerSearch.includes('pro 11') && lowerSearch.includes('m4')) baseF = 900;
+    else if (lowerSearch.includes('pro 12.9') && lowerSearch.includes('m2')) baseF = 800;
+    else if (lowerSearch.includes('air') && lowerSearch.includes('m2')) baseF = 550;
+    else if (lowerSearch.includes('mini')) baseF = 350;
+    else baseF = 250;
+  } else if (isAirpods) {
+    if (lowerSearch.includes('pro 2')) baseF = 170;
+    else if (lowerSearch.includes('pro')) baseF = 120;
+    else if (lowerSearch.includes('max')) baseF = 320;
+    else baseF = 80;
+  } else if (lowerSearch.includes('magic mouse')) {
+    baseF = 55;
+  } else if (isWatch) {
+    if (lowerSearch.includes('ultra 2')) baseF = 580;
+    else if (lowerSearch.includes('ultra')) baseF = 450;
+    else if (lowerSearch.includes('series 10')) baseF = 380;
+    else if (lowerSearch.includes('series 9')) baseF = 320;
+    else baseF = 200;
+  }
 
   if (lowerSearch.includes('256gb')) baseF += 60;
   if (lowerSearch.includes('512gb')) baseF += 120;
   if (lowerSearch.includes('1tb')) baseF += 200;
 
-  // 🎨 FARBA AKO BONUS: Čierna je najbežnejšia, preto mierne nižšia cena pre agresívny predaj
-  if (lowerSearch.includes('čierna') || lowerSearch.includes('black')) {
+  // 🎨 FARBA AKO BONUS
+  if (isIphone && (lowerSearch.includes('čierna') || lowerSearch.includes('black'))) {
     baseF -= 15;
-    console.log(`🎨 FARBA: Čierna (-15€) pre agresívnejšiu ponuku.`);
   }
 
-  // Pre bazar (fallback uz pocitame ako finalnu bazarovu cenu)
   const finalPriceAvg = baseF;
-  const finalPriceFrom = Math.round(baseF * 0.88); // Odhad ceny pre horsi stav
+  const finalPriceFrom = Math.round(baseF * 0.88);
 
   console.log(`DATA_EXIT: priceFrom=${finalPriceFrom} avgPrice=${finalPriceAvg} source=fallback date="${date || 'Dnes'}"`);
 }
