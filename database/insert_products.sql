@@ -64,7 +64,8 @@ Focus: Forenzná analýza & Vyjednávanie
 🔬 2. FORENZNÁ KONTROLA (Profesionálne testy)
     • 🎈 Test barometra: Appka Barometer Plus. Zatlač na displej. U 12.9" modelu s veľkou plochou musí byť pnutie vzduchu jasne viditeľné v grafe.
     • 🔒 iCloud Lock: Skontroluj, či je v menu "Nájsť môj iPad" vypnuté pred kúpou.
-🧼 3. SERVISNÁ HYGIÉNA (Detektor klamstva)
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky. (Detektor klamstva)
     • Záruka: V roku 2026 už väčšina M2 modelov nebude v Apple záruke. Pýtaj si faktúru z nákupu (SR záruka 24 mesiacov).
     • Ohnutie: Polož iPad displejom na rovný stôl. Ak sa v rohoch kolíše, je ohnutý. Skontroluj plastovú lištu na hornej hrane (anténa pri Cellular modeli) – v tomto mieste je šasi najslabšie a tam najčastejšie vzniká mikro-ohnutie.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
@@ -149,7 +150,8 @@ Focus: Forenzná analýza & Vyjednávanie
 🔬 2. FORENZNÁ KONTROLA (Profesionálne testy)
     • 🎈 Test barometra: Appka Barometer Plus. Zatlač na stred displeja. Ak sa tlak nepohne, tablet bol otváraný (neautorizovaná oprava displeja/batérie).
     • 🔒 MDM Check: V Nastavenia -> Všeobecné -> Profil. Musí byť prázdne!
-🧼 3. SERVISNÁ HYGIÉNA (Detektor klamstva)
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky. (Detektor klamstva)
     • Pôvod: Často predávaný ako "v záruke", ale v roku 2026 už platí len tá zákonná u pôvodného predajcu. Pýtaj si faktúru.
     • Smart Connector: Skontroluj 3 body na zadnej strane. Ak sú čierne/zoxidované, Magic Keyboard nebude fungovať.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
@@ -236,6 +238,7 @@ Focus: Forenzná analýza & Vyjednávanie
     • 🎈 Test barometra: Appka Barometer Plus. Zatlač na stred displeja. Ak sa tlak nepohne, tesnenie je porušené (možná predošlá oprava).
     • 🔒 Activation Lock: Povinný reštart a kontrola, či je odhlásený Find My.
 🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky.
     • Záruka: Tieto modely sú často ešte v medzinárodnej Apple záruke. Over cez sériové číslo.
     • Pôvod: Pozor na kusy kúpené v USA (často nemajú slot na fyzickú SIM, len eSIM).
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
@@ -318,7 +321,8 @@ Focus: Praktické vady & Trhová hodnota
 🔬 2. FORENZNÁ KONTROLA (Pro testy)
     • 🎈 Test barometra: Appka Barometer Plus. Aj Air musí byť hermeticky uzavretý kvôli ochrane vnútornej elektroniky.
     • 🔒 MDM Lock: Skontroluj v Nastavenia -> Všeobecné -> Správa zariadenia. Ak tam niečo je, tablet patrí firme a nekupuj ho!
-🧼 3. SERVISNÁ HYGIÉNA (Detektor klamstva)
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky. (Detektor klamstva)
     • Pôvod: Ak predajca tvrdí, že je v záruke, vyžaduj faktúru. Apple záruka platí rok, slovenská zákonná dva roky (iba pre FO).
     • Príslušenstvo: Skontroluj magnety na boku. Ak sú poškriabané, majiteľ používal lacné fejkové perá.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
@@ -403,7 +407,8 @@ Focus: Praktické vady & Trhová hodnota
 🔬 2. FORENZNÁ KONTROLA (Pro testy)
     • 🎈 Test barometra: Appka Barometer Plus. Zatlač na sklo. Ak sa tlak nestúpne, tablet nie je hermeticky uzavretý (časté po výmene "dotykovky").
     • 🔒 Activation Lock: Over, či je odhlásené Apple ID.
-🧼 3. SERVISNÁ HYGIÉNA (Detektor klamstva)
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky. (Detektor klamstva)
     • Pôvod: Často ide o kusy z výpredajov. Pýtaj si faktúru, v roku 2026 je to už starší model.
     • Stereo Test: Reproduktory sú na oboch stranách (v landscape). Skontroluj, či mriežky nie sú upchaté špinou.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
@@ -488,7 +493,8 @@ Focus: Forenzná analýza & Vyjednávanie
 🔬 2. FORENZNÁ KONTROLA (Pro testy)
     • 🎈 Test barometra: Appka Barometer Plus. Zatlač na displej. U mini 6 je displej veľmi blízko komponentov, tesnosť je kľúčová pre dlhovekosť.
     • 🔒 Activation Lock: Over odhlásenie iCloud a Find My.
-🧼 3. SERVISNÁ HYGIÉNA (Detektor klamstva)
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky. (Detektor klamstva)
     • Pôvod: Často kupované ako darček pre deti. Skontroluj mriežky reproduktorov, či v nich nie je plastelína alebo jedlo.
     • Apple Pencil 2: Skontroluj, či magnetická plocha na boku nie je vyleštené od neustáleho pripájania pera bez obalu.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
@@ -577,7 +583,8 @@ Focus: Forenzná analýza & Vyjednávanie
 🔬 2. FORENZNÁ KONTROLA (Profesionálne testy na mieste)
     • 🎈 Test barometra: Appka Barometer Plus. Zatlač na displej. U trojmesačného mobilu musí byť pnutie vzduchu okamžité a výrazné.
     • 🔒 Locked Parts: Skontroluj Nastavenia -> Informácie. iPhone 17 je prvý model, kde Apple cez iOS 19 veľmi prísne stráži originalitu batérie a displeja.
-🧼 3. SERVISNÁ HYGIÉNA (Detektor klamstva)
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky. (Detektor klamstva)
     • Záruka: Over si platnosť Apple Limited Warranty. Ak končí skôr ako v septembri/októbri 2026, mobil bol kupovaný skôr (napr. cez predpredaj pre recenzentov alebo ide o iný trh).
     • Pôvod: Vyžaduj doklad o kúpe kvôli overeniu, či nie je mobil na splátky.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
@@ -663,7 +670,8 @@ Focus: Forenzná analýza & Vyjednávanie
 🔬 2. FORENZNÁ KONTROLA (Profesionálne testy na mieste)
     • 🎈 Test barometra: Appka Barometer Plus. Extrémne dôležité u modelu Air! Každé otvorenie alebo pád môže narušiť integritu takto tenkého tela.
     • 🔒 Locked Parts: Skontroluj, či nebol menený displej. Neoriginálne displeje u Air sú hrubšie a telefón potom "nelícuje".
-🧼 3. SERVISNÁ HYGIÉNA (Detektor klamstva)
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky. (Detektor klamstva)
     • Pôvod: Vyžaduj originálny 30W USB-C adaptér (v balení nie je, ale majiteľ ho musel mať).
     • Záruka: Keďže ide o úplnú novinku, musí mať Apple záruku aspoň 10 mesiacov.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
@@ -902,7 +910,8 @@ Focus: Forenzná analýza & Vyjednávanie
 🔬 2. FORENZNÁ KONTROLA (Profesionálne testy na mieste)
     • 🎈 Test barometra: Appka Barometer Plus. Zatlač na displej. Ak sa tlak nezmení, telefón bol otváraný (časté u lacnejších modelov kvôli opravám po pádoch).
     • 🔒 Locked Parts (iOS 18+): Povinný reštart. Skontroluj „Servisnú históriu“ v menu.
-🧼 3. SERVISNÁ HYGIÉNA (Detektor klamstva)
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky. (Detektor klamstva)
     • MDM Lock: Modely 16e sú extrémne populárne ako "masové" firemné mobily. Skontroluj VPN a profily správy.
     • Záruka: Sériové číslo v systéme Apple.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
@@ -990,7 +999,8 @@ Focus: Forenzná analýza & Vyjednávanie
 🔬 2. FORENZNÁ KONTROLA (Profesionálne testy na mieste)
     • 🎈 Test barometra: Appka Barometer Plus. Zatlač na stred displeja. Ak sa ručička nepohne, mobil bol otváraný a nie je vodotesný.
     • 🔒 Locked Parts (iOS 18+): Reštartuj mobil. Ak systém nahlási neoriginálny diel, pýtaj výraznú zľavu alebo odstúp od kúpy.
-🧼 3. SERVISNÁ HYGIÉNA (Detektor klamstva)
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky. (Detektor klamstva)
     • Pôvod: Vyžiadaj si doklad o kúpe. iPhone 16 je v roku 2026 stále v kurze pre podvodníkov s "fake" baleniami.
     • Záruka: Sériové číslo v systéme musí ukazovať "Limited Warranty" alebo "AppleCare+".
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
@@ -1079,7 +1089,8 @@ Focus: Forenzná analýza & Vyjednávanie
 🔬 2. FORENZNÁ KONTROLA (Profesionálne testy na mieste)
     • 🎈 Test barometra: Appka Barometer Plus. Zatlač na displej – u ročného iPhonu 16 Plus musí byť tesnenie v perfektnom stave.
     • 🔒 Locked Parts (iOS 18+): Reštartuj. Ak vyskočí "Konfigurácia dielu", telefón má vymenené komponenty z iného iPhonu.
-🧼 3. SERVISNÁ HYGIÉNA (Detektor klamstva)
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky. (Detektor klamstva)
     • Záruka: Sériové číslo v systéme musí ukazovať platnú Apple záruku (Limited Warranty).
     • MDM Lock: Skontroluj sekciu VPN. Modely Plus sú extrémne populárne ako firemné benefity.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
@@ -1166,7 +1177,8 @@ Focus: Forenzná analýza & Vyjednávanie
 🔬 2. FORENZNÁ KONTROLA (Profesionálne testy na mieste)
     • 🎈 Test barometra: Appka Barometer Plus. Zatlač na displej. U nového kusu musí byť tesnenie nepriestrelné.
     • 🔒 Activation Lock: Pozor na kusy na splátky (operátori ich môžu pri nesplácaní zablokovať cez IMEI). Over si pôvod zariadenia (faktúra).
-🧼 3. SERVISNÁ HYGIÉNA (Detektor klamstva)
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky. (Detektor klamstva)
     • Záruka: Sériové číslo musí súhlasiť na krabici, v systéme aj v Apple záručnom portáli.
     • MagSafe: Over funkčnosť bezdrôtového nabíjania (podporuje až 25W s novou nabíjačkou).
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
@@ -1254,7 +1266,8 @@ Focus: Forenzná analýza & Vyjednávanie
 🔬 2. FORENZNÁ KONTROLA (Profesionálne testy na mieste)
     • 🎈 Test barometra: Appka Barometer Plus. Zatlač na stred. Tesnenie by malo byť u i16PM v 100% stave.
     • 🔒 Activation Lock: Keďže je to nový model, riziko kradnutých kusov je obrovské. Trvaj na tom, aby predajca pred tebou vypol "Find My".
-🧼 3. SERVISNÁ HYGIÉNA (Detektor klamstva)
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky. (Detektor klamstva)
     • Záruka: Over si sériové číslo na checkover.apple.com. Pri i16 PM musí svietiť platná Apple záruka. Ak nie, ide o kus z neoficiálneho dovozu bez možnosti servisu v EU.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
     • Inzerovaná cena: (podľa trhu)
@@ -1342,7 +1355,8 @@ Kód modelu: i15P | Status: High-End Bazár
 🔬 2. FORENZNÁ KONTROLA (Profesionálne testy na mieste)
     • 🎈 Test barometra: Appka Barometer Plus. Zatlač na displej – ručička sa musí pohnúť.
     • 🔒 Locked Parts (iOS 18+): Reštartuj. Ak vyskočí „Konfigurácia dielu“, sú tam kradnuté súčiastky.
-🧼 3. SERVISNÁ HYGIÉNA (Detektor klamstva)
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky. (Detektor klamstva)
     • História dielov: Ak vidíš „Neznámy diel“, je to čínsky fejk.
     • MDM Lock: Nastavenia -> Všeobecné -> VPN. Ak je tam firemný profil, NEKUPOVAŤ.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
@@ -1754,10 +1768,10 @@ Focus: Forenzná analýza & Vyjednávanie
     • 🔐 Locked Parts (iOS 18+): Reštartuj telefón. Ak po zapnutí vyskočí hláška „Konfigurácia dielu“, v telefóne je súčiastka z iného (často kradnutého) iPhonu.
     • 🕵️‍♂️ Servisná hygiena: V menu (Informácie) kontroluj históriu dielov. „Neznámy diel“ znamená lacný čínsky displej alebo batériu bez čipu.
 📉 2. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: 650 €
-    • Batéria pod 86 %: -90 € (náklady na originálnu výmenu).
-    • Vizuálne vypálený Always-On displej: -200 € (vysoká cena za náhradný ProMotion panel).
-    • REÁLNA HODNOTA DNES: 450 € – 560 € (S touto cenou začni vyjednávať podľa stavu panelu).
+    • Inzerovaná cena (Január 2026): (podľa trhu)
+    • Slabá batéria (pod 86 %): -90 €
+    • Vizuálne vypálený Always-On displej: -200 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach) (S touto cenou začni vyjednávať podľa stavu panelu).
 🤝 3. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Veta na zľavu: „Tento displej má už viditeľné známky vypálenia od Always-On funkcie. Je to známy problém 14-tok a výmena ProMotion panelu je drahá. Spustíte z ceny?“
     • Veta na preverenie: „Môžeme ho reštartovať? Chcem overiť, či iOS nehlási kradnuté komponenty“.
@@ -1839,11 +1853,11 @@ Focus: Forenzná analýza & Vyjednávanie
     • História dielov: Nastavenia -> Informácie. Hľadáme "Unknown Part" (Neznámy diel).
     • MDM Lock: Skontroluj VPN a Správu zariadenia. Modely Plus boli populárne vo firmách, hrozí riziko vzdialeného zablokovania.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: cca 500 €
+    • Inzerovaná cena: (podľa trhu)
     • Batéria pod 88 %: -80 €
     • Chýbajúci originálny kábel: -20 €
     • Ošúchaný hliníkový rám: -30 €
-    • REÁLNA HODNOTA: 370 € – 420 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
 🤝 5. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Veta na zľavu: „Tento 14 Plus má už zdravie batérie na 87 %. Keďže to nie je Pro model, batéria je tu jediný dôvod, prečo ho kupujem. Spustíte niečo na jej výmenu?“
     • Veta na preverenie: „Môžeme ho reštartovať? Chcem vidieť, či iOS 18 nehlási nejaké kradnuté diely.“
@@ -1929,10 +1943,10 @@ Focus: Forenzná analýza & Vyjednávanie
     • História dielov: Nastavenia -> Informácie. Hľadáme "Unknown Part".
     • MDM Lock: Skontroluj VPN a Správu zariadenia. Ak tam niečo je, telefón nekupuj.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: cca 380 – 430 €
+    • Inzerovaná cena: (podľa trhu)
     • Batéria pod 88 %: -70 €
     • Ošúchaný rám pri porte: -20 €
-    • REÁLNA HODNOTA: 300 € – 350 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
 🤝 5. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Veta na zľavu: „Tento model je konštrukčne skoro totožný s i13. Navyše má batériu na 87 %, čo znamená skorú výmenu. Spustíte na 330 €?“
     • Veta na preverenie: „Poďme ho reštartovať, aby som si overil, či systém nehlási neoriginálne diely cez iOS 18.“
@@ -2015,10 +2029,10 @@ Focus: Forenzná analýza & Vyjednávanie
 🕵️‍♂️ 3. SERVISNÁ HYGIÉNA (Detektor klamstva)
     • MDM Lock: Častý u firemných SE. Skontroluj, či v sekcii VPN nie je nainštalovaný profil správy.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: cca 250 – 300 €
+    • Inzerovaná cena: (podľa trhu)
     • Batéria pod 88 %: -60 € (malá batéria degraduje pocitovo rýchlejšie).
     • Chýbajúci originálny kábel/nabíjačka: -20 €.
-    • REÁLNA HODNOTA: 180 € – 220 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
 🤝 5. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Veta na zľavu: „Je to síce model 2022, ale batéria má už len 86 %. Pri tak malom mobile to znamená, že ho budem musieť nabíjať trikrát denne. Spustíte na výmenu batérie?“
 📋 6. ULTIMÁTNY CHECKLIST (Vytiahnuť pri kúpe)
@@ -2104,10 +2118,10 @@ Focus: Forenzná analýza & Vyjednávanie
     • MDM Lock: Skontroluj VPN a Správu zariadenia. Častý problém pri "lacných" bazárových kusoch.
     • FaceID: Skús ho nastaviť. Ak vypíše "FaceID nie je k dispozícii", mobil bol vytopený.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: cca 500 – 580 €
+    • Inzerovaná cena: (podľa trhu)
     • Batéria pod 85 %: -90 €
     • Škrabance na oceľovom ráme: -30 €
-    • REÁLNA HODNOTA: 420 € – 480 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
 🤝 5. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Veta na zľavu: „Tento model trpí na 'Green Screen' chybu displeja a tento kus má už batériu na 84 %. Riziko a náklady na servis sú vysoké, spustíte na 450 €?“
 📋 6. ULTIMÁTNY CHECKLIST (Vytiahnuť pri kúpe)
@@ -2192,10 +2206,10 @@ Focus: Forenzná analýza & Vyjednávanie
     • MDM Lock: Nastavenia -> Všeobecné -> VPN a správa zariadenia. Ak je tam niečo, čo tam nepatrí, ruky preč.
     • FaceID: Skús ho nastaviť pod uhlom. Ak zlyhá, TrueDepth kamera bola opravovaná.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: cca 450 – 520 €
+    • Inzerovaná cena: (podľa trhu)
     • Batéria pod 86 %: -80 €
     • Hlboké ryhy v oceľovom ráme: -40 €
-    • REÁLNA HODNOTA: 350 € – 410 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
 🤝 5. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Veta na zľavu: „Tento model má už zdravie batérie na 84 % a pri 13 Pro to už znamená nutnosť výmeny počas dňa. Navyše riskujem známu chybu bieleho displeja. Spustíte na 380 €?“
 📋 6. ULTIMÁTNY CHECKLIST (Vytiahnuť pri kúpe)
@@ -2279,10 +2293,10 @@ Focus: Forenzná analýza & Vyjednávanie
     • MDM Lock: Skontroluj VPN a Správu zariadenia. Ak je tam firemný profil, telefón môže byť kedykoľvek na diaľku zablokovaný.
     • FaceID: Nastav si tvár. Ak vypíše „Problém s TrueDepth kamerou“, mobil bol vytopený.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: cca 350 – 400 €
+    • Inzerovaná cena: (podľa trhu)
     • Batéria pod 85 %: -70 € (náklady na kvalitnú výmenu).
     • Ošúchaný lak na hliníkovom ráme: -30 €.
-    • REÁLNA HODNOTA: 280 € – 320 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
 🤝 5. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Veta na zľavu: „Tento model je skvelý, ale zdravie batérie má 83 %. Pri iPhone 13 je to už hranica, kedy telefón nevydrží ani do večera. Spustíte na 300 €, aby som mohol dať vymeniť batériu?“
 📋 6. ULTIMÁTNY CHECKLIST (Vytiahnuť pri kúpe)
@@ -2363,10 +2377,10 @@ Focus: Forenzná analýza & Vyjednávanie
     • 🧪 Test barometra: Appka Barometer Plus. Zatlač na displej. Ak sa ručička nepohne, mobil bol otváraný. U mini modelov je vodeodolnosť kľúčová, lebo sa ľahko utopia v pohári.
     • 🔐 Locked Parts (iOS 18+): Reštartuj. Skontroluj v Nastavenia -> Informácie históriu dielov.
 📉 3. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: cca 350 – 420 € (drží si cenu lepšie ako základná 13-ka kvôli rarite).
+    • Inzerovaná cena: (podľa trhu) (drží si cenu lepšie ako základná 13-ka kvôli rarite).
     • Batéria pod 87 %: -70 € (pri mini je to nutnosť).
     • Škrabance na skle: -40 € (displej na mini je drahý diel).
-    • REÁLNA HODNOTA: 290 € – 340 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
 🤝 4. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Veta na zľavu: „13 mini je super, ale táto batéria má už 85 %. Pri tomto modeli to znamená, že bez powerbanky neprežijem obed. Spustíte 50 € na nový akumulátor?“
 📋 5. ULTIMÁTNY CHECKLIST (Vytiahnuť pri kúpe)
@@ -2445,10 +2459,10 @@ Focus: Forenzná analýza & Vyjednávanie
     • 🧪 Test barometra: Appka Barometer Plus. Zatlač na displej – ručička sa musí pohnúť. Pri starších kusoch (3+ roky) je tesnenie často už po životnosti.
     • 🔐 Locked Parts (iOS 18+): Reštartuj. Sleduj menu Informácie -> Servisná história.
 📉 3. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: cca 400 – 480 €
+    • Inzerovaná cena: (podľa trhu)
     • Batéria pod 85 %: -80 €
     • Olúpaná farba na ráme: -40 €
-    • REÁLNA HODNOTA: 320 € – 380 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
 🤝 4. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Veta na zľavu: „Tento model má už zdravie batérie na 83 % a je to prvá generácia 5G, ktorá dosť kúri. Navyše displej nemá 120Hz ako novšie verzie. Spustíte na 350 €?“
 📋 5. ULTIMÁTNY CHECKLIST (Vytiahnuť pri kúpe)
@@ -2531,10 +2545,10 @@ Focus: Forenzná analýza & Vyjednávanie
     • MDM Lock: Skontroluj, či nie je mobil registrovaný vo firemnej správe (Nastavenia -> Všeobecné -> VPN a správa).
     • FaceID: Nastav si tvár. Ak senzor zlyhá, TrueDepth kamera bola pravdepodobne vytopená.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: cca 320 – 380 €
+    • Inzerovaná cena: (podľa trhu)
     • Batéria pod 85 %: -80 €
     • Chrčiace slúchadlo (Earpiece): -60 €
-    • REÁLNA HODNOTA: 240 € – 280 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
 🤝 5. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Veta na zľavu: „Tento model má už zdravie batérie na 84 % a vieme, že 12 Pro mala menšiu batériu než 11 Pro alebo 13 Pro. Spustíte niečo na jej výmenu?“
     • Veta na preverenie: „Môžeme ho reštartovať? Chcem overiť, či iOS 18 nehlási neoriginálne komponenty.“
@@ -2615,10 +2629,10 @@ Focus: Forenzná analýza & Vyjednávanie
     • 🧪 Test barometra: Appka Barometer Plus. Zatlač na stred displeja. Ak ručička nereaguje, telefón bol otváraný.
     • 🔐 Locked Parts (iOS 18+): Povinný reštart. Skontroluj „Súčiastky a servisná história“ v menu Informácie.
 📉 3. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: cca 260 – 310 €
+    • Inzerovaná cena: (podľa trhu)
     • Batéria pod 85 %: -70 €
     • Vyblednutý rám (Fading): -30 €
-    • REÁLNA HODNOTA: 190 € – 230 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
 🤝 4. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Veta na zľavu: „Tento model mal slabšiu batériu už ako nový a tento kus má zdravie 84 %. To je na výmenu hneď zajtra. Spustíte 50 € z ceny?“
     • Veta na preverenie: „Chcem si len overiť, či toto nie je kus z tej série s chybným slúchadlom, môžem si z neho zavolať?“
@@ -2698,10 +2712,10 @@ Focus: Forenzná analýza & Vyjednávanie
     • 🧪 Test barometra: Appka Barometer Plus. Zatlač na displej. Ak sa ručička nepohne, mobil stratil tesnenie.
     • 🔐 Locked Parts (iOS 18+): Povinný reštart pre kontrolu kradnutých súčiastok.
 📉 3. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: cca 220 – 280 €
+    • Inzerovaná cena: (podľa trhu)
     • Batéria pod 87 %: -70 € (pri mini nutnosť).
     • Prasknutý Ceramic Shield: -150 € (vysoká cena panelu).
-    • REÁLNA HODNOTA: 150 € – 200 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
 🤝 4. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Veta na zľavu: „Model 12 mini je už legenda, ale táto batéria je na hrane životnosti (85 %). Bez powerbanky tento mobil nevydrží ani do obeda. Spustíte niečo z ceny na výmenu akumulátora?“
 📋 5. ULTIMÁTNY CHECKLIST (Vytiahnuť pri kúpe)
@@ -2770,10 +2784,10 @@ Focus: Forenzná analýza "Tekutého kovu" a Modulov
     • 🧪 Test "Tekutého kovu": Polož konzolu z vertikálnej polohy do horizontálnej (naležato) a hraj 20 minút. Ak sa hlučnosť ventilátora zníži, kov je vnútri zle rozliaty a vertikálne státie konzole škodí.
     • 🔐 Kontrola šachty SSD: Odsuň bočný kryt a pozri sa na skrutku M.2 slotu. Ak je vyžratá, neodborný používateľ sa snažil násilím pridať disk.
 📉 3. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: 380 €
-    • Hlučný ventilátor (Nidec typ): Výmena za tichší: +60 €
-    • Oprava mechaniky (Laser): +80 €
-    • REÁLNA HODNOTA DNES: 240 € (Pri hlučnom chode a vadnej mechanike).$auditly$,
+    • Inzerovaná cena: (podľa trhu)
+    • Hlučný ventilátor (Nidec typ): Výmena za tichší: -60 €
+    • Oprava mechaniky (Laser): -80 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach) (Pri hlučnom chode a vadnej mechanike).$auditly$,
     NULL
 );
 
@@ -2830,10 +2844,10 @@ Focus: Forenzná analýza SSD a Architektúry chladenia
     • Controller Battery Compartment: Keďže Xbox používa AA batérie, skontroluj kontakty vnútri ovládača. Ak sú tam zelené alebo biele stopy, vytiekli v ňom staré alkalické batérie a kyselina mohla poškodiť elektroniku.
     • Expansion Slot Cap: Ak predajca nemá krytku na zadnom slote pre SSD kartu, je tam vysoké riziko nánosu prachu priamo na pinoch základnej dosky.
 📉 3. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: 350 €
-    • Zanesené chladenie (Hlboký prach): Profesionálne čistenie: +50 €
-    • Poškodený HDMI Retimer čip: Oprava v servise: +90 €
-    • REÁLNA HODNOTA DNES: 210 € (Pri prehrievaní a problémoch s obrazom).
+    • Inzerovaná cena: (podľa trhu)
+    • Zanesené chladenie (Hlboký prach): Profesionálne čistenie: -50 €
+    • Poškodený HDMI Retimer čip: Oprava v servise: -90 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach) (Pri prehrievaní a problémoch s obrazom).
 
 ⚖️ DISKLAIMER (Právna doložka)
     • Informačný charakter: Tento report je súhrnom subjektívnych skúseností komunity a slúži výhradne ako neoficiálna metodická pomôcka.
@@ -2909,11 +2923,11 @@ Focus: Forenzná analýza mechaniky a únavy
     • 🔐 Ban Check: Skús otvoriť eShop. Ak vypíše chybový kód 2124-4508, konzola je zabanovaná od Nintenda (kvôli čipovaniu alebo kradnutým hrám). Je bezcenná pre online hranie.
 
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena (OLED): 250 €
-    • Stick Drift (jedna páčka): Výmena: +25 €
-    • Poškodený herný slot: Servis: +60 €
-    • Chýbajúci originálny zdroj (nutný pre Dock): +30 €
-    • REÁLNA HODNOTA DNES: 135 € (Ak nefunguje slot a driftujú páčky).
+    • Inzerovaná cena (OLED): (podľa trhu)
+    • Stick Drift (jedna páčka): Výmena: -25 €
+    • Poškodený herný slot: Servis: -60 €
+    • Chýbajúci originálny zdroj (nutný pre Dock): -30 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach) (Ak nefunguje slot a driftujú páčky).
 🤝 5. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Red Flag: Predajca povie: „Dám vám k tomu hry na mojom účte.“ – KLAMSTVO. Predajca si účet kedykoľvek vezme späť cez e-mail. Účet má nulovú hodnotu.
     • Veta na zľavu: „Páčky už začínajú driftovať a displej sa v rohu odlepuje. Servis ma vyjde na 50 €, spustíte to z ceny?“
@@ -2996,11 +3010,11 @@ Focus: Forenzná analýza ultra-tenkého herného stroja
     • 🔐 Screen Pressure: Kvôli tenkosti veka sa u Zephyrusov často objavujú biele "duchovia" na displeji (tlačí naň klávesnica v batohu).
 
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: 900 €
-    • Nutnosť prepastovania (Liquid Metal): +120 € (v autorizovanom servise)
-    • Nová batéria: +100 €
-    • Vybitá klávesa (výmena celého topcase): +150 €
-    • REÁLNA HODNOTA DNES: 530 € (Pri nutnosti servisu chladenia a batérie).
+    • Inzerovaná cena: (podľa trhu)
+    • Nutnosť prepastovania (Liquid Metal): -120 € (v autorizovanom servise)
+    • Nová batéria: -100 €
+    • Vybitá klávesa (výmena celého topcase): -150 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach) (Pri nutnosti servisu chladenia a batérie).
 🤝 5. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Red Flag: „Notebook bol používaný len na prácu v Office.“ – LOŽ. Nikto si nekupuje hučiaci ASUS ROG s RTX grafikou na Excel. Notebook bol určite "týraný" hrami.
     • Veta na zľavu: „Teploty v záťaži atakujú 100°C a ventilátory pískajú. Vyčistenie a výmena tekutého kovu ma vyjde na 120 €. Pustíte to z ceny?“
@@ -3087,11 +3101,11 @@ Focus: Forenzná analýza RGB a Vapor Chamber chladenia
     • 🔐 Power Limit Test: V programe HWInfo sleduj "GPU Power". Ak karta nedosahuje svoje maximum (napr. 140W pri RTX 3070), zdroj je oslabený alebo doska škrtí výkon.
 
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: 850 €
-    • Poškodený pánt (začínajúce pukanie): +180 € (výmena celého šasi displeja)
-    • Nové ventilátory (pískanie/hrkotanie): +60 €
-    • Nová batéria (80Wh): +95 €
-    • REÁLNA HODNOTA DNES: 515 € (Ak pánty pukanú a batéria je KO).
+    • Inzerovaná cena: (podľa trhu)
+    • Poškodený pánt (začínajúce pukanie): -180 € (výmena celého šasi displeja)
+    • Nové ventilátory (pískanie/hrkotanie): -60 €
+    • Nová batéria (80Wh): -95 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach) (Ak pánty pukanú a batéria je KO).
 🤝 5. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Red Flag: Predajca, ktorý má na notebooku nalepených milión nálepiek – často tým maskuje škrabance alebo praskliny v plastovom šasi.
     • Veta na zľavu: „Pánty pri otváraní pukajú, čo je u Legionov známy začiatok konca. Oprava stojí skoro dve stovky. Spustíte z ceny, alebo to riskovať nebudem?“
@@ -3160,11 +3174,11 @@ Focus: Forenzná analýza "Pro" segmentu
     • 🔐 Battery Swelling: Pozri sa na klávesnicu zboku. Ak je v strede vypuklá, batéria sa nafukuje a tlačí na šasi.
 
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena (Omen): 800 €
-    • Oprava uzemnenia touchpadu: +60 €
-    • Nové ventilátory: +55 €
-    • Nafúknutá batéria (časté): +90 €
-    • REÁLNA HODNOTA DNES: 595 € (Ak touchpad blbne a batéria je slabá).
+    • Inzerovaná cena (Omen): (podľa trhu)
+    • Oprava uzemnenia touchpadu: -60 €
+    • Nové ventilátory: -55 €
+    • Nafúknutá batéria (časté): -90 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach) (Ak touchpad blbne a batéria je slabá).
 
 ⚖️ DISKLAIMER (Právna doložka)
     • Informačný charakter: Tento report je súhrnom subjektívnych skúseností komunity a slúži výhradne ako neoficiálna metodická pomôcka.
@@ -3223,9 +3237,9 @@ Focus: Forenzná analýza "Budget" segmentu
     • 🔐 Plastic Wear: Skontroluj miesta, kde sa opierajú dlane. Lacný plast u Victusu sa po roku "vyleští" do leskla – indikácia veľmi vysokého používania.
 
 📉 5. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: 600 €
-    • Nové ventilátory: +55 €
-    • REÁLNA HODNOTA DNES: 450 € (Pri vysokom opotrebení plastov a pískajúcich ventilátoroch).
+    • Inzerovaná cena: (podľa trhu)
+    • Nové ventilátory: -55 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach) (Pri vysokom opotrebení plastov a pískajúcich ventilátoroch).
 
 ⚖️ DISKLAIMER (Právna doložka)
     • Informačný charakter: Tento report je súhrnom subjektívnych skúseností komunity a slúži výhradne ako neoficiálna metodická pomôcka.
@@ -3307,11 +3321,11 @@ Focus: Forenzná analýza elektroniky a batérie
     • 🔐 Sound Quality: Otestuj woofery (basové repro). U MSI Raider často odchádzajú pri vysokej hlasitosti.
 
 📉 5. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena (Katana): 650 €
-    • Vytrhnutý/Prasknutý pánt (nutná výmena šasi): +150 €
-    • Nové ventilátory: +45 €
-    • Oprava DC konektora: +70 €
-    • REÁLNA HODNOTA DNES: 385 € (Pri poškodenom pánte a hlučnom chode).
+    • Inzerovaná cena (Katana): (podľa trhu)
+    • Vytrhnutý/Prasknutý pánt (nutná výmena šasi): -150 €
+    • Nové ventilátory: -45 €
+    • Oprava DC konektora: -70 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach) (Pri poškodenom pánte a hlučnom chode).
 
 ⚖️ DISKLAIMER (Právna doložka)
     • Informačný charakter: Tento report je súhrnom subjektívnych skúseností komunity a slúži výhradne ako neoficiálna metodická pomôcka.
@@ -3424,9 +3438,9 @@ Focus: Forenzná analýza prémiového hardvéru
     • 🔐 G-Sync Test: Over v nastaveniach Nvidia, či je G-Sync aktívny. Ak nie, displej bol menený za neoriginálny.
 
 📉 5. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: 800 €
-    • Nové AeroBlade ventilátory: +90 €
-    • REÁLNA HODNOTA DNES: 650 € (Pri hlučných ventilátoroch a vysokom opotrebení).
+    • Inzerovaná cena: (podľa trhu)
+    • Nové AeroBlade ventilátory: -90 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach) (Pri hlučných ventilátoroch a vysokom opotrebení).
 
 ⚖️ DISKLAIMER (Právna doložka)
     • Informačný charakter: Tento report je súhrnom subjektívnych skúseností komunity a slúži výhradne ako neoficiálna metodická pomôcka.
@@ -3496,11 +3510,11 @@ Focus: Analýza ultra-kompaktného výkonu
     • 🧪 Test "Solder Integrity": Razer Blade 14 má RAM pripájanú na doske. Spusti MemTest86. Ak hodí chybu, musíš vymeniť celú základnú dosku za 800 €+.
 
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena: 1 200 €
-    • Nová batéria (povinná preventívna výmena): +110 €
-    • Nefunkčný touchpad (kvôli tlaku batérie): +150 €
-    • Originálny 230W Razer zdroj (často chýba): +130 €
-    • REÁLNA HODNOTA DNES: 810 € (Ak hrozí nafúknutie batérie a chýba príslušenstvo).
+    • Inzerovaná cena: (podľa trhu)
+    • Nová batéria (povinná preventívna výmena): -110 €
+    • Nefunkčný touchpad (kvôli tlaku batérie): -150 €
+    • Originálny 230W Razer zdroj (často chýba): -130 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach) (Ak hrozí nafúknutie batérie a chýba príslušenstvo).
 🤝 5. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Red Flag: „Batéria je odpojená, používam ho len na kábli.“ – To znamená, že batéria bola taká nafúknutá, že ju musel vyhodiť, aby notebook nevybuchol.
     • Veta na zľavu: „U tohto modelu je nafukovanie batérie len otázkou času a táto už tlačí na touchpad. Výmena batérie a servis ma vyjdú na 150 €. Spustíte to z ceny?“
@@ -3570,10 +3584,10 @@ Focus: Forenzná analýza falzifikátov
     • 🧪 Test "Serial Mismatch": V Nastavenia -> Bluetooth klikni na (i). Klikni na sériové číslo – malo by sa zobraziť iné pre ľavé, iné pre pravé a iné pre puzdro. Faky majú všade rovnaké.
     • 🔐 Firmware Update: Originály sa po pripojení na nabíjačku pri iPhone samé zaktualizujú. Fejky ostávajú na starej verzii navždy.
 📉 3. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena (Pro 2): cca 150 €
-    • Nové originálne štuple (hygiena): +15 €
+    • Inzerovaná cena (Pro 2): (podľa trhu)
+    • Nové originálne štuple (hygiena): -15 €
     • Batéria vydrží len 1 hodinu: -100 % hodnoty (vyhodiť)
-    • REÁLNA HODNOTA: 100 € – 130 € (podľa stavu batérie)
+    • REÁLNA HODNOTA: (výsledok po zrážkach) (podľa stavu batérie)
 🤝 4. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Red Flag: „Sú to nevhodné darčeky, nemám bloček.“ – Na 99 % sú to fejky z Marketplace.
     • Veta na zľavu: „Batéria v týchto slúchadlách má už 2 roky. Keďže sa nedá vymeniť, ich životnosť končí. Pustíte 30 € na nové štuple a riziko batérie?“
@@ -3753,10 +3767,10 @@ Focus: Forenzná analýza & Skryté vady
     • Pôvod: Series 11 je novinka. Ak predajca nemá krabicu a originálny magnetický rýchlonabíjací kábel, je vysoká šanca, že ide o kradnutý kus alebo "Super-Fejk".
     • Záruka: S11 musí byť v medzinárodnej Apple záruke. Over sériové číslo – dátum aktivácie by nemal byť starší ako september 2025.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena (Január 2026): cca 380 – 450 €
+    • Inzerovaná cena (Január 2026): (podľa trhu)
     • Chýbajúci adaptér pre staré remienky: -30 €
     • Vryp na novom "Wrap-around" skle: -80 € (tento displej sa nedá vyleštiť bez skreslenia obrazu)
-    • REÁLNA HODNOTA: 340 € – 400 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
 🤝 5. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Veta na zľavu: „Keďže Apple zmenil systém remienkov, všetky moje doterajšie sú mi bez drahého adaptéra nanič. Navyše Series 10 má takmer rovnakú výdrž. Spustíte 40 € na ten adaptér?“
     • Veta na preverenie: „Funguje na tomto kuse už to nové predpovedanie chorôb (Vitals)? Chcem vidieť graf za posledný týždeň.“
@@ -3830,10 +3844,10 @@ Focus: Forenzná analýza & Overenie authenticity
     • Záruka: Ultra 3 je prémiový produkt. Vždy vyžaduj AppleCare+ status. Ak hodinky nemajú pripoistenie, pýtaj sa prečo – oprava rozbitého displeja stojí toľko, čo nové Series 11.
     • Pôvod: „Kupované cez firmu.“ – Over si, či nie sú viazané na MDM (Mobile Device Management) profil, čo sa pri hodinkách stáva zriedka, ale existuje to.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena (Január 2026): cca 750 – 850 €
+    • Inzerovaná cena (Január 2026): (podľa trhu)
     • Hlboký škrabanec na titáne (Satin Black): -100 € (čierna verzia sa opravuje ťažšie ako strieborná)
     • Neoriginálny remienok Trail Loop: -60 €
-    • REÁLNA HODNOTA: 650 € – 750 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
 🤝 5. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Veta na zľavu: „Táto nová čierna farba je náchylná na odreniny v rohoch pri displeji a tento kus už má pár bodiek. Keďže ide o prémiový model, chcel by som zľavu na prelakovanie alebo opravu.“
     • Veta na preverenie: „Môžete mi ukážať históriu potápania v aplikácii Oceanic+? Chcem vidieť, v akej hĺbke boli hodinky reálne testované.“
@@ -3909,10 +3923,10 @@ Focus: Forenzná analýza "Budget" kusu
     • Pôvod: „Ležali v šuplíku pol roka.“ – Pre batériu najhorší stav. Ak sú vybité na 0 % dlho, ich kapacita trvalo klesla, aj keď softvér ukazuje 100 %.
     • Nabíjačka: SE 3 sa predávajú s USB-C káblom, ale bez pleteného poťahu (na rozdiel od Ultra). Ak dostaneš starý USB-A kábel, pýtaj si zľavu na novú nabíjačku.
 📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena (Január 2026): cca 180 – 220 €
+    • Inzerovaná cena (Január 2026): (podľa trhu)
     • Hlboký škrabanec na Ion-X skle (neopraviteľné): -30 €
     • Chýbajúci originálny kábel: -25 €
-    • REÁLNA HODNOTA: 140 € – 170 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
 🤝 5. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Red Flag: Predajca, ktorý tvrdí, že hodinky sú z hliníka. SE 3 sú kompozitné (plastové). Ak to nevie, buď ich sám neoveroval, alebo zavádza o modeli.
     • Veta na zľavu: „Tento model je z plastu a nemá Always-On displej ani EKG. Navyše má škrabance na skle, ktoré sa nedajú vyleštiť. Spustíte 40 € na nový remienok a adaptér?“
@@ -3985,10 +3999,10 @@ Focus: Forenzná analýza a detekcia opotrebenia
     • 🧪 Test "Water Eject": Spusti funkciu vypudenia vody. Sleduj vibrácie a zvuk. S10 má nový systém meničov, zvuk musí byť veľmi ostrý a vysoký.
     • 🔐 iCloud Lock: Neplať, kým neuvidíš obrazovku "Priblížte iPhone k hodinkám".
 📉 3. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena (Január 2026): cca 280 – 340 €
+    • Inzerovaná cena (Január 2026): (podľa trhu)
     • Obitý titánový rám: -50 €
     • Zdravie batérie pod 85 %: -80 € (cena autorizovanej výmeny)
-    • REÁLNA HODNOTA: 220 € – 270 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
 🤝 4. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Veta na zľavu: „Model Series 10 je známy tým, že Jet Black verzia sa rýchlo poškriabe a tento kus ich má dosť. Navyše batéria kvôli rýchlonabíjaniu klesla na 87 %. Spustíte 60 € na servis batérie?“
     • Red Flag: „Nabíjajú sa akoukoľvek nabíjačkou.“ – Series 10 potrebuje špecifický rýchlonabíjací puk, aby využila svoj potenciál. Ak ho predajca nemá, chce sa zbaviť nekompletnej sady.
@@ -4060,10 +4074,10 @@ Focus: Forenzná analýza a hygiena
     • 🧪 Test "Screen Force": Sila potrebná na prebudenie dotykom. Ak musíš na displej "tlačiť", aby reagoval, dotyková vrstva degraduje.
     • 🔐 iCloud Activation Lock: Toto nikdy nepodceňuj. Skús hodinky spárovať. Ak uvidíš meno cudzieho Apple ID, vráť ich predajcovi.
 📉 3. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena (Január 2026): cca 230 – 280 €
+    • Inzerovaná cena (Január 2026): (podľa trhu)
     • Zdravie batérie pod 85 %: -80 € (čoskoro bude potrebný servis)
     • Škrabance na hliníkovom ráme: -30 €
-    • REÁLNA HODNOTA: 150 € – 200 € (podľa stavu a záruky)
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
 🤝 4. PSYCHOLÓGIA PREDAJCU & VYJEDNÁVANIE
     • Red Flag: Predajca tvrdí, že gesto Double Tap "funguje len niekedy". Toto gesto je v S9 veľmi spoľahlivé – ak vynecháva, hodinky sú poškodené.
     • Veta na zľavu: „Tento model má už takmer 3 roky a batéria je na 86 %. Keďže výmena batérie u Apple stojí skoro polovicu ceny týchto hodiniek, spustíte 50 €?“
@@ -4137,9 +4151,462 @@ Focus: Forenzná analýza a hygiena
     • 🧪 Test "Charge Heat": Polož ich na nabíjačku na 5 minút. Ak sa extrémne rozhorúčia, batéria má vysoký vnútorný odpor a je nebezpečná.
     • 🔐 iCloud Lock: Klasika – vyžaduj odpárovanie a obrazovku "Priblížte iPhone".
 📉 3. KALKULAČKA BUDÚCICH NÁKLADOV
-    • Inzerovaná cena (Január 2026): cca 160 – 210 €
+    • Inzerovaná cena (Január 2026): (podľa trhu)
     • Zdravie batérie pod 83 %: -70 € (cena za servis)
     • Hlboký škrabanec na displeji: -40 €
-    • REÁLNA HODNOTA: 100 € – 140 €$auditly$,
+    • REÁLNA HODNOTA: (výsledok po zrážkach)$auditly$,
     NULL
+);
+
+-- MacBook Pro 14" (M4, 2024)
+INSERT INTO products (name, brand, model_name, category, display_tech, common_faults, battery_risks, frame_material, negotiation_tips, full_report, base_price_recommended) 
+VALUES (
+    $auditly$MacBook Pro 14 (M4, 2024)$auditly$,
+    $auditly$Apple$auditly$,
+    $auditly$MacBook Pro 14 M4$auditly$,
+    $auditly$Laptop$auditly$,
+    $auditly$💻 14.2" Liquid Retina XDR s technológiou Quantum Dot a jasom 1000 nitov (SDR).$auditly$,
+    $auditly$[
+        "⚠️ Nano-texture Display: Ak ide o verziu s matným sklom, hľadaj škrabance. Nedajú sa vyleštiť a vyžadujú špeciálnu handričku Apple.",
+        "⚠️ Center Stage Camera: Otestuj 12MPx kameru. Pri pohybe ťa musí softvérovo sledovať (vyžaduje funkčný hardvér).",
+        "⚠️ Porty Thunderbolt 5: M4 Pro/Max majú TB5. Skontroluj, či nie sú uvoľnené alebo či v nich kábel nehrá.",
+        "⚠️ Otlačky klávesnice na displeji: Pri novom stroji by nemali byť. Ak sú, svedčí to o silnom tlaku v batohu a možnom poškodení vrstiev displeja.",
+        "⚠️ MagSafe LED: Skontroluj stabilitu nabíjania. Ak svetielko preblikáva, môže ísť o chybu napájacieho obvodu na doske."
+    ]$auditly$,
+    $auditly$🔋 • Čip: M4 (10-core CPU, 10-core GPU).
+• RAM: Štandardne 16GB.
+• Batéria: Extrémna výdrž (až 24h). Pri ročnom stroji (2026) by zdravie malo byť 98-100 %.
+• Kontrola: Menu Systém -> Batéria -> Zdravie. Ak má cez 100 cyklov, bol používaný ako hlavná pracovná stanica.$auditly$,
+    $auditly$Recyklovaný hliník (Space Black / Silver) s vylepšenou povrchovou úpravou proti otlačkom.$auditly$,
+    $auditly$🤝 • Kalkulačka nákladov:
+  - Odretý roh (Space Black): -120 €
+  - Chýbajúci 96W adaptér: -80 €
+• Veta na zľavu: „M4 je super, ale je to základný čip. Pre moju prácu by bol lepší M4 Pro, tak hľadám dôvod, prečo vziať tento základný kus za túto cenu.“
+• Veta na preverenie: „Môžeme vyskúšať tú novú kameru Center Stage a Quantum Dot displej pri vysokom jase? Chcem vidieť čistotu panelu.“
+• ULTIMÁTNY CHECKLIST:
+  [ ] Displej: Žiadne mŕtve pixely na čiernom pozadí (XDR test).
+  [ ] Reproduktory: Skús basovú skladbu, nesmú chrčať pri 100% hlasitosti.
+  [ ] SSD: Skontroluj rýchlosť v Blackmagic Disk Speed Test.$auditly$,
+    $auditly$💻 HLAVNÝ AUDIT REPORT: MacBook Pro 14 (M4)
+Kód modelu: Mac16,1 | Status: Aktuálna vlajková loď (Top-Tier)
+🏗️ 1. DISPLEJ & PORTY (The Visuals)
+    • Technológia: Liquid Retina XDR s Quantum Dot. Najlepší displej v histórii MacBookov.
+    • Wau-Pikoška: Podpora Thunderbolt 5 (pri M4 Pro/Max) umožňuje prenos až 120 Gb/s.
+    • Refresh: 120Hz ProMotion.
+💎 2. KONŠTRUKCIA & KLÁVESNICA (The Frame)
+    • Materiál: Hliník. Farba Space Black je u M4 ešte odolnejšia voči mastnote než u M3.
+    • Klávesnica: Magic Keyboard s TouchID. Skontroluj, či nie sú klávesy "vyleštené" od písania.
+🔋 3. BATÉRIA & VÝKON (The Energy)
+    • Čip: M4. Brutálny single-core výkon pre AI funkcie Apple Intelligence.
+    • Zdravie: V roku 2026 hľadaj stav nad 95 %.
+📸 4. KAMERA & AUDIO (The Optics)
+    • Senzor: 12MP Center Stage. Obrovský skok oproti 1080p u M3.
+    • Audio: 6-reproduktorový systém. Nesmie byť počuť rezonanciu v šasi.
+⚖️ 5. PREČO KÚPIŤ / NEKÚPIŤ
+    • KÚPIŤ: Chceš to najlepšie na trhu, Apple Intelligence a najlepší displej na prácu vonku.
+    • NEKÚPIŤ: Ak máš M3 Pro, skok vo výkone pre teba nebude taký citeľný.
+
+🔍 SEKUNDÁRNY AUDIT: MacBook Pro 14 (M4)
+Focus: Profesionálna diagnostika
+⚡ 1. RÝCHLA KONTROLA CHÝB (Quick Scan)
+    • Fan Noise: Spusti náročný test. Ventilátory musia bežať hladko bez mechanického pískania.
+    • Port Tightness: USB-C kábel musí v porte držať pevne, nesmie vypadávať pri pohybe.
+🔬 2. FORENZNÁ KONTROLA (Pro testy)
+    • 🎈 XDR Test: V tmavej miestnosti otvor čierny obrázok. Hľadaj rovnomernosť podsvietenia.
+    • 🔒 MDM Check: V Nastaveniach skontroluj "Profiles". Ak je tam firemný profil, nekupuj!
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky.
+    • Pôvod: Pri M4 vyžaduj faktúru/záručný list. Je to príliš drahý stroj na risk bez záruky.
+    • Skrutky: Skontroluj spodné skrutky. Ak sú odreté, notebook bol otváraný.
+📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
+    • Inzerovaná cena (Január 2026): (podľa trhu)
+    • Poškodený pánt (vôľa): -150 €
+    • Chýbajúca krabica: -40 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
+💬 5. PSYCHOLÓGIA & VYJEDNÁVANIE
+    • Veta na zľavu: „Je to základná 16GB verzia. Pre moju prácu budem musieť dokúpiť externý disk, čo mi zvyšuje celkové náklady.“
+✅ 6. ULTIMÁTNY CHECKLIST
+    • [ ] Displej: Žiadne odreniny na antireflexnej vrstve?
+    • [ ] TouchID: Funguje okamžite?
+    • [ ] Wi-Fi: Stabilné pripojenie na 6GHz pásme?
+
+⚖️ DISKLAIMER (Právna doložka)
+    • Informačný charakter: Tento report je metodická pomôcka pri kúpe z druhej ruky.
+    • Vylúčenie zodpovednosti: Autor nezodpovedá za technický stav zariadenia ani za škody pri vykonávaní testov.
+    • Ochrana značky: MacBook Pro a M4 sú majetkom Apple Inc., použité len na identifikáciu.$auditly$,
+    1650.00
+);
+
+-- MacBook Air 13" (M3, 2024)
+INSERT INTO products (name, brand, model_name, category, display_tech, common_faults, battery_risks, frame_material, negotiation_tips, full_report, base_price_recommended) 
+VALUES (
+    $auditly$MacBook Air 13 (M3, 2024)$auditly$,
+    $auditly$Apple$auditly$,
+    $auditly$MacBook Air 13 M3$auditly$,
+    $auditly$Laptop$auditly$,
+    $auditly$💻 13.6" Liquid Retina s jasom 500 nitov a podporou dvoch externých displejov.$auditly$,
+    $auditly$[
+        "⚠️ Dual Display Mode: Otestuj pripojenie dvoch monitorov (veko musí byť zavreté). Ak jeden nenabehne, je chybný radič.",
+        "⚠️ SSD Speed: 256GB verzia je u M3 už rýchlejšia ako u M2, ale skontroluj, či pri zaplnení systém neseká.",
+        "⚠️ Midnight Wear: Farba Midnight sa na hranách USB-C portov ošúcha za pár mesiacov. Pýtaj zľavu.",
+        "⚠️ Tepelný Throttling: Keďže nemá ventilátor, pri dlhom exporte videa spomaľuje. Siahni na hliník nad klávesnicou.",
+        "⚠️ Trackpad Click: Skontroluj haptickú odozvu. Musí byť rovnaká v strede aj v rohoch."
+    ]$auditly$,
+    $auditly$🔋 • Čip: M3 (8-core CPU, 8/10-core GPU).
+• RAM: 8GB alebo 16GB. 
+• Audit pravidlo: V roku 2026 je 8GB RAM na hrane. Ak je to 8GB model, cena musí ísť dole.
+• Kontrola: Menu Batéria -> Zdravie. Pri Air modeloch ľudia často zanedbávajú správne nabíjacie cykly.$auditly$,
+    $auditly$Ultra-tenký hliníkový dizajn (1.13 cm).$auditly$,
+    $auditly$🤝 • Kalkulačka nákladov:
+  - Ošúchané porty (Midnight): -50 €
+  - Základná 8GB RAM: -150 €
+• Veta na zľavu: „M3 Air je super, ale 8GB RAM mi už o rok nebude stačiť na prácu s AI. Musím rátať s tým, že ho skôr predám.“
+• Veta na preverenie: „Môžeme vyskúšať pripojiť dva monitory? To je hlavný dôvod, prečo chcem M3 namiesto M2.“
+• ULTIMÁTNY CHECKLIST:
+  [ ] Pánt: Drží veko pevne v každej polohe?
+  [ ] Mikrofóny: Skús nahrať hlasovú poznámku (M3 má beamforming).
+  [ ] Wi-Fi 6E: Skontroluj stabilitu na 6GHz sieti.$auditly$,
+    $auditly$💻 HLAVNÝ AUDIT REPORT: MacBook Air 13 (M3)
+Kód modelu: Mac15,2 | Status: Najlepší notebook pre študentov (2026)
+🏗️ 1. DISPLEJ & PRIPOJENIE (The Visuals)
+    • Technológia: Liquid Retina. Skvelé farby, ale chýba 120Hz (ProMotion).
+    • Wau-Pikoška: Prvý Air, ktorý natívne podporuje 2 externé monitory (pri zavretom veku).
+💎 2. PRENOSNOSŤ (The Frame)
+    • Hmotnosť: Len 1.24 kg. Najlepší spoločník na cesty.
+    • Porty: MagSafe 3 + 2x Thunderbolt port.
+🔋 3. BATÉRIA & TEPLO (The Energy)
+    • Chladenie: 100% pasívne (0 dB hluk). Notebook sa nikdy nezanesie prachom.
+    • Zdravie: Hľadaj kusy s 92 %+. 
+📸 4. MULTIMÉDIÁ
+    • Kamera: 1080p FaceTime HD. Slušná, ale bez Center Stage.
+    • Zvuk: 4-reproduktorový systém schovaný v pante.
+⚖️ 5. PREČO KÚPIŤ / NEKÚPIŤ
+    • KÚPIŤ: Hľadáš tichý, ľahký stroj s moderným dizajnom a podporou viacerých monitorov.
+    • NEKÚPIŤ: Ak robíš náročný 4K strih videa, pasívne chladenie ťa bude brzdiť.
+
+🔍 SEKUNDÁRNY AUDIT: MacBook Air 13 (M3)
+Focus: Mobilita & Hygiena
+⚡ 1. RÝCHLA KONTROLA CHÝB (Quick Scan)
+    • Key Shine: Skontroluj, či nie sú klávesy vyleštené od mastnoty. Napovie to o intenzite používania.
+    • Rubber Feet: Skontroluj spodné nožičky, či nechýbajú.
+🔬 2. FORENZNÁ KONTROLA
+    • 🎈 Stress Test: Otvor 10 tabov s 4K videom. Sleduj, či sa systém nezasekáva.
+    • 🔒 Activation Lock: Majiteľ sa musí odhlásiť z Find My Mac pred tvojimi očami.
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky.
+    • MagSafe: Skontroluj magnety, či nie sú plné kovových pilín.
+📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
+    • Inzerovaná cena: (podľa trhu)
+    • Zdravie batérie pod 88 %: -80 €
+    • Neoriginálny kábel: -30 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
+💬 5. PSYCHOLÓGIA & VYJEDNÁVANIE
+    • Veta na zľavu: „M2 model vyzerá identicky a stojí o dosť menej. Ak mi nespustíte cenu, vezmem radšej ten M2.“
+✅ 6. ULTIMÁTNY CHECKLIST
+    • [ ] Displej: Žiadne biele fľaky (pressure marks)?
+    • [ ] Bluetooth: Myš a slúchadlá držia stabilne?
+    • [ ] Telo: Je MacBook dokonale rovný na stole?
+
+⚖️ DISKLAIMER (Právna doložka)
+    • Informačný charakter: Tento report je metodická pomôcka pri kúpe z druhej ruky.
+    • Vylúčenie zodpovednosti: Autor nezodpovedá za technický stav zariadenia ani za škody pri vykonávaní testov.
+    • Ochrana značky: MacBook Air a M3 sú majetkom Apple Inc., použité len na identifikáciu.$auditly$,
+    1050.00
+);
+
+-- MacBook Pro 14" (M3, 2023)
+INSERT INTO products (name, brand, model_name, category, display_tech, common_faults, battery_risks, frame_material, negotiation_tips, full_report, base_price_recommended) 
+VALUES (
+    $auditly$MacBook Pro 14 (M3, 2023)$auditly$,
+    $auditly$Apple$auditly$,
+    $auditly$MacBook Pro 14 M3$auditly$,
+    $auditly$Laptop$auditly$,
+    $auditly$💻 14.2" Liquid Retina XDR so 120Hz ProMotion.$auditly$,
+    $auditly$[
+        "⚠️ Space Black Fading: Prvá generácia tejto farby. Skontroluj hrany pod dlaňami, či nepresvitá strieborná.",
+        "⚠️ SD Slot Failure: Vlož SD kartu. Čítačky v týchto modeloch občas strácajú kontakt.",
+        "⚠️ HDMI 2.1: Otestuj 4K/120Hz výstup. Ak obraz bliká, je poškodený radič na doske.",
+        "⚠️ Fan Grinding: Pri M3 Pro/Max modeli skontroluj, či sa ventilátory točia potichu.",
+        "⚠️ Notch Dust: Skontroluj, či sa pod sklo kamery vo výreze nedostal prach."
+    ]$auditly$,
+    $auditly$🔋 • Čip: M3, M3 Pro alebo M3 Max (3nm).
+• Výkon: Prvá generácia s hardvérovým Ray Tracingom.
+• Batéria: Skontroluj cykly. Ak bol MacBook stále na nabíjačke, batéria môže byť "lenivá" (rýchly pokles z 100 na 90 %).$auditly$,
+    $auditly$Prémiový hliník. Space Black má vrstvu proti otlačkom.$auditly$,
+    $auditly$🤝 • Kalkulačka nákladov:
+  - Vyleštený trackpad: -40 €
+  - Slabá batéria (pod 88 %): -120 €
+• Veta na zľavu: „M3 má v základnej verzii stále len 8GB RAM, čo je u Pro modelu v roku 2026 už nepredajné. Musím rátať s nižšou zostatkovou hodnotou.“
+• Veta na preverenie: „Môžem skúsiť nabiť cez MagSafe aj cez oba USB-C porty? Chcem overiť radiče napájania.“
+• ULTIMÁTNY CHECKLIST:
+  [ ] TouchID: Reaguje okamžite?
+  [ ] XDR Displej: Skontroluj čiernu plochu v tme.
+  [ ] Bluetooth: Skús pripojiť Apple Watch pre odomykanie.$auditly$,
+    $auditly$💻 HLAVNÝ AUDIT REPORT: MacBook Pro 14 (M3)
+Kód modelu: Mac15,3 | Status: Profesionálny pracant
+🏗️ 1. VIZUÁL & AUDIO (The Visuals)
+    • Audio: 6-reproduktorový systém. Najlepší zvuk v prenosnom počítači.
+    • Displej: 120Hz ProMotion je u Pro modelov štandardom.
+💎 2. KONŠTRUKCIA (The Frame)
+    • Porty: HDMI 2.1, SDXC slot, 3x Thunderbolt 4.
+🔋 3. EFEKTIVITA (The Energy)
+    • Výdrž: M3 čip je extrémne úsporný pri bežnej kancelárskej práci.
+    • Zdravie: V roku 2026 hľadaj kusy nad 90 %.
+📸 4. KAMERA
+    • Senzor: 1080p FaceTime HD. Slušná, ale M4 má lepšiu.
+⚖️ 5. PREČO KÚPIŤ / NEKÚPIŤ
+    • KÚPIŤ: Chceš profi stroj s HDMI a SD slotom za lepšiu cenu než M4.
+    • NEKÚPIŤ: Základná M3 verzia (bez Pro) podporuje len jeden externý monitor.
+
+🔍 SEKUNDÁRNY AUDIT: MacBook Pro 14 (M3)
+Focus: Záťaž & Spoľahlivosť
+⚡ 1. RÝCHLA KONTROLA CHÝB (Quick Scan)
+    • Hinge Tension: Pánt musí držať pevne, ale dovoliť otvorenie jedným prstom.
+    • Screen Coating: Hľadaj "stopy" po klávesnici na displeji.
+🔬 2. FORENZNÁ KONTROLA
+    • 🎈 Thermal Test: Spusti export 4K videa. Sleduj, či sa ventilátory roztočia plynule.
+    • 🔒 Find My Mac: Musí byť vypnuté pred kúpou.
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky.
+    • Serial Number: Skontroluj na stránke Apple, či sedí model a farba.
+📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
+    • Inzerovaná cena: (podľa trhu)
+    • Škrabanec na XDR displeji: -200 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
+💬 5. PSYCHOLÓGIA & VYJEDNÁVANIE
+    • Veta na zľavu: „V roku 2026 je M3 Pro už stredná trieda. Nová M4 má oveľa lepšiu kameru a Quantum Dot displej.“
+✅ 6. ULTIMÁTNY CHECKLIST
+    • [ ] Displej: Žiadne biele body na bielej ploche?
+    • [ ] Klávesnica: Funguje podsvietenie rovnomerne?
+    • [ ] Porty: Nabíja MagSafe kábel z oboch strán?
+
+⚖️ DISKLAIMER (Právna doložka)
+    • Informačný charakter: Tento report je metodická pomôcka pri kúpe z druhej ruky.
+    • Vylúčenie zodpovednosti: Autor nezodpovedá za technický stav zariadenia ani za škody pri vykonávaní testov.
+    • Ochrana značky: MacBook Pro a M3 sú majetkom Apple Inc., použité len na identifikáciu.$auditly$,
+    1350.00
+);
+
+-- MacBook Air 13" (M2, 2022)
+INSERT INTO products (name, brand, model_name, category, display_tech, common_faults, battery_risks, frame_material, negotiation_tips, full_report, base_price_recommended) 
+VALUES (
+    $auditly$MacBook Air 13 (M2, 2022)$auditly$,
+    $auditly$Apple$auditly$,
+    $auditly$MacBook Air 13 M2$auditly$,
+    $auditly$Laptop$auditly$,
+    $auditly$💻 13.6" Liquid Retina s jasom 500 nitov a výrezom (Notch).$auditly$,
+    $auditly$[
+        "⚠️ Slow SSD (256GB): Tento model má v 256GB verzii len jeden čip, čo spomaľuje systém pri multitaskingu. Pýtaj sa na kapacitu!",
+        "⚠️ Midnight Scratches: Farba Midnight je u M2 extrémne náchylná na odreniny okolo USB-C portov. Veľké ošúchanie znižuje cenu.",
+        "⚠️ Webcam Notch: Skontroluj, či sa pod sklo kamery nedostal prach (častá vada prvých sérií).",
+        "⚠️ Prehrievanie: M2 čip v Air tele kúri viac ako M1. Pri záťaži siahni na šasi nad klávesnicou.",
+        "⚠️ Gumové nožičky: Skontroluj, či držia. Apple ich u M2 Air lepil slabšie a radi odpadávajú."
+    ]$auditly$,
+    $auditly$🔋 • Čip: M2 (8-core CPU, 8/10-core GPU).
+• Batéria: Skvelá výdrž, ale v roku 2026 budú mať tieto stroje často 300+ cyklov.
+• Audit pravidlo: Ak je zdravie pod 85 %, priprav sa na skorú výmenu batérie (cca 150 €).
+• Kontrola: Menu Systém -> Batéria -> Zdravie. Ak hlási 'Service', batéria je na odpis.$auditly$,
+    $auditly$Hliníkový unibody dizajn (hranatejší než M1 Air).$auditly$,
+    $auditly$🤝 • Kalkulačka nákladov:
+  - 256GB SSD verzia: -80 €
+  - Ošúchané hrany (Midnight): -60 €
+• Veta na zľavu: „Viem, že 256GB verzia M2 má pomalší disk než staršia M1. To je pre moju prácu problém, musím brať do úvahy nižšiu rýchlosť systému.“
+• Veta na preverenie: „Môžem vidieť spodnú stranu? Chcem skontrolovať, či nie je šasi prehnuté po páde.“
+• ULTIMÁTNY CHECKLIST:
+  [ ] MagSafe: Drží magnet pevne a nabíja?
+  [ ] Displej: Žiadne žlté fľaky na okrajoch pri bielej ploche?
+  [ ] Klávesnica: Žiadne "lepkavé" alebo nefunkčné klávesy.$auditly$,
+    $auditly$💻 HLAVNÝ AUDIT REPORT: MacBook Air 13 (M2)
+Kód modelu: Mac14,2 | Status: Moderný dizajn za rozumnú cenu
+🏗️ 1. DIZAJN & DISPLEJ (The Visuals)
+    • Nová éra: Prvý Air s moderným plochým dizajnom a MagSafe 3.
+    • Displej: Väčšia plocha a tenšie rámiky než u M1.
+💎 2. ERGONÓMIA (The Frame)
+    • Funkčné klávesy: Horný rad má plnú výšku (lepšie než u M1).
+    • Hmotnosť: Len 1.24 kg.
+🔋 3. VÝKON M2 (The Energy)
+    • Čip: M2. Stále veľmi rýchly na 90 % bežných úloh v roku 2026.
+    • Tip: Vyhýbaj sa 8/256GB kombinácii, ak plánuješ strihať video.
+📸 4. KAMERA & ZVUK
+    • Senzor: 1080p FaceTime HD. Obrovský skok oproti 720p u M1 Air.
+⚖️ 5. PREČO KÚPIŤ / NEKÚPIŤ
+    • KÚPIŤ: Hľadáš moderný Apple vzhľad a MagSafe za dostupnú cenu.
+    • NEKÚPIŤ: Ak ti stačí výkon M1, starší model je o 300 € lacnejší a robí skoro to isté.
+
+🔍 SEKUNDÁRNY AUDIT: MacBook Air 13 (M2)
+Focus: Estetika & SSD
+⚡ 1. RÝCHLA KONTROLA CHÝB (Quick Scan)
+    • Port Scratches: U farby Midnight skontroluj vnútro USB-C portov, či nie sú vybité.
+    • Trackpad Surface: Skontroluj, či nie je sklo prasknuté (časté pri páde predmetu na notebook).
+🔬 2. FORENZNÁ KONTROLA
+    • 🎈 SSD Speed Test: Spusti Blackmagic Disk Speed Test. Ak je zápis pod 1500 MB/s, je to pomalšia 256GB verzia.
+    • 🔒 iCloud Lock: Musí byť odhlásený.
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky.
+    • Pánty: Otvor a zatvor MacBook 5-krát. Nesmie v ňom nič pukať.
+📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
+    • Inzerovaná cena: (podľa trhu)
+    • Chýbajúca originálna nabíjačka: -40 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
+💬 5. PSYCHOLÓGIA & VYJEDNÁVANIE
+    • Veta na zľavu: „V roku 2026 už M2 stráca dych pri Apple Intelligence kvôli malej RAM. Spustíte cenu, aby to bola férová kúpa?“
+✅ 6. ULTIMÁTNY CHECKLIST
+    • [ ] Displej: Žiadne mŕtve pixely?
+    • [ ] Mikrofón: Nahraj hlasovú poznámku a vypočuj si ju.
+    • [ ] Bluetooth: Pripoj slúchadlá a vzdiaľ sa 3 metre.
+
+⚖️ DISKLAIMER (Právna doložka)
+    • Informačný charakter: Tento report je metodická pomôcka pri kúpe z druhej ruky.
+    • Vylúčenie zodpovednosti: Autor nezodpovedá za technický stav zariadenia ani za škody pri vykonávaní testov.
+    • Ochrana značky: MacBook Air a M2 sú majetkom Apple Inc., použité len na identifikáciu.$auditly$,
+    850.00
+);
+
+-- MacBook Pro 14" (M1 Pro, 2021)
+INSERT INTO products (name, brand, model_name, category, display_tech, common_faults, battery_risks, frame_material, negotiation_tips, full_report, base_price_recommended) 
+VALUES (
+    $auditly$MacBook Pro 14 (M1 Pro, 2021)$auditly$,
+    $auditly$Apple$auditly$,
+    $auditly$MacBook Pro 14 M1 Pro$auditly$,
+    $auditly$Laptop$auditly$,
+    $auditly$💻 14.2" Liquid Retina XDR (mini-LED) so 120Hz ProMotion.$auditly$,
+    $auditly$[
+        "⚠️ Battery Life: Po 4 rokoch (v 2026) bude mať väčšina kusov 400+ cyklov. Vyžaduj screen z CoconutBattery.",
+        "⚠️ Ghosting: Staršie mini-LED panely môžu mať pomalšiu odozvu. Skontroluj, či za kurzorom nezostáva tieň.",
+        "⚠️ MagSafe Port Corrosion: Skontroluj piny v porte. Ak sú zelené, do vnútra vnikla vlhkosť.",
+        "⚠️ Gumené tesnenie displeja: Ak je vydrolené alebo lepkavé, notebook bol vystavený extrémnym teplotám.",
+        "⚠️ Prasknutý 'Chin': Skontroluj plastový nápis MacBook Pro pod displejom, či nie je prasknutý (vada pri zlom zatváraní)."
+    ]$auditly$,
+    $auditly$🔋 • Čip: M1 Pro (8/10-core CPU).
+• RAM: Minimálne 16GB (všetky modely).
+• Batéria: Ak je zdravie pod 80 %, macOS už začne hlásiť 'Service'.
+• Kontrola: Nechaj MacBook bežať 10 minút na batérii pri max. jase. Ak klesne o viac ako 5 %, batéria je na konci.$auditly$,
+    $auditly$Masívny hliníkový unibody dizajn (nárast hrúbky).$auditly$,
+    $auditly$🤝 • Kalkulačka nákladov:
+  - Zdravie batérie pod 80%: -150 €
+  - Ošúchaná antireflexná vrstva: -100 €
+• Veta na zľavu: „Tento model má už 4 roky. Aj keď je to M1 Pro, batéria je chemicky na konci životnosti a výmena v servise bude nákladná.“
+• Veta na preverenie: „Môžeme skúsiť HDMI port s externým monitorom? Často sa stáva, že po rokoch odchádza.“
+• ULTIMÁTNY CHECKLIST:
+  [ ] Reproduktory: Skontroluj, či nechrčia (častý problém starších Pro modelov).
+  [ ] USB-C: Všetky 3 porty musia nabíjať a držať kábel pevne.
+  [ ] Ventilátory: Musia byť tiché aj pri vyšších otáčkach.$auditly$,
+    $auditly$💻 HLAVNÝ AUDIT REPORT: MacBook Pro 14 (M1 Pro)
+Kód modelu: MacBookPro18,3 | Status: Legendárny model (Top hodnota)
+🏗️ 1. REVOLÚCIA (The Visuals)
+    • Porty sú späť: Návrat HDMI, SD slotu a MagSafe zmenil pravidlá hry.
+    • Displej: Prvý 120Hz XDR v MacBooku. Stále prekonáva väčšinu nových PC.
+💎 2. VÝKON M1 PRO (The Frame)
+    • Stále profík: Pre programátorov a fotografov stále viac než dostatočný výkon aj v roku 2026.
+    • RAM: 16GB základ je obrovská výhoda oproti novým Air modelom.
+🔋 3. BATÉRIA (The Energy)
+    • Upozornenie: Staršie modely môžu mať batériu, ktorá sa pri 20 % náhle vybije na nulu.
+    • Zdravie: Hľadaj kusy nad 83 %.
+📸 4. KONEKTIVITA
+    • Porty: 3x Thunderbolt 4, HDMI, SDXC, MagSafe 3, Jack 3.5mm.
+⚖️ 5. PREČO KÚPIŤ / NEKÚPIŤ
+    • KÚPIŤ: Hľadáš najlepší pomer ceny a profesionálnych funkcií (120Hz, porty, 16GB RAM).
+    • NEKÚPIŤ: Ak potrebuješ extrémnu výdrž na batériu, novšie M3/M4 modely sú v tomto lepšie.
+
+🔍 SEKUNDÁRNY AUDIT: MacBook Pro 14 (M1 Pro)
+Focus: Opotrebenie & Vek
+⚡ 1. RÝCHLA KONTROLA CHÝB (Quick Scan)
+    • Screen Flickering: Pri zmene jasu sleduj, či displej nebliká (chyba flex kábla).
+    • Keyboard Wear: Skontroluj, či niektoré klávesy nie sú "vyleštené" až do hladka.
+🔬 2. FORENZNÁ KONTROLA
+    • 🎈 Battery Health: Vyžiadaj si screenshot z CoconutBattery, ukazuje reálnu kapacitu lepšie než macOS.
+    • 🔒 MDM Lock: Kritické! Skontroluj firemnú správu zariadenia.
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky.
+    • Dust in Fans: Pozri sa cez nasávacie otvory na bokoch. Ak sú plné prachu, notebook sa prehrieval.
+📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
+    • Inzerovaná cena: (podľa trhu)
+    • Nefunkčný TouchID: -150 € (neopraviteľné lacno)
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
+💬 5. PSYCHOLÓGIA & VYJEDNÁVANIE
+    • Veta na zľavu: „Model 2021 je už za zenitom oficiálnej Apple záruky. Akákoľvek oprava základnej dosky ma vyjde na polovicu ceny notebooku.“
+✅ 6. ULTIMÁTNY CHECKLIST
+    • [ ] Displej: Žiadne odreniny od klávesnice?
+    • [ ] TouchID: Funguje okamžite?
+    • [ ] Reproduktory: Hrajú čisto aj basy?
+
+⚖️ DISKLAIMER (Právna doložka)
+    • Informačný charakter: Tento report je metodická pomôcka pri kúpe z druhej ruky.
+    • Vylúčenie zodpovednosti: Autor nezodpovedá za technický stav zariadenia ani za škody pri vykonávaní testov.
+    • Ochrana značky: MacBook Pro a M1 sú majetkom Apple Inc., použité len na identifikáciu.$auditly$,
+    1100.00
+);
+
+-- MacBook Air (M1, 2020)
+INSERT INTO products (name, brand, model_name, category, display_tech, common_faults, battery_risks, frame_material, negotiation_tips, full_report, base_price_recommended) 
+VALUES (
+    $auditly$MacBook Air (M1, 2020)$auditly$,
+    $auditly$Apple$auditly$,
+    $auditly$MacBook Air M1$auditly$,
+    $auditly$Laptop$auditly$,
+    $auditly$💻 13.3" Retina displej s technológiou P3 a jasom 400 nitov.$auditly$,
+    $auditly$[
+        "⚠️ Hairline Crack: Najčastejšia vada. Tenká prasklina vznikne aj pri omrvinke na klávesnici. Skontroluj displej pod uhlom!",
+        "⚠️ USB-C Wobbly Ports: Model má len 2 porty na jednej strane. Často sú vykývané od nabíjania. Kábel musí 'kliknúť'.",
+        "⚠️ Battery Health < 80%: V roku 2026 bude väčšina týchto strojov na hranici životnosti batérie. Pýtaj zľavu.",
+        "⚠️ Antireflexná vrstva: Okolo okrajov sa môže olupovať (tzv. Staingate). Ak je to v zornom poli, je to neopraviteľné.",
+        "⚠️ Zanesená klávesnica: Skontroluj Space a Enter. Ak idú 'tupo', pod klávesmi je prach, ktorý sa ťažko čistí."
+    ]$auditly$,
+    $auditly$🔋 • Čip: M1 (8-core CPU, 7/8-core GPU).
+• Revolúcia: Prvý Mac s Apple Silicon. Žiadny ventilátor, absolútne ticho.
+• Batéria: Skontroluj cykly. Ak má cez 700, batéria môže kedykoľvek vypovedať službu.
+• Kontrola: Menu Systém -> Batéria. Ak je zdravie pod 82 %, výdrž bude polovičná oproti novému kusu.$auditly$,
+    $auditly$Kultový klinovitý hliníkový dizajn (posledný svojho druhu).$auditly$,
+    $auditly$🤝 • Kalkulačka nákladov:
+  - Chýbajúca originálna nabíjačka: -40 €
+  - Batéria v stave 'Service': -120 €
+• Veta na zľavu: „M1 Air je legenda, ale v roku 2026 už končí jeho podpora nových macOS. Navyše tento kus má batériu, ktorá už nevydrží ani pol dňa.“
+• Veta na preverenie: „Môžem si vyskúšať FaceTime kameru? Chcem vidieť, či obraz nie je zrnitý (má len 720p).“
+• ULTIMÁTNY CHECKLIST:
+  [ ] Pánt: Nesmie mať vôľu pri pohybe (tzv. wobble).
+  [ ] Reproduktory: Hrajú obe strany rovnako hlasno?
+  [ ] TouchID: Funguje aj po reštarte systému?$auditly$,
+    $auditly$💻 HLAVNÝ AUDIT REPORT: MacBook Air (M1)
+Kód modelu: MacBookAir10,1 | Status: Najpredávanejší Mac histórie
+🏗️ 1. KONIEC JEDNEJ ÉRY (The Visuals)
+    • Dizajn: Posledný model s ikonickým zužujúcim sa telom.
+    • Ticho: Žiadne pohyblivé časti, žiadny prach vnútri notebooku.
+💎 2. DISPLEJ (The Frame)
+    • Retina: Kvalitný panel, ale starší dizajn s hrubšími rámikmi. Jas 400 nitov je na prácu vonku málo.
+🔋 3. BATÉRIA & TEPLO (The Energy)
+    • Trvácnosť: Čip M1 je tak úsporný, že aj slabšia batéria vydrží viac ako staré Intel modely.
+    • Chladenie: 100% ticho. Nikdy nezačuješ ventilátor.
+📸 4. KAMERA
+    • Senzor: 720p FaceTime HD. Najslabší bod tohto modelu.
+⚖️ 5. PREČO KÚPIŤ / NEKÚPIŤ
+    • KÚPIŤ: Hľadáš najlacnejší funkčný Mac s Apple Silicon na kanceláriu a školu.
+    • NEKÚPIŤ: Ak potrebuješ moderný dizajn, MagSafe alebo lepší displej (choď do M2).
+
+🔍 SEKUNDÁRNY AUDIT: MacBook Air (M1)
+Focus: Životnosť & Pánty
+⚡ 1. RÝCHLA KONTROLA CHÝB (Quick Scan)
+    • Hinge Wobble: Ak veko pri jemnom zatrasení padá, pánty sú vybehané.
+    • Bezel Integrity: Skontroluj gumu okolo displeja, či nie je vytrhnutá.
+🔬 2. FORENZNÁ KONTROLA
+    • 🎈 SSD Health: Použi aplikáciu DriveDx. Staršie M1 modely mali problém s nadmerným zápisom na SSD.
+    • 🔒 iCloud Check: Musí byť čistý.
+🧼 3. SERVISNÁ HYGIÉNA
+    • Záruka: Vždy overte sériové číslo na checkcoverage.apple.com pre potvrdenie stavu záruky.
+    • Keyboard Cleaning: Skús stlačiť každú klávesu. Ak je odozva neistá, vnútri je špina.
+📉 4. KALKULAČKA BUDÚCICH NÁKLADOV
+    • Inzerovaná cena: (podľa trhu)
+    • Prasknutý plastový kryt pántu: -50 €
+    • REÁLNA HODNOTA: (výsledok po zrážkach)
+💬 5. PSYCHOLÓGIA & VYJEDNÁVANIE
+    • Veta na zľavu: „Je to starší model. Aj keď funguje, batéria a displej sú už za zenitom. Za podobnú cenu sa dá kúpiť oveľa modernejší model M2.“
+✅ 6. ULTIMÁTNY CHECKLIST
+    • [ ] Displej: Žiadne praskliny v spodnej časti?
+    • [ ] Porty: Nabíja z oboch USB-C vstupov?
+    • [ ] Trackpad: Kliká po celej ploche?
+
+⚖️ DISKLAIMER (Právna doložka)
+    • Informačný charakter: Tento report je metodická pomôcka pri kúpe z druhej ruky.
+    • Vylúčenie zodpovednosti: Autor nezodpovedá za technický stav zariadenia ani za škody pri vykonávaní testov.
+    • Ochrana značky: MacBook Air a M1 sú majetkom Apple Inc., použité len na identifikáciu.$auditly$,
+    550.00
 );

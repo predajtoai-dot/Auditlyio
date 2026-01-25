@@ -82,7 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
    * 📱 DEVICE CATALOG: Technical specifications for expert audits
    */
   const DEVICE_CATALOG = {
-    "iphone 17": { cpu: "A19 (3nm)", display: "6.1\" OLED (120Hz LTPO, 2000 nits)", ram: "8 GB", camera: "48MP + AF UltraWide", charging: "USB-C (30W)", material: "Hliník + Matné sklo", battery_cap: "4000 mAh", charging_time: "55 min na 100%", battery_life: "24 hodín videa" },
     "iphone 16 pro max": { cpu: "A18 Pro (3nm)", display: "6.9\" OLED (120Hz, 2000 nits peak)", ram: "8 GB", camera: "48MP Main + 5x Opt. Zoom", charging: "USB-C (USB 3.0, 27W)", material: "Titán Grade 5", battery_cap: "4676 mAh", charging_time: "65 min na 100%", battery_life: "33 hodín videa" },
     "iphone 16 pro": { cpu: "A18 Pro (3nm)", display: "6.3\" OLED (120Hz, 2000 nits peak)", ram: "8 GB", camera: "48MP Main + 5x Opt. Zoom", charging: "USB-C (USB 3.0, 27W)", material: "Titán Grade 5", battery_cap: "3582 mAh", charging_time: "60 min na 100%", battery_life: "27 hodín videa" },
     "iphone 16": { cpu: "A18 (3nm)", display: "6.1\" OLED (60Hz, 2000 nits peak)", ram: "8 GB", camera: "48MP Dual System", charging: "USB-C (USB 2.0, 25W)", material: "Hliník + Matné sklo", battery_cap: "3561 mAh", charging_time: "60 min na 100%", battery_life: "22 hodín videa" },
@@ -7421,71 +7420,6 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
   loadDatabaseCatalog();
 
-  const CATALOG = {
-    "Mobil": [
-      { name: "iPhone 17 Pro Max", storage: ["256GB", "512GB", "1TB"] },
-      { name: "iPhone 17 Pro", storage: ["128GB", "256GB", "512GB", "1TB"] },
-      { name: "iPhone 17", storage: ["128GB", "256GB", "512GB"] },
-      { name: "iPhone 16 Pro Max", storage: ["256GB", "512GB", "1TB"] },
-      { name: "iPhone 16 Pro", storage: ["128GB", "256GB", "512GB", "1TB"] },
-      { name: "iPhone 16", storage: ["128GB", "256GB", "512GB"] },
-      { name: "iPhone 15 Pro Max", storage: ["128GB", "256GB", "512GB", "1TB"] },
-      { name: "iPhone 15 Pro", storage: ["128GB", "256GB", "512GB", "1TB"] },
-      { name: "iPhone 15", storage: ["128GB", "256GB", "512GB"] },
-      { name: "iPhone 14 Pro Max", storage: ["128GB", "256GB", "512GB", "1TB"] },
-      { name: "iPhone 14 Pro", storage: ["128GB", "256GB", "512GB", "1TB"] },
-      { name: "iPhone 14", storage: ["128GB", "256GB", "512GB"] },
-      { name: "iPhone 13 Pro Max", storage: ["128GB", "256GB", "512GB", "1TB"] },
-      { name: "iPhone 13 Pro", storage: ["128GB", "256GB", "512GB", "1TB"] },
-      { name: "iPhone 13", storage: ["128GB", "256GB", "512GB"] },
-      { name: "iPhone 12 Pro Max", storage: ["128GB", "256GB", "512GB"] },
-      { name: "iPhone 12 Pro", storage: ["128GB", "256GB", "512GB"] },
-      { name: "iPhone 12", storage: ["64GB", "128GB", "256GB"] },
-      { name: "iPhone 12 mini", storage: ["64GB", "128GB", "256GB"] },
-      { name: "iPhone 11 Pro Max", storage: ["64GB", "256GB", "512GB"] },
-      { name: "iPhone 11 Pro", storage: ["64GB", "256GB", "512GB"] },
-      { name: "iPhone 11", storage: ["64GB", "128GB", "256GB"] },
-      { name: "iPhone SE (3rd Gen)", storage: ["64GB", "128GB", "256GB"] },
-      { name: "iPhone SE (2nd Gen)", storage: ["64GB", "128GB", "256GB"] }
-    ],
-    "Hodinky": [
-      { name: "Apple Watch Ultra 2", storage: ["64GB"] },
-      { name: "Apple Watch Ultra", storage: ["32GB"] },
-      { name: "Apple Watch Series 9", storage: ["32GB", "64GB"] },
-      { name: "Apple Watch Series 8", storage: ["32GB"] },
-      { name: "Apple Watch SE (2nd Gen)", storage: ["32GB"] }
-    ],
-    "Slúchadlá": [
-      { name: "AirPods Pro (2nd Gen)", storage: ["—"] },
-      { name: "AirPods (3rd Gen)", storage: ["—"] },
-      { name: "AirPods Max", storage: ["—"] }
-    ],
-    "Notebook": [
-      { name: "MacBook Pro 14 (M3 Pro)", storage: ["512GB", "1TB"] },
-      { name: "MacBook Air 13 (M3)", storage: ["256GB", "512GB"] },
-      { name: "MacBook Air 13 (M2)", storage: ["256GB", "512GB"] },
-      { name: "MacBook Air 13 (M1)", storage: ["256GB", "512GB"] },
-      { name: "Herný notebook (všeobecný)", storage: ["512GB", "1TB", "2TB"] },
-      { name: "Pracovný notebook (všeobecný)", storage: ["256GB", "512GB", "1TB"] }
-    ],
-    "Tablet": [
-      { name: "iPad Pro 12.9 (M2)", storage: ["128GB", "256GB", "512GB", "1TB", "2TB"] },
-      { name: "iPad Pro 11 (M2)", storage: ["128GB", "256GB", "512GB", "1TB", "2TB"] },
-      { name: "iPad Air (5th Gen)", storage: ["64GB", "256GB"] },
-      { name: "iPad (10th Gen)", storage: ["64GB", "256GB"] },
-      { name: "Samsung Galaxy Tab S9", storage: ["128GB", "256GB"] }
-    ],
-    "Konzola": [
-      { name: "PlayStation 5 Pro", storage: ["2TB"] },
-      { name: "PlayStation 5 Slim", storage: ["1TB"] },
-      { name: "PlayStation 5 (Disc)", storage: ["825GB"] },
-      { name: "PlayStation 4 Pro", storage: ["1TB"] },
-      { name: "Xbox Series X", storage: ["1TB"] },
-      { name: "Xbox Series S", storage: ["512GB", "1TB"] },
-      { name: "Nintendo Switch OLED", storage: ["64GB"] }
-    ]
-  };
-
   // 🔐 LOCK HELPERS: Save previous values to revert if cancel
   const savePrevValue = (el) => { el.dataset.prevValue = el.value; };
   const revertValue = (el) => { el.value = el.dataset.prevValue || ""; };
@@ -7553,15 +7487,9 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     });
 
     const modelsFromDB = DB_CATALOG[category] || [];
-    const modelsFromHardcoded = CATALOG[category] || [];
     
-    // Merge and unique by name
+    // 🛡️ ONLY USE DATABASE MODELS (User Request: must match database)
     const allModels = [...modelsFromDB];
-    modelsFromHardcoded.forEach(hm => {
-      if (!allModels.find(m => m.name === hm.name)) {
-        allModels.push(hm);
-      }
-    });
     
     modelSelect.innerHTML = `<option value="" disabled selected>Vyberte model</option>` + 
       allModels.map(m => `<option value="${m.name}">${m.name}</option>`).join('');
@@ -7589,23 +7517,13 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
     console.log(`📱 Model selected: ${modelName} in category: ${category}`);
 
-    // Try to find model in both catalogs
+    // Try to find model in database catalog
     const dbModelData = DB_CATALOG[category]?.find(m => m.name === modelName);
-    
-    // Hardcoded catalog lookup with fallback to common category if specific one is empty
-    const hardcodedModels = CATALOG[category] || [];
-    const hardcodedModelData = hardcodedModels.find(m => 
-      m.name === modelName || 
-      modelName.toLowerCase().includes(m.name.toLowerCase()) ||
-      m.name.toLowerCase().includes(modelName.toLowerCase())
-    );
     
     let storages = [];
     
-    // Prefer hardcoded storage list if it exists (usually more complete for UI)
-    if (hardcodedModelData && hardcodedModelData.storage) {
-      storages = hardcodedModelData.storage;
-    } else if (dbModelData && dbModelData.storage && dbModelData.storage[0] !== "—") {
+    // Use database storage list if it exists
+    if (dbModelData && dbModelData.storage && dbModelData.storage[0] !== "—") {
       storages = dbModelData.storage;
     }
 
@@ -9052,7 +8970,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
   const updateCompareModels = (side) => {
     const cat = compareCats[side].value;
-    const models = DB_CATALOG[cat] || CATALOG[cat] || [];
+    const models = DB_CATALOG[cat] || [];
     compareModels[side].innerHTML = `<option value="" disabled selected>Vyberte model</option>` +
       models.map(m => `<option value="${m.name}">${m.name}</option>`).join('');
     compareModels[side].disabled = false;
@@ -9340,7 +9258,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     if (currentModel && currentCat) {
         compareCats.a.value = currentCat;
       // Force Side A to be the stable one
-      const models = DB_CATALOG[currentCat] || CATALOG[currentCat] || [];
+      const models = DB_CATALOG[currentCat] || [];
       compareModels.a.innerHTML = `<option value="${currentModel}">${currentModel}</option>`;
         compareModels.a.value = currentModel;
         fetchCompareData('a');
