@@ -2943,6 +2943,244 @@ Focus: Forenzná analýza mechaniky a únavy
     • Ochrana značky: Názvy Nintendo Switch a Joy-Con sú majetkom spoločnosti Nintendo$auditly$,
     NULL
 );
+
+-- Nintendo Switch OLED (2021)
+INSERT INTO products (name, brand, model_name, category, display_tech, common_faults, battery_risks, frame_material, negotiation_tips, full_report, base_price_recommended) 
+VALUES (
+    $auditly$Nintendo Switch OLED$auditly$,
+    $auditly$Nintendo$auditly$,
+    $auditly$Nintendo Switch OLED$auditly$,
+    $auditly$Console$auditly$,
+    $auditly$📱 7.0" OLED panel, sýte farby a dokonalá čierna.$auditly$,
+    $auditly$[
+        "⚠️ OLED Burn-in: Skontroluj, či na bielom pozadí nevidíš „duchov“ z HUD hier.",
+        "⚠️ Green Tint: Niektoré panely majú pri nízkom jase zelený nádych.",
+        "⚠️ Kickstand: Masívny stojan musí držať v každom uhle, nesmie „padať“.",
+        "⚠️ Joy-Con Drift: Klasická vada, analógy sa samovoľne hýbu.",
+        "⚠️ SD Card Slot: Slot pod stojanom býva často zanesený alebo nefunkčný."
+    ]$auditly$,
+    $auditly$🔋 • Batéria u OLED verzie je o niečo lepšia vďaka efektivite panela.
+• Zdravie pod 90 % pri tomto modeli (2023+) značí extrémne používanie.$auditly$,
+    $auditly$Plast + Kovový stojan.$auditly$,
+    $auditly$🤝 • Kalkulačka nákladov:
+  - Stick Drift (pár): +50 €
+  - Green Tint displeja: -80 €
+• Veta na zľavu: „Displej má pri nízkom jase zelený nádych, čo je známa vada OLED série. Spustíte 50 € na túto nedokonalosť?“$auditly$,
+    $auditly$🎮 HLAVNÝ AUDIT REPORT: Nintendo Switch OLED
+Kód modelu: HEG-001 | Status: Premium Handheld
+💎 1. DISPLEJ & VIDITEĽNOSŤ (The OLED King)
+    • Technológia: 7.0" OLED, rozlíšenie 720p (v handhelde), 1080p (v docku).
+    • Wau-Pikoška: Displej je sklenený, nie plastový ako u V2. To znamená lepšiu ostrosť, ale vyššie riziko prasknutia pri páde.
+    • Checklist: Otvor prázdnu bielu stránku v prehliadači alebo eShope. Ak vidíš v rohoch náznaky starého menu, displej má "Burn-in".
+🏗️ 2. KONŠTRUKCIA & STOJAN (The Build)
+    • Kickstand: Na rozdiel od V2, OLED verzia má stojan cez celý chrbát.
+    • Checklist: Vyskúšaj stabilitu stojanu. Musí klásť odpor. Ak sa zatvára príliš ľahko, kĺb je vybehaný.
+📉 3. PREČO KÚPIŤ / NEKÚPIŤ
+    • KÚPIŤ: Chceš najlepší vizuálny zážitok z Nintendo hier na cestách.
+    • NEKÚPIŤ: Výkon je rovnaký ako u 7 rokov starého pôvodného modelu.
+⚖️ DISKLAIMER (Právna doložka)
+    • Informačný charakter: Tento report je metodická pomôcka pri kúpe.
+    • Vylúčenie zodpovednosti: Autor nezodpovedá za technický stav ani za stratu vodotesnosti.
+    • Ochrana značky: Názvy sú majetkom Nintendo Inc.$auditly$,
+    NULL
+);
+
+-- PlayStation 5 Slim (2023)
+INSERT INTO products (name, brand, model_name, category, display_tech, common_faults, battery_risks, frame_material, negotiation_tips, full_report, base_price_recommended) 
+VALUES (
+    $auditly$PlayStation 5 Slim$auditly$,
+    $auditly$Sony$auditly$,
+    $auditly$PlayStation 5 Slim$auditly$,
+    $auditly$Console$auditly$,
+    $auditly$📱 4K/120Hz, Ray Tracing, 1TB SSD. Menšie rozmery o 30 %.$auditly$,
+    $auditly$[
+        "⚠️ Detachable Drive: Ak mechanika nie je priradená k účtu, nespustíš disky.",
+        "⚠️ Heat Trap: Kvôli menšiemu telu sa Slim verzia hreje viac ako Fat rev. 12xx.",
+        "⚠️ Coil Whine: U Slim verzie je pískanie cievok častejšie kvôli inému zdroju.",
+        "⚠️ USB Port: Predný USB-A port bol nahradený druhým USB-C, over funkčnosť oboch.",
+        "⚠️ Stand: Slim verzia potrebuje pre vertikálne státie extra kruhový stojan (často chýba)."
+    ]$auditly$,
+    $auditly$🔋 DualSense (V2): Má o niečo lepšiu výdrž batérie než pôvodná verzia, ale Stick Drift ostáva rizikom.$auditly$,
+    $auditly$Plast (vymeniteľné kryty).$auditly$,
+    $auditly$🤝 • Kalkulačka nákladov:
+  - Chýbajúci stojan pre vertikálne státie: -30 €
+  - Hučiaca mechanika: -50 €
+• Veta na zľavu: „Slim verzia nemá v balení stojan na výšku a cievky zdroja dosť pískajú. Spustíte 40 € na ten stojan?“$auditly$,
+    $auditly$🎮 HLAVNÝ AUDIT REPORT: PlayStation 5 Slim
+Kód modelu: CFI-20xx | Status: Aktuálny Standard
+💎 1. MODULARITA & SSD (The New Era)
+    • Kapacita: Štandardne 1TB (reálne dostupných cca 848 GB).
+    • Wau-Pikoška (Modular Drive): Mechanika sa dá odpojiť. Ak kupuješ Digital verziu, môžeš mechaniku dokúpiť neskôr. Pozor: Pri prvom zapojení vyžaduje internet na spárovanie!
+🏗️ 2. CHLADENIE (The Size)
+    • Checklist: Slim má viac ventilátorových lopatiek. Po hodine hrania nesmie konzola "pískať" (tzv. UFO sound). Ak píska, ventilátor je zle vyvážený.
+📉 3. PREČO KÚPIŤ / NEKÚPIŤ
+    • KÚPIŤ: Chceš viac miesta na disku a menšiu konzolu, ktorá nezaberie pol obývačky.
+    • NEKÚPIŤ: Ak ti nevadí veľkosť, staršia Fat revízia 12xx je tichšia.
+⚖️ DISKLAIMER (Právna doložka)
+    • Informačný charakter: Tento report je metodická pomôcka pri kúpe.
+    • Vylúčenie zodpovednosti: Autor nezodpovedá za technický stav.
+    • Ochrana značky: Názvy sú majetkom Sony.$auditly$,
+    NULL
+);
+
+-- Valve Steam Deck OLED (2023)
+INSERT INTO products (name, brand, model_name, category, display_tech, common_faults, battery_risks, frame_material, negotiation_tips, full_report, base_price_recommended) 
+VALUES (
+    $auditly$Steam Deck OLED$auditly$,
+    $auditly$Valve$auditly$,
+    $auditly$Steam Deck OLED$auditly$,
+    $auditly$Console$auditly$,
+    $auditly$📱 7.4" HDR OLED, 90Hz refresh rate. Špičkový kontrast.$auditly$,
+    $auditly$[
+        "⚠️ Dead Pixels: U prvej várky OLED panelov sa často vyskytovali mŕtve pixely.",
+        "⚠️ Bumper Buttons: L1/R1 tlačidlá môžu pri páde stratiť klikavosť.",
+        "⚠️ Battery Calibration: Ak percentá skáču z 20 % na 5 % v sekunde, batéria je KO.",
+        "⚠️ Fan High Pitch: Hoci je tichší ako LCD verzia, niektoré ložiská pískajú.",
+        "⚠️ Charger Port: USB-C port je priamo na doske, pri namáhaní hrozí drahý skrat."
+    ]$auditly$,
+    $auditly$🔋 • Batéria u OLED verzie vydrží o 30-50 % dlhšie než u LCD.
+• Zdravie batérie (v Desktop móde) by malo byť nad 95 %.$auditly$,
+    $auditly$Tvrdený plast (Soft-touch).$auditly$,
+    $auditly$🤝 • Kalkulačka nákladov:
+  - Mŕtvy pixel na OLED: -100 € (nutná výmena panelu)
+  - Odretý joystick: -30 €
+• Veta na zľavu: „Tento kus má mŕtvy pixel, čo pri OLED displeji strašne bije do očí. Výmena panelu je drahá, spustíte 80 €?“$auditly$,
+    $auditly$🎮 HLAVNÝ AUDIT REPORT: Valve Steam Deck OLED
+Status: Handheld King (2023/2024)
+💎 1. DISPLEJ (The Game Changer)
+    • Technológia: 7.4" HDR OLED, 90Hz. Jas až 1000 nitov v HDR.
+    • Wau-Pikoška: Displej OLED verzie má o polovicu nižšiu latenciu dotyku než LCD verzia. Hranie pôsobí oveľa plynulejšie.
+🏗️ 2. CHLADENIE & VÝDRŽ (The Efficiency)
+    • Wau-Fakt: 6nm čip je efektívnejší. Konzola sa menej hreje a batéria vydrží reálne 3-5 hodín náročného hrania.
+    • Checklist: Skontroluj otvory chladenia navrchu. Ak cítiš zápach spáleného plastu, konzola bola dlhodobo preťažovaná v neoriginálnom puzdre.
+📉 3. PREČO KÚPIŤ / NEKÚPIŤ
+    • KÚPIŤ: Najlepší herný zážitok na cestách so Steam knižnicou.
+    • NEKÚPIŤ: Ak chceš hrať hry s agresívnym Anti-cheatom (Fortnite, COD), tie na SteamOS nefungujú.
+⚖️ DISKLAIMER (Právna doložka)
+    • Informačný charakter: Report slúži ako neoficiálna pomôcka.
+    • Vylúčenie zodpovednosti: Autor nezodpovedá za ban na Steam účte ani za stav HW.
+    • Ochrana značky: Názvy sú majetkom Valve Corp.$auditly$,
+    NULL
+);
+
+-- ASUS ROG Ally (Z1 Extreme, 2023)
+INSERT INTO products (name, brand, model_name, category, display_tech, common_faults, battery_risks, frame_material, negotiation_tips, full_report, base_price_recommended) 
+VALUES (
+    $auditly$ASUS ROG Ally$auditly$,
+    $auditly$ASUS$auditly$,
+    $auditly$ROG Ally Z1 Extreme$auditly$,
+    $auditly$Console$auditly$,
+    $auditly$📱 7" IPS, 1080p, 120Hz, FreeSync Premium. Veľmi jasný displej.$auditly$,
+    $auditly$[
+        "⚠️ SD Card Killer: Čítačka kariet sa u prvých sérií prehrieva a ničí SD karty.",
+        "⚠️ Stick Grind: Okolo analógových páčok vzniká biely prach z obrusovania plastu.",
+        "⚠️ Battery Life: Pri plnom výkone (30W) vydrží ledva 50 minút.",
+        "⚠️ Windows Glitch: Systém Windows 11 vie občas zamrznúť pri prebudení.",
+        "⚠️ Fan Grinding: Dva ventilátory - ak jeden hrká, ložisko je na konci životnosti."
+    ]$auditly$,
+    $auditly$🔋 • Batéria je slabá stránka. Vyžaduj battery report z Windows (powercfg).
+• Zdravie pod 90 % po roku je bežné, ale pýtaj zľavu.$auditly$,
+    $auditly$Biely tvrdený plast s RGB prvkami.$auditly$,
+    $auditly$🤝 • Kalkulačka nákladov:
+  - Zničená čítačka SD kariet: -100 € (vada dosky)
+  - Vydraté joysticky: -40 €
+• Veta na zľavu: „Tento model trpí na odpaľovanie SD kariet kvôli teplu. Funguje vám čítačka spoľahlivo? Ak nie, je to na výmenu dosky.“$auditly$,
+    $auditly$🎮 HLAVNÝ AUDIT REPORT: ASUS ROG Ally (Z1 Extreme)
+Status: Windows Powerhouse
+💎 1. VÝKON & DISPLEJ (The Specs)
+    • Technológia: AMD Ryzen Z1 Extreme, 7" 1080p 120Hz displej s FreeSync.
+    • Wau-Pikoška: FreeSync Premium robí zázraky. Aj keď hra beží na 40 FPS, vďaka synchronizácii to pôsobí plynule.
+🏗️ 2. PROBLÉM S SD KARTOU (The Warning)
+    • Wau-Fakt: Čítačka SD kariet je umiestnená priamo nad výduchom horúceho vzduchu. U modelov vyrobených pred 08/2023 je vysoká šanca, že čítačka časom odíde.
+    • Checklist: Vlož SD kartu a skús na ňu niečo zapísať. Ak zmizne zo systému, čítačka je poškodená.
+📉 3. PREČO KÚPIŤ / NEKÚPIŤ
+    • KÚPIŤ: Chceš hrať všetko (Game Pass, Epic, Steam) a potrebuješ výkon Windows.
+    • NEKÚPIŤ: Výdrž na batériu je frustrujúca a Windows v handhelde nie je vždy pohodlný.
+⚖️ DISKLAIMER (Právna doložka)
+    • Informačný charakter: Report slúži ako neoficiálna pomôcka.
+    • Vylúčenie zodpovednosti: Autor nezodpovedá za stratu dát na SD karte.
+    • Ochrana značky: Názvy sú majetkom ASUS.$auditly$,
+    NULL
+);
+
+-- Lenovo Legion Go (2023)
+INSERT INTO products (name, brand, model_name, category, display_tech, common_faults, battery_risks, frame_material, negotiation_tips, full_report, base_price_recommended) 
+VALUES (
+    $auditly$Lenovo Legion Go$auditly$,
+    $auditly$Lenovo$auditly$,
+    $auditly$Legion Go$auditly$,
+    $auditly$Console$auditly$,
+    $auditly$📱 8.8" QHD+ IPS, 144Hz. Obrovský tablet s ovládačmi.$auditly$,
+    $auditly$[
+        "⚠️ Controller Wobble: Odnímateľné ovládače môžu mať po čase vôľu v koľajničkách.",
+        "⚠️ Portrait Screen: Hry, ktoré nepodporujú Portrait mode, môžu mať problém s obrazom.",
+        "⚠️ Fan Noise: Jediný ventilátor je pomerne hlučný a má vysoký tón (whine).",
+        "⚠️ FPS Mouse Mode: Optický senzor na spodku pravého ovládača môže vynechávať.",
+        "⚠️ Software Bugs: Legion Space je stále v beta štádiu, skontroluj stabilitu."
+    ]$auditly$,
+    $auditly$🔋 • Obrovský displej žerie batériu rýchlo. Výdrž cca 1.5 - 2 hodiny pri hraní.
+• Rýchle nabíjanie (Super Rapid Charge) funguje skvele, ale batériu viac hreje.$auditly$,
+    $auditly$Plast + Kovový stojan (tablet štýl).$auditly$,
+    $auditly$🤝 • Kalkulačka nákladov:
+  - Vôľa v ovládačoch: -50 €
+  - Škrabance na obrovskom displeji: -70 €
+• Veta na zľavu: „Ovládače sa na tele hýbu, čo kazí pocit z hrania. Spustíte 40 € na nové poistky?“$auditly$,
+    $auditly$🎮 HLAVNÝ AUDIT REPORT: Lenovo Legion Go
+Status: The Giant Handheld
+💎 1. DISPLEJ (The Screen)
+    • Technológia: 8.8" QHD+ (1600p), 144Hz. Najväčší a najjemnejší displej v handheldoch.
+    • Wau-Pikoška: Displej je reálne panel z tabletu (native portrait). Niektoré staršie hry môžu mať obraz otočený o 90 stupňov.
+🏗️ 2. MODULARITA (FPS Mode)
+    • Wau-Fakt: Pravý ovládač sa dá použiť ako vertikálna myš (FPS mode). Skvelé na stratégie.
+    • Checklist: Odpoj oba ovládače a znova ich zacvakni. Nesmú mať "vakel". Ak sa hýbu, koľajnička v tablete je uvoľnená.
+📉 3. PREČO KÚPIŤ / NEKÚPIŤ
+    • KÚPIŤ: Chceš najväčší displej a možnosť použiť konzolu ako regulárny Windows tablet.
+    • NEKÚPIŤ: Je to obrovské, ťažké (854g) a softvér nie je tak odladený ako u Steam Decku.
+⚖️ DISKLAIMER (Právna doložka)
+    • Informačný charakter: Report slúži ako neoficiálna pomôcka.
+    • Ochrana značky: Názvy sú majetkom Lenovo.$auditly$,
+    NULL
+);
+
+-- PlayStation Portal (2023)
+INSERT INTO products (name, brand, model_name, category, display_tech, common_faults, battery_risks, frame_material, negotiation_tips, full_report, base_price_recommended) 
+VALUES (
+    $auditly$PlayStation Portal$auditly$,
+    $auditly$Sony$auditly$,
+    $auditly$PlayStation Portal$auditly$,
+    $auditly$Console$auditly$,
+    $auditly$📱 8" LCD, 1080p, 60Hz. Streamovacie zariadenie pre PS5.$auditly$,
+    $auditly$[
+        "⚠️ Analog Drift: Rovnaké páčky ako DualSense, trpia na Stick Drift.",
+        "⚠️ Wi-Fi Latency: Ak obraz „seká“, môže byť vadný Wi-Fi modul v zariadení.",
+        "⚠️ Screen Bleed: Na okrajoch LCD panelu sa môžu objaviť svetlé fľaky.",
+        "⚠️ Headphone Jack: 3.5mm jack býva uvoľnený, skontroluj kontakt.",
+        "⚠️ Charging Pin: USB-C port je hlboko zapustený, neoriginálne káble nedržia."
+    ]$auditly$,
+    $auditly$🔋 • Batéria vydrží cca 4-6 hodín, keďže len streamuje obraz.
+• Ak sa vybíja rýchlejšie, podsvietenie LCD panelu má skrat.$auditly$,
+    $auditly$Plast + Gumené úchopy.$auditly$,
+    $auditly$🤝 • Kalkulačka nákladov:
+  - Stick Drift: -50 €
+  - Silný Screen Bleed: -30 €
+• Veta na zľavu: „Páčky už začínajú driftovať a cez Wi-Fi to laguje aj pri dobrom routeri. Spustíte niečo z ceny?“$auditly$,
+    $auditly$🎮 HLAVNÝ AUDIT REPORT: PlayStation Portal
+Status: The PS5 Companion
+💎 1. KONCEPT (The Remote Player)
+    • Technológia: 8" LCD displej vložený medzi dve polovice DualSense ovládača.
+    • Pozor: Toto nie je samostatná konzola! Bez zapnutej PS5 v rovnakej sieti (alebo cez internet) je to len drahé ťažítko.
+🏗️ 2. OVLÁDANIE (DualSense Features)
+    • Wau-Fakt: Má to plnú haptickú odozvu a adaptívne triggery ako DualSense.
+    • Checklist: Skontroluj páčky. Sú menšie než u klasického ovládača a náchylné na opotrebovanie.
+📉 3. PREČO KÚPIŤ / NEKÚPIŤ
+    • KÚPIŤ: Chceš hrať PS5 v posteli alebo keď je TV obsadený rodinou.
+    • NEKÚPIŤ: Nemá to Bluetooth (vyžaduje drahé Link slúchadlá) a je to závislé od kvality Wi-Fi.
+⚖️ DISKLAIMER (Právna doložka)
+    • Informačný charakter: Report slúži ako neoficiálna pomôcka.
+    • Ochrana značky: Názvy sú majetkom Sony.$auditly$,
+    NULL
+);
+
 -- ASUS ROG (Strix / Zephyrus)
 INSERT INTO products (name, brand, model_name, category, display_tech, common_faults, battery_risks, frame_material, negotiation_tips, full_report, base_price_recommended) 
 VALUES (

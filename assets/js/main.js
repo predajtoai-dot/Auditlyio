@@ -2565,8 +2565,11 @@ const fallbackCopyToClipboard = (text) => {
 
     // 💳 PAYMENT CHECK (TEST MODE) - Vždy vyžadovať pre testovacie účely
     if (!isTestPaid) {
-      openPricingModal();
       window._pendingAnalysis = true; // Flag to resume this specific analysis
+      localStorage.setItem("auditly_pending_analysis", "true");
+      console.log("💾 Saved pending analysis to localStorage");
+      
+      openPricingModal();
       return;
     }
     
@@ -7708,9 +7711,13 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
     // 💳 PAYMENT CHECK (TEST MODE)
     if (!forcedId && !isTestPaid) {
+      // Store current request in localStorage immediately so it survives redirect
+      const pending = { forcedId, options };
+      window._pendingReport = pending;
+      localStorage.setItem("auditly_pending_report", JSON.stringify(pending));
+      console.log("💾 Saved pending report to localStorage");
+      
       openPricingModal();
-      // Store current request in window to resume after "payment"
-      window._pendingReport = { forcedId, options };
       return;
     }
 
@@ -10003,18 +10010,23 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     }
 
     // 💳 STRIPE REDIRECT INTERCEPTOR
-    qs("#stripePayBtn")?.addEventListener("click", () => {
+    qs("#stripePayBtn")?.addEventListener("click", (e) => {
       // 💾 Save current selection so it can be restored after redirect
       saveAppState();
 
-      // Save pending actions to localStorage so they survive the redirect
+      // Ensure pending actions are in localStorage
       if (window._pendingAnalysis) {
         localStorage.setItem("auditly_pending_analysis", "true");
       }
       if (window._pendingReport) {
         localStorage.setItem("auditly_pending_report", JSON.stringify(window._pendingReport));
       }
-      console.log("💾 Saved pending actions before Stripe redirect");
+      
+      console.log("💾 State saved. Redirecting to Stripe...");
+      
+      // We don't preventDefault here because we want the browser to follow the href
+      // but the small delay of execution here is usually enough for localStorage.
+      // If the user reports issues, we'll switch to manual redirect.
     });
 
     // 💳 TEST PAYMENT FLOW (Now direct Stripe redirect)
@@ -10203,17 +10215,27 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     if (window._pendingAnalysis) {
       console.log("🚀 Resuming pending analysis after payment...");
       window._pendingAnalysis = false;
+      localStorage.removeItem("auditly_pending_analysis");
+      
       setTimeout(() => {
         const generateBtn = qs("[data-generate]");
-        if (generateBtn) generateBtn.click();
-      }, 500);
+        if (generateBtn) {
+          console.log("🎯 Clicking generate button automatically");
+          generateBtn.click();
+        } else {
+          console.error("❌ Generate button not found during resume");
+        }
+      }, 800);
     } else if (window._pendingReport) {
       console.log("🚀 Opening pending expert report after payment...");
       const { forcedId, options } = window._pendingReport;
       window._pendingReport = null;
+      localStorage.removeItem("auditly_pending_report");
+      
       setTimeout(() => {
+        console.log("🎯 Opening expert report automatically", forcedId);
         handleOpenExpertReport(forcedId, options);
-      }, 500);
+      }, 800);
     }
 
     if (supabase) {
