@@ -1257,11 +1257,13 @@ const fallbackCopyToClipboard = (text) => {
 
     if (!model) return;
 
-    // 💳 PAYMENT GATE: Do not fetch or update anything on the right until paid
+    // 💳 PAYMENT GATE MOVED: Analysis is now free, payment required only for deep reports
+    /* 
     if (!isTestPaid) {
       console.log("⏳ Skryté načítavanie: Platba sa vyžaduje pred zobrazením dát.");
       return;
     }
+    */
     
     console.log(`🕵️ Frontend: Fetching Heureka price for "${model} ${storage} ${ram} ${color}"...`);
     
@@ -7213,6 +7215,12 @@ const fallbackCopyToClipboard = (text) => {
   };
 
   openTrendBtn?.addEventListener("click", () => {
+    // 💳 PAYMENT CHECK
+    if (!isTestPaid) {
+      openPricingModal();
+      return;
+    }
+
     if (trendModal) {
       trendModal.hidden = false;
       document.body.style.overflow = "hidden";
@@ -7259,6 +7267,12 @@ const fallbackCopyToClipboard = (text) => {
 
     e.preventDefault();
     console.log("✍️ Generating ad...");
+
+    // 💳 PAYMENT CHECK
+    if (!isTestPaid) {
+      openPricingModal();
+      return;
+    }
     
     // Ensure we have an audit ID before showing the modal
     if (!expertOverlay.dataset.currentAuditId) {
@@ -7775,7 +7789,75 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     if (verdictBox) verdictBox.after(timerDiv);
   };
 
-  const handleOpenExpertReport = async (forcedId = null, options = { showMain: true }) => {
+  // 🔗 EXPERT REPORT SCROLL & NAV LOGIC
+window.scrollToExpertSection = (e, sectionId) => {
+  e.preventDefault();
+  const container = document.querySelector(".expert-scroll-area");
+  const target = document.getElementById(sectionId);
+  if (!container || !target) return;
+
+  // Auto-expand if collapsed
+  if (!target.classList.contains("is-expanded")) {
+    target.classList.add("is-expanded");
+  }
+
+  // Update active state in sidebar and mobile nav
+  document.querySelectorAll(".nav-item, .mobile-nav-item").forEach(item => {
+    const isTarget = item.getAttribute("href") === `#${sectionId}` || 
+                     (item.getAttribute("onclick") && item.getAttribute("onclick").includes(sectionId));
+    item.classList.toggle("active", isTarget);
+  });
+
+  const topPos = target.offsetTop - 20; // 20px padding
+  container.scrollTo({
+    top: topPos,
+    behavior: "smooth"
+  });
+};
+
+const initExpertScrollObserver = () => {
+  const container = document.querySelector(".expert-scroll-area");
+  const sections = document.querySelectorAll(".expert-section");
+  const navItems = document.querySelectorAll(".nav-item");
+  const mobileNavItems = document.querySelectorAll(".mobile-nav-item");
+
+  if (!container || !sections.length) return;
+
+  container.addEventListener("scroll", () => {
+    let current = "";
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (container.scrollTop >= sectionTop - 100) {
+        current = section.getAttribute("id");
+      }
+    });
+
+    navItems.forEach(item => {
+      item.classList.toggle("active", item.getAttribute("href") === `#${current}`);
+    });
+
+    mobileNavItems.forEach(item => {
+      const onclick = item.getAttribute("onclick") || "";
+      item.classList.toggle("active", onclick.includes(current));
+    });
+  }, { passive: true });
+};
+
+window.toggleExpertSection = (header) => {
+  const section = header.parentElement;
+  const isExpanded = section.classList.contains("is-expanded");
+  
+  // Close other sections? (Optional, let's keep them independent for better UX)
+  // document.querySelectorAll(".expert-section.collapsible-section").forEach(s => s.classList.remove("is-expanded"));
+  
+  if (isExpanded) {
+    section.classList.remove("is-expanded");
+  } else {
+    section.classList.add("is-expanded");
+  }
+};
+
+const handleOpenExpertReport = async (forcedId = null, options = { showMain: true }) => {
     let rawModel = productNameHidden?.value?.trim();
     if (!rawModel && !forcedId) {
       showToast("❌ Prosím, najprv vyberte kategóriu a model.", { type: "error" });
@@ -7840,10 +7922,16 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         try {
           const viewType = options.fillDashboard ? 'private' : 'expert';
           const userEmail = options.emailOverride || localStorage.getItem("auditly_user_email") || "";
-          const fetchUrl = `${API_BASE}/api/audits/${forcedId}?view=${viewType}&email=${encodeURIComponent(userEmail)}`;
-          console.log(`📡 [handleOpenExpertReport] Fetching: ${fetchUrl}`);
-          
-          const resp = await fetch(fetchUrl, { signal: controller.signal });
+    const fetchUrl = `${API_BASE}/api/audits/${forcedId}?view=${viewType}&email=${encodeURIComponent(userEmail)}`;
+    console.log(`📡 [handleOpenExpertReport] Fetching: ${fetchUrl}`);
+
+    // 💳 PAYMENT CHECK (Deep Report)
+    if (!isTestPaid && !options.fillDashboard) {
+      openPricingModal();
+      return;
+    }
+
+    const resp = await fetch(fetchUrl, { signal: controller.signal });
           clearTimeout(timeoutId);
           
           if (!resp.ok) {
@@ -7871,6 +7959,10 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
           rd = fetchedData.audit.report_data || {};
           auditId = forcedId;
           createdAt = fetchedData.audit.created_at;
+
+          // Update Sidebar ID
+          const sidebarId = qs("#expertReportIDSidebar");
+          if (sidebarId) sidebarId.textContent = `#${auditId.substring(0, 8).toUpperCase()}`;
         } catch (fErr) {
           clearTimeout(timeoutId);
           console.error("❌ [handleOpenExpertReport] Fetch failure:", fErr);
@@ -8138,6 +8230,22 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         startDashboardTimer(createdAt, auditId);
       }
 
+      // Reset Scroll and Nav
+      const scrollArea = qs(".expert-scroll-area");
+      if (scrollArea) scrollArea.scrollTop = 0;
+      
+      // Auto-expand sections (Strategy and Risks by default)
+      document.querySelectorAll(".collapsible-section").forEach((s, idx) => {
+        // Expand first two sections by default for better visibility
+        s.classList.toggle("is-expanded", idx === 0 || idx === 1);
+      });
+
+      document.querySelectorAll(".nav-item, .mobile-nav-item").forEach(item => {
+        const isStart = item.getAttribute("href") === "#section-visual" || 
+                        (item.getAttribute("onclick") && item.getAttribute("onclick").includes("section-visual"));
+        item.classList.toggle("active", !!isStart);
+      });
+
       qs("#expertReportName").textContent = r.name;
       const catHeader = qs("#expertReportCategoryHeader");
       if (catHeader) {
@@ -8149,7 +8257,9 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       let topFairPrice = baseFairPrice;
       window._baseFairPrice = topFairPrice; 
       
-      qs("#expertRecommendedPrice").textContent = `${Math.round(topFairPrice)} €`;
+      const priceVal = Math.round(topFairPrice);
+      const priceHtml = !isTestPaid ? `🔒 4.99 €` : `${priceVal} €`;
+      qs("#expertRecommendedPrice").textContent = priceHtml;
       
       // Build Specs HTML (Minimal style for visual area)
       const mode = rd?.mode || document.querySelector('input[name="auditMode"]:checked')?.value || "buy";
@@ -8218,6 +8328,18 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       const calcItems = document.querySelectorAll("#expertReportCalculator .expert-check-item");
       calcItems.forEach(item => {
         const drop = parseInt(item.dataset.priceDrop || 0);
+        
+        // 🔒 LOCK UNPAID INTERACTION
+        if (!isTestPaid) {
+          item.style.opacity = "0.7";
+          item.style.cursor = "pointer";
+          item.addEventListener("click", (e) => {
+            e.stopPropagation();
+            openPricingModal();
+          });
+          return;
+        }
+
         if (drop > 0) {
           item.addEventListener("click", () => {
             item.classList.toggle("is-checked");
@@ -8260,27 +8382,56 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         })
         .filter(item => item.text && item.text !== "—" && item.text.length > 2); 
       
-      const manualHtml = manualItems.map(item => `
-        <div class="expert-check-item" data-hint="${item.hint}" style="cursor: pointer;" onclick="this.classList.toggle('is-checked')">
-          <span class="expert-check-icon" style="color: ${item.isGood ? '#10b981' : '#ef4444'}">${item.icon}</span>
-          <span style="font-weight: 700;">${item.text}</span>
-        </div>
-      `).join('');
+      const manualHtml = manualItems.map(item => {
+        // 🔒 LOCK UNPAID INTERACTION
+        const lockAttr = !isTestPaid ? `onclick="openPricingModal()"` : `onclick="this.classList.toggle('is-checked')"`;
+        const lockStyle = !isTestPaid ? `opacity: 0.7; cursor: pointer;` : `cursor: pointer;`;
+
+        return `
+          <div class="expert-check-item" data-hint="${item.hint}" style="${lockStyle}" ${lockAttr}>
+            <span class="expert-check-icon" style="color: ${item.isGood ? '#10b981' : '#ef4444'}">${item.icon}</span>
+            <span style="font-weight: 700;">${item.text}</span>
+          </div>
+        `;
+      }).join('');
       qs("#expertReportManual").innerHTML = manualHtml;
 
-      // Set Full Text for Master Report
+      // Set Full Text for Master Report (Interactive Accordion)
       const fullReportText = r.full_report || "Hĺbkový report pre tento model sa pripravuje.";
-      const formattedFullReport = fullReportText.split('\n')
+      
+      // Global toggle function
+      window.toggleAccordion = (el) => {
+        const wasExpanded = el.classList.contains("is-expanded");
+        // Close others in same container
+        el.parentElement.querySelectorAll(".accordion-p").forEach(p => p.classList.remove("is-expanded"));
+        if (!wasExpanded) el.classList.add("is-expanded");
+      };
+
+      const formattedFullReport = fullReportText.split(/\n\s*\n/)
         .filter(p => p.trim() !== '')
         .filter(p => {
           const lower = p.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-          // 🛡️ Filter out advertised price and real value
           if (lower.includes("inzerovana cena") || lower.includes("inzerovana") || lower.includes("realna hodnota")) {
             return false;
           }
           return true;
         })
-        .map(p => `<p style="margin-bottom: 20px; line-height: 1.8; color: rgba(255,255,255,0.8); font-size: 15px; font-weight: 500;">${p.trim()}</p>`).join('');
+        .map(p => {
+          const lines = p.trim().split('\n');
+          const title = lines[0].replace(/^[•\-\*]\s*/, '').substring(0, 60);
+          
+          // 🔒 LOCK UNPAID TEXT
+          const content = !isTestPaid ? `Tento odsek obsahuje detailné expertné rady a triky ako otestovať zariadenie. Pre zobrazenie kompletného obsahu si prosím zakúpte audit.` : p.replace(/\n/g, '<br>');
+          const clickAction = !isTestPaid ? `onclick="openPricingModal()"` : `onclick="toggleAccordion(this)"`;
+
+          return `
+            <p class="accordion-p" ${clickAction}>
+              <span class="paragraph-title">${title}</span>
+              <span class="paragraph-text">${content}</span>
+            </p>
+          `;
+        }).join('');
+      
       qs("#expertReportFullText").innerHTML = formattedFullReport;
 
       expertLoader.hidden = true;
@@ -8950,6 +9101,13 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
 
   const handleOpenRisksReport = async () => {
     if (!risksOverlay) return;
+
+    // 💳 PAYMENT CHECK
+    if (!isTestPaid) {
+      openPricingModal();
+      return;
+    }
+
     risksOverlay.hidden = false;
     qs("#risksReportLoader").hidden = false;
     qs("#risksReportContent").hidden = true;
@@ -9369,6 +9527,12 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
   };
 
   openCompareBtn?.addEventListener("click", () => {
+    // 💳 PAYMENT CHECK
+    if (!isTestPaid) {
+      openPricingModal();
+      return;
+    }
+
     compareOverlay.hidden = false;
     document.body.style.overflow = "hidden";
     
@@ -9412,6 +9576,7 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
   // 📸 AI SCANNER LOGIC (UX MAGIC & DETERMINISM)
   const aiScannerOverlay = qs("#aiScannerOverlay");
   const aiPhotoInput = qs("#ai-photo-input");
+  const mainPhotoInput = qs("#photo-upload");
   const btnPhoto = qs(".btnPhoto");
   const scannerImg = qs("#scannerImg");
   const scannerPlaceholder = qs("#scannerPlaceholder");
@@ -9432,9 +9597,12 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     if (!btnPhoto || !aiScannerOverlay) return;
 
     btnPhoto.addEventListener("click", (e) => {
-      e.preventDefault();
+      // ⚠️ DO NOT preventDefault() - let the label do its thing to trigger file input
+      // but we need to reset the scanner state and show the overlay
+      console.log("📸 [btnPhoto] Triggering camera/file input...");
       resetScanner();
-      aiScannerOverlay.style.display = "flex";
+      
+      // We don't show the overlay YET. We show it once a file is selected.
     });
 
     // Close on X
@@ -9453,12 +9621,17 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
       aiPhotoInput.click();
     });
 
-    aiPhotoInput.addEventListener("change", async (e) => {
+    const handlePhotoChange = async (e) => {
       const file = e.target.files?.[0];
       if (!file) return;
 
       scannedFiles.push(file);
       
+      // ENSURE OVERLAY IS VISIBLE (Mainly for mobile first-trigger)
+      if (aiScannerOverlay.style.display !== "flex") {
+        aiScannerOverlay.style.display = "flex";
+      }
+
       // Update Preview
       const reader = new FileReader();
       reader.onload = (re) => {
@@ -9477,7 +9650,10 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
         scannerStep = 3;
         await startAIAnalysis();
       }
-    });
+    };
+
+    aiPhotoInput.addEventListener("change", handlePhotoChange);
+    mainPhotoInput?.addEventListener("change", handlePhotoChange);
 
     qs("#scannerConfirmBtn")?.addEventListener("click", () => {
       applyAIResult();
@@ -10351,6 +10527,9 @@ Preferujem osobný odber, aby ste si mohli stav z auditu porovnať s realitou. V
     savePrevValue(storageSelect);
 
     console.log("💳 Platobný stav:", isTestPaid ? "ZAPLATENÉ" : "NEZAPLATENÉ");
+
+    // Initialize observers
+    initExpertScrollObserver();
 
     // 🛡️ ENSURE OVERLAY IS VISIBLE
     const overlay = qs("[data-report-overlay]");

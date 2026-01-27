@@ -1,14 +1,19 @@
 node_modules
 .env.local
+env.local
 *.log
 .DS_Store
 Thumbs.db
 .vercel
+data/*.json
 terminals
 .cursor
 package-lock.json
-tests
-*.md
-predajto-vercel.zip
-create-vercel-zip.bat
-test-vercel.bat
+*.zip
+*.bat
+*.sh
+database/* copy.sql
+database/raw_product_data.txt
+docs/
+heureka_debug.png
+tests/

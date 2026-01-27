@@ -281,7 +281,7 @@
                   <label class="btnPhoto" for="photo-upload">
                     <span class="btnPhoto__icon">📸</span>
                     <span class="btnPhoto__text">Sfotografovať & Analyzovať</span>
-                    <input type="file" id="photo-upload" accept="image/*" capture="environment" hidden data-photo-input>
+                    <input type="file" id="photo-upload" accept="image/*" hidden data-photo-input>
                   </label>
                 </div>
 
@@ -478,7 +478,7 @@
                         <div class="specItem"><span>Záruka</span> <strong>---</strong></div>
                       </div>
                       <div class="cardActionHint">
-                        <span>🔍</span> Kliknite pre kompletný hĺbkový report
+                        <span>🔒</span> Odomknúť kompletný hĺbkový report
                       </div>
                     </div>
 
@@ -504,7 +504,7 @@
                       </div>
 
                       <div class="cardActionHint" style="margin-top: 12px;">
-                        <span>🔍</span> Kliknite pre hĺbkový checklist chýb
+                        <span>🔒</span> Odomknúť hĺbkový checklist chýb
                       </div>
                     </div>
 
@@ -524,7 +524,7 @@
                       </p>
 
                       <div class="cardActionHint">
-                        <span>📈</span> <span data-market-freshness>Kliknite pre detailný vývoj ceny</span>
+                        <span>🔒</span> Odomknúť detailný vývoj ceny
                       </div>
                     </div>
 
@@ -544,12 +544,12 @@
 
                       <!-- 🆕 COMPARISON TRIGGER BUTTON (MOVED HERE) -->
                       <button type="button" class="btnCompareTrigger" data-open-compare-modal style="margin-top: 15px; border-style: solid; background: rgba(167, 139, 250, 0.15);">
-                        <span>🤔</span> Nevieš sa rozhodnúť? Porovnaj si svoje top 2 produkty...
+                        <span>🔒</span> Odomknúť porovnanie produktov
                       </button>
                       
                       <!-- SELL MODE ONLY: Generate Ad Text -->
                       <button class="btnGenerateAd" data-generate-ad hidden>
-                        <span>✍️</span> Vygenerovať text inzerátu
+                        <span>🔒</span> Vygenerovať text inzerátu
                       </button>
 
                       <button class="btn-scanner btn-scanner--secondary" data-preview-public-direct hidden style="margin-top: 10px; width: 100%; height: 50px; border-radius: 12px; font-weight: 700;">
@@ -659,96 +659,151 @@
 
     <!-- EXPERT MASTER REPORT OVERLAY (REDESIGNED TO MATCH SCREENSHOT STYLE) -->
     <div id="expertReportOverlay" hidden>
-      <div class="expert-report-window">
-        <!-- Header Area -->
-        <div class="expert-header-top">
-          <div class="expert-title-group">
-            <h2 id="expertReportName">Model Zariadenia</h2>
-            <div id="expertReportCategoryHeader" class="expert-subtitle">Trend za posledný rok • Elektronika</div>
-          <div style="display: flex; gap: 15px; align-items: center; margin-top: 10px;">
-            <div id="expertShareLinkPrivate" style="font-size: 11px; color: #a78bfa; cursor: pointer; display: none;" onclick="copyPrivateLink()">
-              🔒 Kopírovať súkromný odkaz
-            </div>
-            <div id="expertShareLinkPublic" style="font-size: 11px; color: #a78bfa; cursor: pointer; display: none;" onclick="copyPublicLinkExpert()">
-              🌐 Kopírovať verejný odkaz
-            </div>
+      <div class="expert-report-window has-sidebar">
+        <!-- Sidebar Navigation (Desktop only) -->
+        <aside class="expert-sidebar">
+          <div class="sidebar-logo">🛡️ Auditly</div>
+          <nav class="sidebar-nav">
+            <a href="#section-visual" class="nav-item active" onclick="scrollToExpertSection(event, 'section-visual')">
+              <span class="nav-dot"></span> 📊 Prehľad & Cena
+            </a>
+            <a href="#section-strategy" class="nav-item" onclick="scrollToExpertSection(event, 'section-strategy')">
+              <span class="nav-dot"></span> 💡 Stratégia
+            </a>
+            <a href="#section-risks" class="nav-item" onclick="scrollToExpertSection(event, 'section-risks')">
+              <span class="nav-dot"></span> ⚠️ Expertné riziká
+            </a>
+            <a href="#section-manual" class="nav-item" onclick="scrollToExpertSection(event, 'section-manual')">
+              <span class="nav-dot"></span> 🛡️ Kontrola & Test
+            </a>
+            <a href="#section-analysis" class="nav-item" onclick="scrollToExpertSection(event, 'section-analysis')">
+              <span class="nav-dot"></span> 🔍 Hĺbková analýza
+            </a>
+          </nav>
+          <div class="sidebar-footer">
+            ID: <span id="expertReportIDSidebar">#---</span>
           </div>
-          </div>
-          <button id="closeExpertReport">✕</button>
+        </aside>
+
+        <!-- Mobile Navigation Tab Bar -->
+        <div class="expert-mobile-nav">
+          <button class="mobile-nav-item active" onclick="scrollToExpertSection(event, 'section-visual')">
+            <span class="mobile-nav-icon">📊</span>
+            <span class="mobile-nav-text">Cena</span>
+          </button>
+          <button class="mobile-nav-item" onclick="scrollToExpertSection(event, 'section-strategy')">
+            <span class="mobile-nav-icon">💡</span>
+            <span class="mobile-nav-text">Tipy</span>
+          </button>
+          <button class="mobile-nav-item" onclick="scrollToExpertSection(event, 'section-risks')">
+            <span class="mobile-nav-icon">⚠️</span>
+            <span class="mobile-nav-text">Riziká</span>
+          </button>
+          <button class="mobile-nav-item" onclick="scrollToExpertSection(event, 'section-manual')">
+            <span class="mobile-nav-icon">🛡️</span>
+            <span class="mobile-nav-text">Testy</span>
+          </button>
         </div>
 
-        <div id="expertReportLoader">
-          <div class="skeleton-expert-layout">
-            <div class="skeleton-header-row">
-              <div class="skeleton skeleton-circle" style="width: 80px; height: 80px;"></div>
-              <div style="flex: 1;">
-                <div class="skeleton skeleton-title"></div>
-                <div class="skeleton skeleton-text" style="width: 30%;"></div>
-              </div>
-            </div>
-            <div class="skeleton-grid">
-              <div class="skeleton skeleton-card" style="height: 200px;"></div>
-              <div class="skeleton skeleton-card" style="height: 200px;"></div>
-            </div>
-            <div class="skeleton skeleton-card" style="height: 300px;"></div>
-          </div>
-        </div>
-
-        <!-- Main Content Area -->
-        <div class="expert-scroll-area" id="expertReportContent" hidden>
-          
-          <!-- TOP SECTION: Specs & Price -->
-          <div class="expert-visual-area">
-            <div id="expertReportSpecs"></div>
-            <div class="expert-price-tag">
-              <span class="price-label">Auditly férová cena:</span>
-              <span id="expertRecommendedPrice">850 €</span>
-              <div style="font-size: 10px; opacity: 0.6; margin-top: 4px; line-height: 1.2;">
-                *Cena za model v TOP stave. Pri poškodeniach klesá.
-              </div>
-              
-              <!-- 🛡️ Authenticity Verification in Master Report -->
-              <div style="margin-top: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); text-align: left;">
-                <p style="font-size: 10px; color: #ffffff; margin-bottom: 6px;">🛡️ <strong>Overenie pravosti:</strong></p>
-                <p style="font-size: 9px; opacity: 0.8; margin-bottom: 8px; line-height: 1.3;">Pred kúpou si overte pravosť zariadenia pomocou sériového čísla na oficiálnej stránke alebo pre podrobnejší výpis využite druhý link.</p>
-                <div style="display: flex; flex-direction: column; gap: 4px;">
-                  <a href="https://checkcoverage.apple.com/?cid=gn-ols-checkcoverage-lp-get_help&locale=sk_SK" target="_blank" style="font-size: 9px; color: #a78bfa; text-decoration: none;">➜ Oficiálna stránka Apple (Záruka)</a>
-                  <a href="https://iunlocker.com/check_imei.php" target="_blank" style="font-size: 9px; color: #a78bfa; text-decoration: none;">➜ Podrobný IMEI výpis (iUnlocker)</a>
+        <div class="expert-main-content">
+          <!-- Header Area -->
+          <div class="expert-header-top">
+            <div class="expert-title-group">
+              <h2 id="expertReportName">Model Zariadenia</h2>
+              <div id="expertReportCategoryHeader" class="expert-subtitle">Trend za posledný rok • Elektronika</div>
+              <div style="display: flex; gap: 15px; align-items: center; margin-top: 10px;">
+                <div id="expertShareLinkPrivate" style="font-size: 11px; color: #a78bfa; cursor: pointer; display: none;" onclick="copyPrivateLink()">
+                  🔒 Kopírovať súkromný odkaz
+                </div>
+                <div id="expertShareLinkPublic" style="font-size: 11px; color: #a78bfa; cursor: pointer; display: none;" onclick="copyPublicLinkExpert()">
+                  🌐 Kopírovať verejný odkaz
                 </div>
               </div>
             </div>
+            <button id="closeExpertReport">✕</button>
           </div>
 
-          <!-- MIDDLE SECTION: Strategic Checklist & Risks -->
-          <div class="expert-info-grid">
-            <div class="info-card">
-              <h4 class="card-label" style="color: #eab308;">💡 Kalkulačka & Stratégia</h4>
-              <div id="expertReportCalculator" class="checks-container"></div>
-            </div>
-            <div class="info-card">
-              <h4 class="card-label">⚠️ Expertné Riziká</h4>
-              <div id="expertReportRisks" class="risks-container"></div>
-            </div>
+          <div id="expertReportLoader">
+            <!-- ... skeleton ... -->
           </div>
 
-          <!-- BOTTOM SECTION: Manual Checks & Analysis -->
-          <div class="expert-bottom-grid">
-            <div class="info-card secondary-card">
-              <h4 class="card-label">🛡️ Manuálna Kontrola (interaktívna)</h4>
-              <div id="expertReportManual" class="manual-mini-grid"></div>
-            </div>
-            <div class="analysis-card">
-              <h4 class="card-label">🔍 Ako otestovať toto zariadenie</h4>
-              <div id="expertReportFullText" class="analysis-content"></div>
-            </div>
-          </div>
-        </div>
+          <!-- Main Content Area -->
+          <div class="expert-scroll-area" id="expertReportContent" hidden>
+            
+            <!-- TOP SECTION: Specs & Price -->
+            <section id="section-visual" class="expert-section">
+              <div class="expert-visual-area">
+                <div id="expertReportSpecs"></div>
+                <div class="expert-price-tag">
+                  <span class="price-label">Auditly férová cena:</span>
+                  <span id="expertRecommendedPrice">850 €</span>
+                  <div style="font-size: 10px; opacity: 0.6; margin-top: 4px; line-height: 1.2;">
+                    *Cena za model v TOP stave. Pri poškodeniach klesá.
+                  </div>
+                  
+                  <!-- 🛡️ Authenticity Verification -->
+                  <div style="margin-top: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); text-align: left;">
+                    <p style="font-size: 10px; color: #ffffff; margin-bottom: 6px;">🛡️ <strong>Overenie pravosti:</strong></p>
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                      <a href="https://checkcoverage.apple.com/?cid=gn-ols-checkcoverage-lp-get_help&locale=sk_SK" target="_blank" style="font-size: 9px; color: #a78bfa; text-decoration: none;">➜ Oficiálna stránka Apple</a>
+                      <a href="https://iunlocker.com/check_imei.php" target="_blank" style="font-size: 9px; color: #a78bfa; text-decoration: none;">➜ Podrobný IMEI výpis</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
 
-        <!-- FOOTER: Branding / Small Note -->
-        <div class="expert-footer-simple">
-          <p>© 2026 Auditlyio Expert System. Dáta overené v reálnom čase.</p>
-          <div style="font-size: 10px; line-height: 1.5; opacity: 0.6; max-width: 800px; margin: 15px auto 0; padding: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
-            <strong>PRÁVNE UPOZORNENIE:</strong> Reporty generované systémom Auditly.io majú výhradne informatívny charakter. Prevádzkovateľ nezodpovedá za presnosť dát ani za obchodné rozhodnutia (kúpa/predaj) vykonané na základe týchto informácií. Každé zariadenie si vyžaduje osobnú fyzickú kontrolu odborníkom.
+            <!-- MIDDLE SECTION: Strategy -->
+            <section id="section-strategy" class="expert-section collapsible-section">
+              <div class="expert-section-header" onclick="toggleExpertSection(this)">
+                <h4><span>💡</span> Kalkulačka & Stratégia</h4>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="expert-section-content">
+                <div id="expertReportCalculator" class="checks-container"></div>
+              </div>
+            </section>
+
+            <!-- MIDDLE SECTION: Risks -->
+            <section id="section-risks" class="expert-section collapsible-section">
+              <div class="expert-section-header" onclick="toggleExpertSection(this)">
+                <h4><span>⚠️</span> Expertné Riziká</h4>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="expert-section-content">
+                <div id="expertReportRisks" class="risks-container"></div>
+              </div>
+            </section>
+
+            <!-- BOTTOM SECTION: Manual Checks -->
+            <section id="section-manual" class="expert-section collapsible-section">
+              <div class="expert-section-header" onclick="toggleExpertSection(this)">
+                <h4><span>🛡️</span> Manuálna Kontrola (interaktívna)</h4>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="expert-section-content">
+                <div id="expertReportManual" class="manual-mini-grid"></div>
+              </div>
+            </section>
+
+            <!-- BOTTOM SECTION: Analysis -->
+            <section id="section-analysis" class="expert-section collapsible-section">
+              <div class="expert-section-header" onclick="toggleExpertSection(this)">
+                <h4><span>🔍</span> Ako otestovať toto zariadenie</h4>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="expert-section-content">
+                <div id="expertReportFullText" class="analysis-content"></div>
+              </div>
+            </section>
+
+            <!-- LEGAL FOOTER (Moved inside scroll area) -->
+            <div class="expert-footer-simple">
+              <p>© 2026 Auditlyio Expert System.</p>
+              <div class="disclaimer-box">
+                <strong>PRÁVNE UPOZORNENIE:</strong> Reporty generované systémom Auditly.io majú výhradne informatívny charakter. Prevádzkovateľ nezodpovedá za presnosť dát ani za obchodné rozhodnutia. Každé zariadenie si vyžaduje osobnú fyzickú kontrolu odborníkom.
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1038,9 +1093,9 @@
 
             <div class="scanner-footer" id="scannerFooter">
                 <button class="btn-scanner btn-scanner--primary" id="scannerActionBtn">
-                    Odfotiť Zadnú Stranu
+                    Odfotiť alebo vybrať z galérie
                 </button>
-                <input type="file" id="ai-photo-input" accept="image/*" capture="environment" hidden>
+                <input type="file" id="ai-photo-input" accept="image/*" hidden>
             </div>
 
             <div class="scanner-footer" id="scannerConfirmFooter" style="display: none;">

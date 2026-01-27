@@ -4632,20 +4632,23 @@ const server = http.createServer(async (req, res) => {
 
         if (error) throw error;
 
-        // If email provided, send the link (Non-blocking)
-        if (user_email) {
-          const protocol = req.headers["x-forwarded-proto"] || "https";
-          let host = req.headers.host || "www.auditlyio.sk";
-          
-          // Ak doména neobsahuje www a nie je to localhost, pridáme ho pre istotu
-          if (!host.includes("www.") && !host.includes("localhost") && !host.includes("127.0.0.1") && !host.includes(".up.railway.app")) {
-            host = "www." + host;
-          }
-          
-          const currentBaseUrl = `${protocol}://${host}`;
-          
+        // 🔔 ALWAYS NOTIFY ADMIN (New Request)
+        const protocol = req.headers["x-forwarded-proto"] || "https";
+        let host = req.headers.host || "www.auditlyio.sk";
+        if (!host.includes("www.") && !host.includes("localhost") && !host.includes("127.0.0.1") && !host.includes(".up.railway.app")) {
+          host = "www." + host;
+        }
+        const currentBaseUrl = `${protocol}://${host}`;
+        const adminEmail = process.env.ADMIN_EMAIL || "auditly.io@gmail.com";
+        
+        // Notify admin in background
+        sendAuditEmail(adminEmail, data.id, report_data.productName || report_data.model || "Zariadenie", currentBaseUrl)
+          .catch(mailErr => console.error("❌ [API Audits] Admin notification failure:", mailErr.message));
+
+        // If user email provided, send the link to them too
+        if (user_email && user_email !== adminEmail) {
           sendAuditEmail(user_email, data.id, report_data.productName || report_data.model || "Zariadenie", currentBaseUrl)
-            .catch(mailErr => console.error("❌ [API Audits] Background email failure:", mailErr.message));
+            .catch(mailErr => console.error("❌ [API Audits] User email failure:", mailErr.message));
         }
 
         return json(res, 200, { ok: true, id: data.id });
